@@ -1,0 +1,657 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jRecipeBook ModDate="" Name="Cristie's Favorite Recipes"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="recipe_book.xsd">
+    <Recipe Cat="Vegetables" Chapter="Sides" Name="Asparagus Side Dish"
+        Origin="" Source="Linda Hilbert" SubCat="" UUID="37859997-30b0-4832-9530-03b49b3a5b02">
+        <IngredientList>
+            <Ingredient Amount="2.0" Name="Fresh Asparagus" Units="lb"/>
+            <Ingredient Amount="1.0" Name="Red Pepper, roasted, sliced" Units="c"/>
+            <Ingredient Amount="2.0" Name="Goat Cheese" Units="oz"/>
+            <Ingredient Amount="2.0" Name="Vinegar, white wine" Units="Tbsp"/>
+            <Ingredient Amount="2.0" Name="Capers, drained" Units="Tbsp"/>
+            <Ingredient Amount="1.0" Name="Dijon Mustard" Units="tsp"/>
+            <Ingredient Amount="1.0" Name="Garlic, minced" Units="clove"/>
+            <Ingredient Amount="1.0" Name="taste Salt" Units="to"/>
+            <Ingredient Amount="1.0" Name="taste Pepper" Units="to"/>
+            <Ingredient Amount="1.0" Name="Taragon" Units="dash"/>
+            <Ingredient Amount="0.25" Name="Oil, Olive" Units="c"/>
+            <Ingredient Amount="0.25" Name="Parmesan Cheese, grated" Units="c"/>
+        </IngredientList>
+        <ProcessList>Blanch asparagus until tender.
+
+Drain well.
+
+Place on a serving platter and garnish with red pepper stripes and
+goat cheese.
+
+Cover with dressing.
+
+Sprinkle capers on top.
+
+Sprinkle parmesan cheese on top.
+
+Dressing
+
+Combine white wine vinegar, dijon mustard, minced garlic, taragon,
+salt, pepper, and olive oil.
+</ProcessList>
+        <Comments>Serve at room temperature.
+</Comments>
+    </Recipe>
+    <Recipe Cat="Quick Bread" Chapter="Breads" Name="Banana Bread"
+        Origin="" Source="Dorie" SubCat="" UUID="4a36a58e-cc58-47be-8b6d-b43fbcf040f8">
+        <IngredientList>
+            <Ingredient Amount="0.5" Name="Butter" Units="c"/>
+            <Ingredient Amount="1.5" Name="Sugar" Units="c"/>
+            <Ingredient Amount="2.0" Name="Eggs" Units="each"/>
+            <Ingredient Amount="0.5" Name="Buttermilk" Units="c"/>
+            <Ingredient Amount="2.0" Name="Bananas" Units="large"/>
+            <Ingredient Amount="2.0" Name="Flour" Units="c"/>
+            <Ingredient Amount="1.0" Name="Baking Soda" Units="tsp"/>
+            <Ingredient Amount="0.5" Name="Nuts or raisons" Units="c"/>
+        </IngredientList>
+        <ProcessList>Mix butter and sugar.
+
+Add eggs, buttermilk, and bananas.
+
+Add flour and baking soda.
+
+Add nuts/raisons.
+
+Use a greased pan.
+
+Bake at 350F for 35-40 minutes (3 little loaf pans) or 70 minutes (big
+loaf pan).
+</ProcessList>
+        <Comments/>
+    </Recipe>
+    <Recipe Cat="Meat" Chapter="Entrees" Name="Beef Stroganoff"
+        Origin="Russian" Source="Marybeth Hunter" SubCat="Beef" UUID="0a0fd0dd-d5c6-4b56-812d-697b1a2ad9c0">
+        <IngredientList>
+            <Ingredient Amount="0.0"
+                Name="Round steak or sirloin steak cut in 2 to 3 inch strips" Units=""/>
+            <Ingredient Amount="0.0" Name="Dash of garlic salt" Units=""/>
+            <Ingredient Amount="0.5" Name="chopped onion" Units="cup"/>
+            <Ingredient Amount="0.5" Name="salt" Units="teaspoon"/>
+            <Ingredient Amount="0.0" Name="Dash marjoram" Units=""/>
+            <Ingredient Amount="0.125" Name="pepper" Units="teaspoon"/>
+            <Ingredient Amount="3.0"
+                Name="can sliced mushrooms (or fresh, saut?)" Units="oz"/>
+            <Ingredient Amount="2.0" Name="catsup" Units="tablespoons"/>
+            <Ingredient Amount="0.5" Name="beef bouillon (to 1 cup)" Units="cup"/>
+            <Ingredient Amount="1.0" Name="white wine" Units="cup"/>
+            <Ingredient Amount="0.5" Name="chopped bacon fried crisp" Units="pound"/>
+            <Ingredient Amount="1.0" Name="sour cream" Units="cup"/>
+        </IngredientList>
+        <ProcessList>* Saute Onion and Remove.
+* Dredge beef in seasonings and brown.
+* Add undrained mushrooms, onions, catsup, bouillon and wine.
+* Cover and Cook over low heat for 1 hour or until tender.
+* Uncover, and add bacon and sour cream until heated through.
+
+Serve over wide buttered noodles.
+Sprinkle with snip of fresh parsely just before serving.
+</ProcessList>
+        <Comments/>
+    </Recipe>
+    <Recipe Cat="Meat" Chapter="Entrees" Name="Beef Stroginoff"
+        Origin="Russian" Source="Nancy Evans" SubCat="Beef, Traditional" UUID="f97f83a8-719b-4378-9d88-c737517f818d">
+        <IngredientList>
+            <Ingredient Amount="2.0" Name="Beef, round steak" Units="lb"/>
+            <Ingredient Amount="1.0" Name="Onion" Units="Medium"/>
+            <Ingredient Amount="0.25" Name="Olive Oil" Units="c"/>
+            <Ingredient Amount="1.0" Name="Sour Cream" Units="c"/>
+            <Ingredient Amount="0.5" Name="Mushrooms" Units="lb"/>
+            <Ingredient Amount="1.0" Name="Wine, red" Units="c"/>
+            <Ingredient Amount="1.0" Name="Flour, multi-purpose" Units="c"/>
+            <Ingredient Amount="12.0" Name="Beef Consume" Units="oz"/>
+            <Ingredient Amount="16.0" Name="Noodles, egg, extra wide" Units="oz"/>
+        </IngredientList>
+        <ProcessList>*Slice the Onion, medium fine.
+*Slice the Mushrooms, medium fine.
+*Slice the Beef into thin strips.
+*Saute the Onions until very brown/carmelized.
+*Before the Onions are done, throw in the mushroom and saute until
+tender.
+*Remove the Onions and Mushrooms from the pan.
+*Coat the beef in flour and the saute in the butter until nicely
+browned.
+*Add Onions and Mushrooms back into pan with Beef and add consume.
+*Add Red Wine as needed.
+*Add Water as needed.
+*Let simmer for an hour or so.
+*Add sour cream, slowly mixing as you go at the right before serving.
+*Serve on egg noodles or rice.
+</ProcessList>
+        <Comments>*Don't use a cast iron pan for this one.
+*The iron will leach and you meal will come out gray.
+</Comments>
+    </Recipe>
+    <Recipe Cat="Meat" Chapter="Entrees" Name="Cajun Chicken Mustard"
+        Origin="Cajun" Source="Food Network" SubCat="Chicken" UUID="32280907-2769-47d7-858d-116a7ac7506a">
+        <IngredientList>
+            <Ingredient Amount="6.0" Name="Cajun Seasoning" Units="Tbsp"/>
+            <Ingredient Amount="2.0" Name="Bread Crumbs, seasoned" Units="c"/>
+            <Ingredient Amount="1.0" Name="Chicken Tenderloins" Units="lb"/>
+            <Ingredient Amount="1.0" Name="Oil, vegetable" Units="c"/>
+            <Ingredient Amount="2.0" Name="Milk" Units="c"/>
+            <Ingredient Amount="4.0" Name="Butter" Units="oz"/>
+            <Ingredient Amount="1.0" Name="Dijon Mustard" Units="jar"/>
+        </IngredientList>
+        <ProcessList>Add the cajun seasoning to the bread crumbs, and toss the chicken
+tenders in the mix to coat well.
+
+Heat the oil until the bread crumbs fry when sprinkled in.
+
+Fry the chicken until golden brown, about 1 minute.
+
+Bring the milk and the butter to a rapid boil, whisk in the mustard
+and heat.
+
+Add the chicken to the sauce and warm through, sprinkle with 2 tsp of
+Cajun seasoning and serve.
+</ProcessList>
+        <Comments>1/6 -&amp;gt; only need 1 cup crumbs and 1/2 cajun seasoning.
+
+Use 3/4 c oil.
+
+3 oz Dijon only.
+</Comments>
+    </Recipe>
+    <Recipe Cat="Meat" Chapter="Entrees" Name="Carne Asada Marinade"
+        Origin="Mexican" Source="Food 911, Tyler Florence"
+        SubCat="Marinade" UUID="04f56ae4-bb1a-4816-8b09-de225be7188a">
+        <IngredientList>
+            <Ingredient Amount="4.0" Name="Garlic, minced" Units="cloves"/>
+            <Ingredient Amount="1.0" Name="Jalapeno, minced" Units="whole"/>
+            <Ingredient Amount="1.0" Name="Cilantro, finely chopped" Units="handful"/>
+            <Ingredient Amount="2.0" Name="Limes, juised" Units="whole"/>
+            <Ingredient Amount="1.0" Name="Orange, juised" Units="whole"/>
+            <Ingredient Amount="2.0" Name="Vinegar, white" Units="Tbsp"/>
+            <Ingredient Amount="0.5" Name="Olive Oil" Units="c"/>
+            <Ingredient Amount="0.0" Name="Salt" Units="to taste"/>
+            <Ingredient Amount="0.0" Name="Pepper" Units="to taste"/>
+        </IngredientList>
+        <ProcessList>Cut the meat thin if possible, marinade for 1-8 hours.
+
+Grill meat on the barbique or broil until done well. (rare isn't a
+good thing for this).
+</ProcessList>
+        <Comments>&lt;p&gt;
+Marinade for 1-8 hours. Anything longer and the meat breaks down and
+becomes mushy.
+&lt;/p&gt;
+</Comments>
+    </Recipe>
+    <Recipe Cat="Cookies" Chapter="Desserts" Name="Carrot Cake Cookies"
+        Origin="" Source="Martha" SubCat="Carrot Cake" UUID="65a331b3-0d23-47ea-8ac7-c4486fe685d4">
+        <IngredientList>
+            <Ingredient Amount="1.0" Name="light-brown sugar, packed" Units="c"/>
+            <Ingredient Amount="1.0" Name="sugar, granulated" Units="c"/>
+            <Ingredient Amount="0.5"
+                Name="butter, unsalted (room temperature)" Units="lb"/>
+            <Ingredient Amount="2.0" Name="eggs (room temerature)" Units="large"/>
+            <Ingredient Amount="1.0" Name="pure vanilla extract" Units="tsp"/>
+            <Ingredient Amount="2.0" Name="flour, all purpose" Units="c"/>
+            <Ingredient Amount="1.0" Name="baking soda" Units="tsp"/>
+            <Ingredient Amount="1.0" Name="baking powder" Units="tsp"/>
+            <Ingredient Amount="0.25" Name="salt" Units="tsp"/>
+            <Ingredient Amount="1.0" Name="cinnamon, ground" Units="tsp"/>
+            <Ingredient Amount="0.5" Name="nutmeg, ground" Units="tsp"/>
+            <Ingredient Amount="0.5" Name="ginger, ground" Units="tsp"/>
+            <Ingredient Amount="2.0" Name="oats, rolled old-fashioned" Units="c"/>
+            <Ingredient Amount="1.5" Name="carrots (finely grated)" Units="c"/>
+            <Ingredient Amount="1.0" Name="raisons" Units="c"/>
+            <Ingredient Amount="2.0"
+                Name="Cream Cheese Frosting (Martha's)" Units="c"/>
+        </IngredientList>
+        <ProcessList>Preheat oven to 350&amp;#176;. Line two baking sheets with Silpat baking mats
+or parchment paper, and set aside. In the bowl of an electric mixer
+fitted with the paddle attachment, combine sugars and butter; beat
+until light and fluffy, 3 to 4 minutes. Add eggs and vanilla, and beat
+on medium speed until well combined.
+
+In a large bowl, sift together flour, baking soda, baking powder,
+salt, cinnamon, nutmeg, and ginger; stir to combine. Gradually add
+flour to butter mixture; mix on a low speed until just blended. Mix in
+oats, carrots, and raisins. Chill dough in refrigerator until firm, at
+least 1 hour.
+
+Using a 1/2-ounce ice-cream scoop, scoop dough onto prepared baking
+sheets, leaving 2 inches between cookies. Transfer to oven, and bake
+until browned and crisped, rotating pan halfway through baking to
+ensure even color, 12 to 15 minutes. Transfer to a wire rack to cool.
+Repeat baking process with remaining dough. Once cooled completely,
+use an offset spatula to spread about 2 teaspoons of cream-cheese
+filling onto a cookie. Sandwich together with a second cookie. Repeat
+with remaining cookies. Store in an airtight container for up to 3
+days in the refrigerator.
+</ProcessList>
+        <Comments/>
+    </Recipe>
+    <Recipe Cat="Salsa" Chapter="Appetizers" Name="Ceviche"
+        Origin="Mexican" Source="Mandy Peterson-Curran" SubCat="Seafood" UUID="d036ed65-732a-4bd0-a00d-36ba1b096486">
+        <IngredientList>
+            <Ingredient Amount="2.0" Name="&quot;uncooked shrimp&quot;" Units="pounds"/>
+            <Ingredient Amount="2.0" Name="chopped" Units="onions,"/>
+            <Ingredient Amount="4.0"
+                Name="chile peppers, chopped or canned chopped" Units="green"/>
+            <Ingredient Amount="2.0" Name="chopped" Units="tomatoes,"/>
+            <Ingredient Amount="0.25" Name="cilantro" Units="cup"/>
+            <Ingredient Amount="2.0" Name="Mexican lime juice" Units="cups"/>
+            <Ingredient Amount="2.0" Name="black pepper" Units="tablespoons"/>
+            <Ingredient Amount="0.125" Name="white vinegar" Units="cup"/>
+            <Ingredient Amount="0.0" Name="Salt to taste" Units=""/>
+        </IngredientList>
+        <ProcessList>* Mix together in a glass bowl.
+* Refrigerate for 24 hours.
+</ProcessList>
+        <Comments>Mandy:
+* I usually add extra shrimp. I buy the big size shrimp that they sell at Costco or Trader Joes and cut the shrimp into 3 pieces.  This shrimp taste better than the small cocktail shrimp.  Of course you can find this shrimp at QFC as well.  Cheaper at Costco. Anyway you get the idea. I would also add a 1 2 of lime juice and then see if you need anymore as it sits for a while.
+* Serve with chips.
+* I personally think that it tastes a lot better with about 6 corona's and a guy named Jose' serving it to me poolside.
+
+Enjoy!!!!
+</Comments>
+    </Recipe>
+    <Recipe Cat="Frosting" Chapter="Desserts"
+        Name="Cream Cheese Frosting" Origin="" Source="Martha" SubCat="" UUID="65e0ba1f-0f09-424a-a345-2d0edb6328b8">
+        <IngredientList>
+            <Ingredient Amount="8.0"
+                Name="cream cheese (room temperature)" Units="oz"/>
+            <Ingredient Amount="8.0"
+                Name="butter, unsalted (cut into pieces, room temperature)" Units="Tbsp"/>
+            <Ingredient Amount="1.0" Name="sugar, confectioners'" Units="c"/>
+            <Ingredient Amount="1.0" Name="pure vanilla extract" Units="tsp"/>
+        </IngredientList>
+        <ProcessList>Place cream cheese in a medium mixing bowl. Using a rubber spatula,
+soften cream cheese. Gradually add butter, and continue beating until
+smooth and well blended. Sift in confectioners&amp;#8217; sugar, and continue
+beating until smooth. Add vanilla, and stir to combine.
+</ProcessList>
+        <Comments>Goes with Martha's Carrot Cake Cookie Recipe.
+</Comments>
+    </Recipe>
+    <Recipe Cat="Cakes" Chapter="Desserts" Name="Eggnog Pound Cake"
+        Origin="" Source="Jill Zimmerman" SubCat="" UUID="2d404d44-24e9-4830-b251-ee2db436e286">
+        <IngredientList>
+            <Ingredient Amount="2.0" Name="Butter, softened" Units="Tbsp"/>
+            <Ingredient Amount="0.5" Name="Almonds, sliced" Units="c"/>
+            <Ingredient Amount="1.0" Name="Yellow Cake Mix" Units="package"/>
+            <Ingredient Amount="0.33333334" Name="Nutmeg, ground" Units="tsp"/>
+            <Ingredient Amount="2.0" Name="Eggs" Units="medium"/>
+            <Ingredient Amount="1.5" Name="Eggnog (purchased)" Units="c"/>
+            <Ingredient Amount="4.0" Name="Butter, melted" Units="Tbsp"/>
+            <Ingredient Amount="2.0" Name="rum ( or 1/4 tsp rum flavor)" Units="Tbsp"/>
+        </IngredientList>
+        <ProcessList>Grease a 10in tube or bundt pan with softened butter, press almonds on
+sides and bottom of pan; set aside.
+
+In a large bowl, combine cake mix, nutmeg, eggs, eggnog, the melted
+butter, and rum.
+
+Using an electric mixer, beat until smooth and creamy (about 4
+minutes) or beat for about 450 strokes with a wooden spoon. Pount
+batter into prepared pan.
+
+Bake at 350 degrees for 45-55 minutes or until a wooden pick inserted
+into center comes out clean.
+
+Let cool in pan for 10 minutes; then invert cake onto a rack to cool
+completely.
+</ProcessList>
+        <Comments>Make 10-12 servings
+</Comments>
+    </Recipe>
+    <Recipe Cat="Vegetables" Chapter="Sides"
+        Name="Garlic-Lemon Green Beans with Toasted Bread Crumbs"
+        Origin="" Source="America's Test Kitchen" SubCat="" UUID="30d4f475-3cdd-4e2c-a5e7-6fb0db808a63">
+        <IngredientList>
+            <Ingredient Amount="3.0" Name="Butter, unsalted" Units="Tbsp"/>
+            <Ingredient Amount="2.0"
+                Name="high-quality sandwich bread, ground fine in a food processor" Units="slices"/>
+            <Ingredient Amount="1.0" Name="Taste Salt and Pepper" Units="To"/>
+            <Ingredient Amount="2.0" Name="Parmesan Cheese, grated" Units="Tbsp"/>
+            <Ingredient Amount="6.0" Name="Garlic" Units="cloves"/>
+            <Ingredient Amount="2.0" Name="Flour, all purpose" Units="tsp"/>
+            <Ingredient Amount="1.0" Name="Red Pepper Flakes" Units="tsp"/>
+            <Ingredient Amount="1.0" Name="Thyme Leaves, minced" Units="tsp"/>
+            <Ingredient Amount="1.5" Name="Green Beans, trimmed" Units="lb"/>
+            <Ingredient Amount="1.0" Name="Chicken Broth, low sodium" Units="c"/>
+            <Ingredient Amount="1.0" Name="Lemon Juice" Units="Tbsp"/>
+        </IngredientList>
+        <ProcessList>* Heat 1 tablespoon butter in a 12-inch nonstick skillet over
+medium-high heat; when melted, add the bread crumbs and cook, stirring
+frequently, until golden brown, 3 to 5 minutes.
+* Transfer to a medium
+bowl, stir in &amp;#188; teaspoon salt, 1/8 teaspoon pepper, and the Parmesan;
+set aside.
+* Wipe out the skillet. Add the remaining 2 tablespoons butter, garlic,
+and &amp;#188; teaspoon salt; cook over medium heat, stirring constantly, until
+the garlic is golden, 3 to 5 minutes. Stir in the flour, pepper
+flakes, and thyme, then toss in the green beans.
+* Add the broth and increase the heat to medium-high; cover and cook until the beans are
+partly tender but still crisp at the center, about 4 minutes. Uncover
+and cook, stirring occasionally, until the beans are tender, about 4
+minutes.
+* Stir in the lemon juice; adjust the seasonings with salt and
+pepper.
+* Transfer to a serving dish, sprinkle with bread crumbs, and
+serve.
+</ProcessList>
+        <Comments/>
+    </Recipe>
+    <Recipe Cat="" Chapter="Sauces" Name="Hollandaise Sauce" Origin=""
+        Source="Joan Hunter" SubCat="" UUID="d5794f14-0124-4729-8da1-ea148d9687b3">
+        <IngredientList>
+            <Ingredient Amount="3.0" Name="Egg Yolks" Units="each"/>
+            <Ingredient Amount="2.0"
+                Name="Lemon Juice (more if necessary)" Units="Tbsp"/>
+            <Ingredient Amount="0.25" Name="Salt" Units="tsp"/>
+            <Ingredient Amount="1.0" Name="Cayenne Pepper" Units="dash"/>
+            <Ingredient Amount="1.5" Name="Butter (1 to 1-1/2)" Units="sticks"/>
+        </IngredientList>
+        <ProcessList>Combine egg yolks, lemon juice, salt, and cayenne pepper in blender.
+
+Blend on high speed for 3 secs.
+
+Melt butter, slowly add to egg mixture while blender is on high speed.
+
+Keep warm over hot water, keep stirring.
+
+For poached eggs
+
+Heat water
+
+Add 1 Tbsp white vinegar
+
+Add eggs in simmering water while stirring
+
+Cooks, 2-3 minutes.
+</ProcessList>
+        <Comments>12/25/03 - Use only 2 TBSP of lemon if using only 1 stick of butter.
+Add two dashes of cayenne.
+Poach eggs to CS liking (4 minutes)
+</Comments>
+    </Recipe>
+    <Recipe Cat="" Chapter="Soups and Salads" Name="Love Salad"
+        Origin="" Source="Kim Brook" SubCat="" UUID="fbbc3684-fd4d-44d8-b850-c3c37b2901a2">
+        <IngredientList>
+            <Ingredient Amount="4.0" Name="olive oil" Units="TBS"/>
+            <Ingredient Amount="6.0"
+                Name="French Bread cut into 1 inch cubes" Units="cups"/>
+            <Ingredient Amount="1.0" Name="kosher salt" Units="tsp"/>
+            <Ingredient Amount="3.0"
+                Name="tomatoes, cut into 1 inch cubes" Units="large"/>
+            <Ingredient Amount="1.0"
+                Name="cucumber, sliced 1/2 inch thick" Units="hothouse"/>
+            <Ingredient Amount="1.0"
+                Name="bell pepper, seeded and cut into 1 inch cubes" Units="red"/>
+            <Ingredient Amount="1.0"
+                Name="bell pepper, seeded and cut into 1 inch cubes" Units="yellow"/>
+            <Ingredient Amount="0.5" Name="onion, finely chopped" Units="red"/>
+            <Ingredient Amount="20.0"
+                Name="basil leaves, coarsely chopped" Units="large"/>
+            <Ingredient Amount="3.0" Name="capers, drained" Units="TBS"/>
+            <Ingredient Amount="0.0" Name="" Units=""/>
+            <Ingredient Amount="0.0" Name="For the vinaigrette:" Units=""/>
+            <Ingredient Amount="2.0" Name="finely minced garlic" Units="tsp"/>
+            <Ingredient Amount="0.5" Name="Dijon mustard" Units="tsp"/>
+            <Ingredient Amount="3.0" Name="champagne vinegar" Units="TBS"/>
+            <Ingredient Amount="0.5" Name="olive oil" Units="cup"/>
+            <Ingredient Amount="0.5" Name="kosher salt" Units="tsp"/>
+            <Ingredient Amount="0.25" Name="freshly ground black pepper" Units="tsp"/>
+        </IngredientList>
+        <ProcessList>Heat oil in a large saut?an.
+
+Add the bread and salt; cook over low to medium heat, tossing frequently, for 10 minutes, or until nicely browned.
+
+Add more oil as needed.
+
+For vinaigrette, whisk together ingredients.
+
+In a large bowl, mix the tomatoes, cucumber, red pepper, yellow pepper, red onion, basil and capers.
+
+Add the bread cubes and toss with the vinaigrette.
+
+Season liberally with salt and pepper.
+</ProcessList>
+        <Comments/>
+    </Recipe>
+    <Recipe Cat="" Chapter="Soups and Salads"
+        Name="New Year's Prosperity Soup" Origin="" Source="" SubCat="" UUID="e64aa71d-4e0a-4acd-954f-5016dd2fc955">
+        <IngredientList>
+            <Ingredient Amount="1.5"
+                Name="New Year's Prosperity Soup Seasoning" Units="Tbsp"/>
+            <Ingredient Amount="16.0" Name="Black Eyed Peas" Units="oz"/>
+            <Ingredient Amount="0.5" Name="Bacon, cooked crisp w/grease" Units="lb"/>
+            <Ingredient Amount="1.5" Name="Ham, chopped of slivered" Units="c"/>
+            <Ingredient Amount="1.0" Name="Onion, chopped" Units="c"/>
+            <Ingredient Amount="1.0" Name="Celery, chopped" Units="c"/>
+            <Ingredient Amount="1.0" Name="Carrot, chopped" Units="c"/>
+            <Ingredient Amount="6.0" Name="Water" Units="c"/>
+        </IngredientList>
+        <ProcessList>Cover peas with water and bring to a boil.
+
+Turn heat down, let peas simmer for 30 minutes.
+
+Add remaining ingredients and stir well.
+
+Let simmer for 40 minutes or until desired consistency.
+
+Do not over cook peas.
+</ProcessList>
+        <Comments>Can be served with corn bread muffins or biscuits if desired.
+</Comments>
+    </Recipe>
+    <Recipe Cat="Cookies" Chapter="Desserts"
+        Name="Peanut Butter Cookies" Origin="" Source="Martha"
+        SubCat="Peanut Butter" UUID="9c8aefc6-b733-4d27-8c4d-b53ad1e3fbd0">
+        <IngredientList>
+            <Ingredient Amount="8.0" Name="Butter, unsalted" Units="Tbsp"/>
+            <Ingredient Amount="0.75" Name="Peanut Butter, smooth" Units="c"/>
+            <Ingredient Amount="0.5" Name="Sugar, granulated" Units="c"/>
+            <Ingredient Amount="0.5" Name="Dark Brown Sugar, packed" Units="c"/>
+            <Ingredient Amount="1.0" Name="Egg, large" Units="ea"/>
+            <Ingredient Amount="0.5" Name="Vanilla Extract, pure" Units="tsp"/>
+            <Ingredient Amount="1.0" Name="Flour, all purpose" Units="c"/>
+            <Ingredient Amount="0.75" Name="Baking Soda" Units="tsp"/>
+            <Ingredient Amount="2.0"
+                Name="Peanuts, dry roasted (optional)" Units="oz"/>
+        </IngredientList>
+        <ProcessList>Heat oven to 350 degrees. Line several baking sheets with parchment
+paper, and set aside.
+
+In the bowl of an electric mixer fitted with the paddle attachment,
+cream butter, peanut butter, and both sugars together until light and
+fluffy. Add egg and vanilla, and mix on medium speed until well
+combined.
+
+In a medium mixing bowl, sift flour and baking soda together. Add to
+the butter mixture, and beat just to combine.
+
+Scoop out 2 TBSP of dough, shape into a ball, and place on one of the
+prepared baking sheets. Repeat with remaining dough, placing scoops 3
+inches apart. Dip the tines of a fork in warm water; press the dough
+balls lightly with the back of the fork to flatten them slightly (dip
+the fork back in the water for each dough ball, to prevent sticking).
+Sprinkle with a few peanuts, if desired.
+
+Transfer to the oven, and bake until golden brown, 18 to 20 minutes,
+rotating the baking sheets between the oven shelves halfway through
+baking. Transfer baking sheets to a wire rack to cool. Store in an
+airtight container at room temperature up to 1 week.
+</ProcessList>
+        <Comments/>
+    </Recipe>
+    <Recipe Cat="" Chapter="Appetizers" Name="Pumpkin Seeds" Origin=""
+        Source="Dorie" SubCat="" UUID="3f83359d-81f7-41e8-8714-bdb0c5f3fc96">
+        <IngredientList>
+            <Ingredient Amount="2.0" Name="Pumpkin Seeds, unwashed" Units="c"/>
+            <Ingredient Amount="0.5" Name="Worchestershire Sauce" Units="tsp"/>
+            <Ingredient Amount="1.5" Name="Butter, melted" Units="Tbsp"/>
+            <Ingredient Amount="1.25" Name="Johnny's Seasoning" Units="tsp"/>
+            <Ingredient Amount="0.5" Name="Garlic Powder" Units="tsp"/>
+        </IngredientList>
+        <ProcessList>Stir all ingredients
+
+Layout on baking sheet.
+
+Bake for 1-1/2 to 2 hours at 250 degrees.
+</ProcessList>
+        <Comments/>
+    </Recipe>
+    <Recipe Cat="Meat" Chapter="Entrees" Name="Puppy's Breath Chili"
+        Origin="" Source="Cathy Wilkey" SubCat="Chili" UUID="b490aad9-e330-4fd8-9652-a9df6278c08b">
+        <IngredientList>
+            <Ingredient Amount="3.0" Name="Beef, Tri Tip or Sirloin Tip" Units="lb"/>
+            <Ingredient Amount="2.0" Name="Oil, Wesson" Units="tsp"/>
+            <Ingredient Amount="1.0" Name="Onion, Yellow" Units="small"/>
+            <Ingredient Amount="1.0" Name="Beef Broth (14oz)" Units="can"/>
+            <Ingredient Amount="3.5" Name="Cumin, ground" Units="Tbsp"/>
+            <Ingredient Amount="0.5" Name="Oregano" Units="tsp"/>
+            <Ingredient Amount="6.0" Name="Garlic, finely chopped" Units="cloves"/>
+            <Ingredient Amount="3.0" Name="Chili Powder (Gebhardt)" Units="Tbsp"/>
+            <Ingredient Amount="1.0" Name="New Mexico Mild Chili Powder" Units="Tbsp"/>
+            <Ingredient Amount="5.0" Name="California Chili Powder" Units="Tbsp"/>
+            <Ingredient Amount="1.0" Name="Hunts Tomato Sauce (8oz)" Units="can"/>
+            <Ingredient Amount="1.0"
+                Name="Dried New Mexico Chili Pepper (boiled and pureed)" Units="whole"/>
+            <Ingredient Amount="3.0"
+                Name="Dried California Chili Pepper (boiled and pureed)" Units="whole"/>
+            <Ingredient Amount="1.0" Name="Chicken Broth (14oz)" Units="can"/>
+            <Ingredient Amount="1.0" Name="Tabasco" Units="tsp"/>
+            <Ingredient Amount="1.0" Name="Brown Sugar" Units="tsp"/>
+            <Ingredient Amount="1.0" Name="Lime (juiced)" Units="whole"/>
+            <Ingredient Amount="1.0" Name="MSG" Units="dash"/>
+            <Ingredient Amount="1.0" Name="Salt (to taste)" Units="dash"/>
+        </IngredientList>
+        <ProcessList>Brown meat in Wesson Oil for about &amp;#189; hour over medium heat.
+
+Add onion and enough beef broth to cover meat.
+
+Bring to a boil and cook for 15 minutes.
+
+Add 1 Tbls cumin and &amp;#189; tsp of Oregano.
+
+Reduce heat to light boil and add &amp;#189; of the garlic.
+
+Add &amp;#189; half of the chili powder and cook for 10 minutes.
+
+Add Hunts tomato sauce with the pulp from the dried peppers and
+remaining garlic.
+
+Add any remaining beef broth and chicken broth for desired consistency.
+
+Cook for one hour on medium heat stirring occasionally.
+
+Add remaining chili powders and cumin Simmer for 25 minutes on low to
+medium heat, stirring occasionally.
+
+Turn up heat to light boil and add Tabasco pepper sauce, salt to
+taste, brown sugar and juice of lime.
+
+Simmer on medium heat until you are ready to enter this championship
+recipe at your next cookoff or to a group of hungry chili lovers.
+</ProcessList>
+        <Comments>Puppy's Breath Chili - World Champion 1993
+</Comments>
+    </Recipe>
+    <Recipe Cat="" Chapter="Soups and Salads" Name="Roasted Squash Soup"
+        Origin="" Source="Martha" SubCat="" UUID="f2979617-e118-4cbb-a810-b6be3ecbc24a">
+        <IngredientList>
+            <Ingredient Amount="1.0" Name="Butternut Squash, Large" Units="whole"/>
+            <Ingredient Amount="8.0" Name="Thyme" Units="sprigs"/>
+            <Ingredient Amount="1.0" Name="Garlic" Units="head"/>
+            <Ingredient Amount="1.0" Name="Olive Oil" Units="Tbsp"/>
+            <Ingredient Amount="2.0"
+                Name="Chicken Stock (low sodium or homemade)" Units="c"/>
+            <Ingredient Amount="1.0" Name="Coarse Salt (to taste)" Units="tsp"/>
+            <Ingredient Amount="1.0" Name="Pepper, Ground (to taste)" Units="tsp"/>
+        </IngredientList>
+        <ProcessList>* Preheat oven to 425. Line a baking sheet with a Silpat, and set aside.
+* Season squash halves with salt and pepper, and tuck 4 sprigs thyme
+into cavity of each squash half. Place halves, cut side down, on
+prepared baking sheet; place whole garlic head next to squash. Drizzle
+garlic with olive oil, and season with salt.
+* Transfer the baking sheet to the oven, and roast until squash is
+tender when pierced with a fork and garlic is soft, about 40 minutes.
+Remove from oven, and let stand until cool enough to handle.
+* Discard thyme from squash. Using a large spoon, scoop out the flesh of
+each squash half into a food processor fitted with the metal blade.
+Squeeze out 4 cloves of garlic, and add to food processor; reserve
+remaining garlic cloves for another use (wrap in plastic, and
+refrigerate up to 1 week). Add about 1 cup stock, and process until
+smooth. With machine running, add remaining stock through the feed
+tube until soup reaches the desired consistency.
+* Transfer soup to a medium saucepan. Cook over medium heat until heated
+through. Adjust seasoning with salt and pepper. Serve immediately.
+</ProcessList>
+        <Comments>Martha, Dec 2002, page 197 (if you can find the stupid page numbers at all.)
+
+Cristie's Changes:
+* Swapped Rosemary for Thyme (had it in the garden)
+* Added a little half-n-half (for creaminess).
+* Added a little Worcestershire (meatiness).
+* 1/2 head of garlic instead of 4 cloves (what the heck).
+</Comments>
+    </Recipe>
+    <Recipe Cat="Meat" Chapter="Entrees" Name="Sour Cream Enchilada"
+        Origin="Mexican" Source="" SubCat="Chicken" UUID="22ec653b-261e-413c-938c-845691396cf3">
+        <IngredientList>
+            <Ingredient Amount="1.0" Name="Cream of Chicken Soup" Units="can"/>
+            <Ingredient Amount="1.0" Name="Cream of Celery Soup" Units="can"/>
+            <Ingredient Amount="1.0" Name="Sour Cream" Units="lb"/>
+            <Ingredient Amount="1.0" Name="desired Chicken or Turkey" Units="as"/>
+            <Ingredient Amount="1.0" Name="desired Cheese" Units="as"/>
+            <Ingredient Amount="1.0" Name="Green Chilis, chopped" Units="can"/>
+            <Ingredient Amount="1.0" Name="Onion" Units="ea"/>
+            <Ingredient Amount="1.0" Name="Corn Tortillas" Units="pack"/>
+            <Ingredient Amount="1.0" Name="desired Oil" Units="as"/>
+        </IngredientList>
+        <ProcessList>Combine cream of chicken and celery with equal parts sour cream for
+sauce.
+
+Precook poultry.
+
+Preheat oven to 350 degrees.
+
+Assembly
+
+To assemble (make) enchiladas, dip tortilla into warm oil (do not
+cook, this is just to make it easier to roll) fill tortilla with
+chopped poultry, chopped onions, chopped chilis and grated cheese.
+
+Add teaspoon of sauce to inside of tortilla. Roll up and place in
+baking pan.
+
+Add remaining sauce over finished enchiladas.
+
+Bake until sauce bubbles.
+</ProcessList>
+        <Comments>Carrie uses only cream of chicken soup w/equal parts sour cream.
+Too much sauce otherwise.
+</Comments>
+    </Recipe>
+    <Recipe Cat="" Chapter="Soups and Salads" Name="Split Pea Soup"
+        Origin="" Source="" SubCat="" UUID="1d419ef3-db28-4f89-9795-7ff78ec2ff26">
+        <IngredientList>
+            <Ingredient Amount="16.0" Name="Split Peas, dried" Units="oz"/>
+            <Ingredient Amount="1.0" Name="Onion, chopped" Units="ea"/>
+            <Ingredient Amount="1.0" Name="Ham Hock" Units="ea"/>
+        </IngredientList>
+        <ProcessList>Soak peas overnight.
+
+Rinse peas in collander.
+
+Add peas, ham hock and chopped onion to pot.
+
+Add 2 quarts of water.
+
+Boil, 3-5 hours.
+
+Salt and pepper to taste after peas are cooked.
+</ProcessList>
+        <Comments/>
+    </Recipe>
+</jRecipeBook>
