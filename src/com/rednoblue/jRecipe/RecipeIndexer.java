@@ -3,16 +3,18 @@ package com.rednoblue.jRecipe;
 import com.rednoblue.jRecipe.model.Book;
 import com.rednoblue.jRecipe.model.Recipe;
 import com.rednoblue.jRecipe.model.Ingredient;
-import org.apache.lucene.queryParser.QueryParser;
-import org.apache.lucene.analysis.Analyzer;
+
+
+import org.apache.lucene.store.FSDirectory;
+import org.apache.lucene.util.Version;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
-import org.apache.lucene.index.IndexWriter;
-import org.apache.lucene.document.Document;
-import org.apache.lucene.document.Field;
-import org.apache.lucene.search.Searcher;
-import org.apache.lucene.search.IndexSearcher;
-import org.apache.lucene.search.Query;
-import org.apache.lucene.search.Hits;
+import org.apache.lucene.analysis.*;
+import org.apache.lucene.document.*;
+import org.apache.lucene.index.*;
+import org.apache.lucene.search.*;
+import org.apache.lucene.queryParser.*;
+
+//import org.apache.lucene.search.Hits;
 
 import java.io.File;
 import java.util.*;
@@ -46,8 +48,8 @@ public class RecipeIndexer {
   public HashMap searchRecipes(Collection fields, String querystr) {
     HashMap<String, String> returnList = new HashMap<String, String>();
     try {
-      Searcher searcher = new IndexSearcher(indexLocation);
-      Analyzer analyzer = new StandardAnalyzer();
+      Searcher searcher = new IndexSearcher(FSDirectory.open(new File(indexLocation)), true);
+      Analyzer analyzer = new StandardAnalyzer(Version.LUCENE_CURRENT);
 
       if (querystr == null || querystr.length() == 0) {
         searcher.close();
@@ -68,12 +70,15 @@ public class RecipeIndexer {
       LOGGER.info(querystr);
 
       Query query = qp.parse(querystr);
-      Hits hits = searcher.search(query);
+      TopFieldDocs hits = searcher.search(query, null, 100000, Sort.RELEVANCE);
       
-      LOGGER.info(hits.length() + " total matching documents");
+      LOGGER.info(hits.totalHits + " total matching documents");
       
-      for (int i = 0; i < hits.length(); i += 1) {
-        Document doc = hits.doc(i);
+      for (int i = 0; i < hits.totalHits; i += 1) {
+
+        ScoreDoc[] sd = hits.scoreDocs;
+        // get the actual document with stored fields
+        Document doc = searcher.doc(sd[i].doc);
         String name = doc.get("recipeName");
         String uuid = doc.get("UUID");
         if (name != null) {
@@ -107,27 +112,27 @@ public class RecipeIndexer {
         f.delete();
         f = null;
         indexLocation = new String(tempDir.getAbsolutePath() + "/" + Global.appName + "_index");
-        IndexWriter writer = new IndexWriter(indexLocation, new StandardAnalyzer(), true);
+        IndexWriter writer = new IndexWriter(FSDirectory.open(new File(indexLocation)), new StandardAnalyzer(Version.LUCENE_CURRENT), true, IndexWriter.MaxFieldLength.UNLIMITED);
 
         Iterator it = book.getRecipes().iterator();
         while (it.hasNext()) {
           Recipe r = (Recipe) it.next();
           // index Recipe
           Document ldoc = new Document();
-          ldoc.add(new Field("UUID", r.getUUID().toString(), Field.Store.YES, Field.Index.UN_TOKENIZED));
-          ldoc.add(new Field("recipeName", r.getRecipeName(), Field.Store.YES, Field.Index.TOKENIZED));
-          ldoc.add(new Field("source", r.getSource(), Field.Store.YES, Field.Index.TOKENIZED));
-          ldoc.add(new Field("chapter", r.getChapter(), Field.Store.YES, Field.Index.UN_TOKENIZED));
-          ldoc.add(new Field("cat", r.getCat(), Field.Store.YES, Field.Index.UN_TOKENIZED));
-          ldoc.add(new Field("subcat", r.getSubCat(), Field.Store.YES, Field.Index.UN_TOKENIZED));
-          ldoc.add(new Field("origin", r.getOrigin(), Field.Store.YES, Field.Index.TOKENIZED));
-          ldoc.add(new Field("process", r.getProcess(), Field.Store.YES, Field.Index.TOKENIZED));
-          ldoc.add(new Field("comments", r.getComments(), Field.Store.YES, Field.Index.TOKENIZED));
+          ldoc.add(new Field("UUID", r.getUUID().toString(), Field.Store.YES, Field.Index.NOT_ANALYZED));
+          ldoc.add(new Field("recipeName", r.getRecipeName(), Field.Store.YES, Field.Index.ANALYZED));
+          ldoc.add(new Field("source", r.getSource(), Field.Store.YES, Field.Index.ANALYZED));
+          ldoc.add(new Field("chapter", r.getChapter(), Field.Store.YES, Field.Index.NOT_ANALYZED));
+          ldoc.add(new Field("cat", r.getCat(), Field.Store.YES, Field.Index.NOT_ANALYZED));
+          ldoc.add(new Field("subcat", r.getSubCat(), Field.Store.YES, Field.Index.NOT_ANALYZED));
+          ldoc.add(new Field("origin", r.getOrigin(), Field.Store.YES, Field.Index.ANALYZED));
+          ldoc.add(new Field("process", r.getProcess(), Field.Store.YES, Field.Index.ANALYZED));
+          ldoc.add(new Field("comments", r.getComments(), Field.Store.YES, Field.Index.ANALYZED));
           Collection ingList = r.getIngredientsList();
           Iterator ingIt = ingList.iterator();
           while (ingIt.hasNext()) {
             Ingredient i = (Ingredient) ingIt.next();
-            ldoc.add(new Field("ingredient", i.getName(), Field.Store.YES, Field.Index.TOKENIZED));
+            ldoc.add(new Field("ingredient", i.getName(), Field.Store.YES, Field.Index.ANALYZED));
           }
           writer.addDocument(ldoc);
         }
