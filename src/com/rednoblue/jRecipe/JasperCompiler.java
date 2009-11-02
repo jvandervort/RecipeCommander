@@ -3,7 +3,7 @@ package com.rednoblue.jRecipe;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.design.*;
 import net.sf.jasperreports.engine.xml.JRXmlLoader;
-import java.util.logging.Logger;
+import java.util.logging.*;
 import java.net.URL;
 
 /**
@@ -47,16 +47,26 @@ public class JasperCompiler {
 
     @Override
     public void run() {
-      LOGGER.info("JasperCompilerThread Running");
+      LOGGER.info("jasper compiler thread running");
       try {
         URL url = getClass().getResource("/xml/Report1.jrxml");
+
+        LOGGER.fine("loading " + url.getPath());
         JasperDesign jasperDesign = JRXmlLoader.load(url.openStream());
+
+        LOGGER.fine("compiling " + url.getPath());
         main_report = JasperCompileManager.compileReport(jasperDesign);
 
         url = getClass().getResource("/xml/Report1_ingredients.jrxml");
+
+        LOGGER.fine("loading " + url.getPath());
         JasperDesign ingredientDesign = JRXmlLoader.load(url.openStream());
+
+        LOGGER.fine("compiling " + url.getPath());
         ingred_report = JasperCompileManager.compileReport(ingredientDesign);
-        LOGGER.info("JasperCompilerThread Done");
+
+        LOGGER.fine("jasper compiler thread ");
+
       } catch (JRException e) {
         LOGGER.severe(e.toString());
       } catch (java.io.IOException e) {

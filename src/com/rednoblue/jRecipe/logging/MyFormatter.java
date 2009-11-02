@@ -22,11 +22,11 @@ class MyFormatter extends Formatter {
     // Bold any levels >= WARNING
     buf.append(calcDate(rec.getMillis()));
     buf.append('\t');
-    buf.append(rec.getSourceMethodName());
-    buf.append('\t');
     buf.append(rec.getLevel());
     buf.append('\t');
     buf.append(formatMessage(rec));
+    buf.append('\t');
+    buf.append(rec.getSourceClassName() + '.' + rec.getSourceMethodName());
     buf.append('\n');
     return buf.toString();
   }

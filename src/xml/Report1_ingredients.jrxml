@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"  ?>
-<!-- Created with iReport - A designer for JasperReports -->
-<!DOCTYPE jasperReport PUBLIC "//JasperReports//DTD Report Design//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
 <jasperReport
+    xmlns="http://jasperreports.sourceforge.net/jasperreports"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd"
 		 name="Report1_ingredients"
 		 columnCount="1"
 		 printOrder="Vertical"
@@ -35,19 +36,19 @@
 	</field>
 
 		<background>
-			<band height="0"  isSplitAllowed="true" >
+			<band height="0">
 			</band>
 		</background>
 		<title>
-			<band height="0"  isSplitAllowed="true" >
+			<band height="0" >
 			</band>
 		</title>
 		<pageHeader>
-			<band height="0"  isSplitAllowed="true" >
+			<band height="0" >
 			</band>
 		</pageHeader>
 		<columnHeader>
-			<band height="30"  isSplitAllowed="true" >
+			<band height="30" >
 				<staticText>
 					<reportElement
 						mode="Transparent"
@@ -71,7 +72,7 @@
 			</band>
 		</columnHeader>
 		<detail>
-			<band height="16"  isSplitAllowed="true" >
+			<band height="16" >
 				<textField isStretchWithOverflow="false" pattern="" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						mode="Transparent"
@@ -137,15 +138,15 @@
 			</band>
 		</detail>
 		<columnFooter>
-			<band height="2"  isSplitAllowed="true" >
+			<band height="2" >
 			</band>
 		</columnFooter>
 		<pageFooter>
-			<band height="1"  isSplitAllowed="true" >
+			<band height="1" >
 			</band>
 		</pageFooter>
 		<summary>
-			<band height="0"  isSplitAllowed="true" >
+			<band height="0" >
 			</band>
 		</summary>
 </jasperReport>
