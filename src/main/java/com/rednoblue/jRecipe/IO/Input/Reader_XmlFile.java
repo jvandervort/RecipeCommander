@@ -334,7 +334,6 @@ class Reader_XmlFile extends DefaultHandler implements I_Interface {
 				int length = attributes.getLength();
 				for (int i = 0; i < length; i++) {
 					if (attributes.getLocalName(i).equalsIgnoreCase("Name")) {
-						LOGGER.info("HEY MAN = " + attributes.getValue(i));
 						book.setBookName(attributes.getValue(i));
 					}
 				}

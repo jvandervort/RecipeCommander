@@ -73,12 +73,13 @@
 						y="-36"
 						width="538"
 						height="1"
+						stretchType="NoStretch"
 						forecolor="#000000"
 						backcolor="#FFFFFF"
 						key="line"
 						positionType="FixRelativeToBottom"
 						isPrintRepeatedValues="false"/>
-					<graphicElement stretchType="NoStretch" fill="Solid" >
+					<graphicElement fill="Solid" >
 					<pen lineWidth="0.25" lineStyle="Solid"/>
 </graphicElement>
 				</line>
@@ -119,7 +120,7 @@
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 </box>
-					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" markup="html" lineSpacing="Single">
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" markup="html">
 						<font reportFont="Arial_Normal" size="10"/>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA[$F{COMMENTS}]]></textFieldExpression>
@@ -143,7 +144,7 @@
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 </box>
-					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None">
 						<font reportFont="Arial_Normal" size="18" isBold="true"/>
 					</textElement>
 				<text><![CDATA[Comments]]></text>
@@ -164,7 +165,7 @@
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 </box>
-					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" markup="html" lineSpacing="Single">
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" markup="html">
 						<font reportFont="Arial_Normal" size="10"/>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA[$F{PROCESS}]]></textFieldExpression>
@@ -187,7 +188,7 @@
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 </box>
-					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None">
 						<font reportFont="Arial_Normal" size="18" isBold="true"/>
 					</textElement>
 				<text><![CDATA[Process]]></text>
@@ -209,7 +210,7 @@
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 </box>
-					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None">
 						<font reportFont="Arial_Normal" isBold="true"/>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA["(..." + $F{RECIPE_NAME}+" continued)"]]></textFieldExpression>
@@ -229,7 +230,7 @@
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 </box>
-					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None">
 						<font reportFont="Arial_Bold" pdfFontName="Helvetica" size="18" isBold="false"/>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA[$F{RECIPE_NAME}]]></textFieldExpression>
@@ -251,7 +252,7 @@
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 </box>
-					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None">
 						<font reportFont="Arial_Bold" pdfFontName="Helvetica" isBold="false"/>
 					</textElement>
 				<text><![CDATA[(continued)]]></text>
@@ -263,11 +264,12 @@
 						y="47"
 						width="537"
 						height="1"
+						stretchType="NoStretch"
 						forecolor="#000000"
 						backcolor="#FFFFFF"
 						key="line"
 						isPrintWhenDetailOverflows="true"/>
-					<graphicElement stretchType="NoStretch" fill="Solid" >
+					<graphicElement fill="Solid" >
 					<pen lineWidth="0.25" lineStyle="Solid"/>
 </graphicElement>
 				</line>
@@ -300,7 +302,7 @@
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 </box>
-					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None">
 						<font reportFont="Arial_Bold" pdfFontName="Helvetica" size="10" isBold="false"/>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA["(" + $F{SOURCE} + ")"]]></textFieldExpression>

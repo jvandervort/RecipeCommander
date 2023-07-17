@@ -36,7 +36,6 @@ public class MyFileReader extends I_FormatCreator {
 	}
 
 	public MyFileReader(String argFileName) throws FileNotFoundException, IOException {
-		Logger.getLogger(MyFileReader.class.getName()).log(Level.INFO, argFileName);
 		createInputFormats();
 		fileName = argFileName;
 		loadFile();
@@ -71,7 +70,6 @@ public class MyFileReader extends I_FormatCreator {
 	}
 
 	public BufferedReader openBufferedReader() throws FileNotFoundException, IOException {
-		Logger.getLogger(MyFileReader.class.getName()).log(Level.INFO, fileName);
 		BufferedReader br = null;
 		if (fileName.startsWith("http://") == true || fileName.startsWith("file:/") == true
 				|| fileName.equals("/test/TestXmlBook.xml")) {
@@ -79,7 +77,6 @@ public class MyFileReader extends I_FormatCreator {
 			java.io.Reader r = null;
 			URL u = null;
 			if (fileName.equals("/test/TestXmlBook.xml")) {
-				Logger.getLogger(MyFileReader.class.getName()).log(Level.INFO, "open resource " + fileName);
 				u = getClass().getResource("/test/TestXmlBook.xml");
 				Global.lastFileName = fileName;
 			} else {
