@@ -152,7 +152,7 @@ public class RecipeIndexer {
 					Iterator<Ingredient> ingIt = ingList.iterator();
 					while (ingIt.hasNext()) {
 						Ingredient i = (Ingredient) ingIt.next();
-						ldoc.add(new TextField("ingredient", i.getName(), Field.Store.YES));
+						ldoc.add(new TextField("Ingredient", i.getName(), Field.Store.YES));
 					}
 					writer.addDocument(ldoc);
 				}
