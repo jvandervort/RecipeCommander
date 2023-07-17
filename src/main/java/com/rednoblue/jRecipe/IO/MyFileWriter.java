@@ -136,12 +136,8 @@ public class MyFileWriter extends O_FormatCreator {
 				File oldFile = new File(fileName);
 				if (oldFile.renameTo(new File(bakFileName))) {
 					System.err.println("Rename Successful");
-				} else {
-					// NOTE: saveAs will always fail here
-					System.err.println("Rename Failed (OK for SaveAs) " + fileName + " to " + bakFileName);
 				}
 			}
-
 			writer.setBook(book);
 			if (rec != null) {
 				writer.setRec(rec);
@@ -152,7 +148,8 @@ public class MyFileWriter extends O_FormatCreator {
 			fileFormat = writer.getFormatName();
 
 		} catch (Exception e) {
-			System.out.println(this.getClass().getName() + ".saveFile: " + e.getMessage());
+			System.err.println(this.getClass().getName() + ".saveFile: " + e.getMessage());
+			e.printStackTrace();
 		}
 
 		return true;

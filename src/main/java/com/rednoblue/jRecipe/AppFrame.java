@@ -1190,6 +1190,9 @@ public class AppFrame extends javax.swing.JFrame implements FileHistory.IFileHis
 		try {
 			MyFileReader reader = new MyFileReader(path);
 			book = reader.getBook();
+			if (book == null) {
+				return false;
+			}
 			miFilter.setSelected(false);
 			filter = null;
 			BookUtils bw = new BookUtils(book);

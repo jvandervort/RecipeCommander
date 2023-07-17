@@ -231,6 +231,7 @@ class Reader_XmlFile extends DefaultHandler implements I_Interface {
 			parser.parse(inputStream);
 		} catch (java.io.IOException ioe) {
 			Logger.getLogger(Reader_XmlFile.class.getName()).log(Level.SEVERE, null, ioe);
+			ioe.printStackTrace();
 		}
 
 		Logger.getLogger(Reader_XmlFile.class.getName()).log(Level.INFO, "File Parsed!");
@@ -281,6 +282,7 @@ class Reader_XmlFile extends DefaultHandler implements I_Interface {
 							rec.setModDate(d);
 						} catch (java.text.ParseException e1) {
 							Logger.getLogger(Reader_XmlFile.class.getName()).log(Level.SEVERE, null, e1);
+							e1.printStackTrace();
 						}
 					}
 				}
@@ -370,16 +372,19 @@ class Reader_XmlFile extends DefaultHandler implements I_Interface {
 	@Override
 	public void warning(SAXParseException ex) {
 		Logger.getLogger(Reader_XmlFile.class.getName()).log(Level.SEVERE, null, ex);
+		ex.printStackTrace();
 	}
 
 	@Override
 	public void error(SAXParseException ex) {
 		Logger.getLogger(Reader_XmlFile.class.getName()).log(Level.SEVERE, null, ex);
+		ex.printStackTrace();
 	}
 
 	@Override
 	public void fatalError(SAXParseException ex) throws SAXException {
 		Logger.getLogger(Reader_XmlFile.class.getName()).log(Level.SEVERE, null, ex);
+		ex.printStackTrace();
 		throw ex;
 	}
 

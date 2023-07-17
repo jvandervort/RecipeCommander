@@ -42,8 +42,12 @@ public class XmlUtils {
 		dbf.setValidating(false);
 		DocumentBuilder db = dbf.newDocumentBuilder();
 		DOMImplementation dim = db.getDOMImplementation();
-		Document d = dim.createDocument("http://www.w3.org/2001/XMLSchema-instance", "jRecipeBook", null);
-		d.getDocumentElement().setAttribute("xsi:noNamespaceSchemaLocation", "recipe_book.xsd");
+		Document d = dim.createDocument("", "jRecipeBook", null);
+		Element root = d.getDocumentElement();
+		root.setAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
+		root.setAttribute("xsi:noNamespaceSchemaLocation", "recipe_book.xsd");
+		root.setAttribute("Name", book.getBookName());
+		root.setAttribute("ModDate", "");
 		return d;
 	}
 
@@ -69,7 +73,7 @@ public class XmlUtils {
 			bookElement.appendChild(createRecipeElement(r));
 		}
 
-		// LOGGER.fine(getXmlString(doc));
+		//LOGGER.info(getXmlString(doc));
 
 		return doc;
 	}
@@ -85,7 +89,7 @@ public class XmlUtils {
 		Element bookElement = XmlUtils.doc.getDocumentElement();
 		bookElement.appendChild(createRecipeElement(singleRec));
 
-		// LOGGER.fine(getXmlString(doc));
+		//LOGGER.info(getXmlString(doc));
 
 		return doc;
 	}
@@ -161,6 +165,7 @@ public class XmlUtils {
 			DOMImplementation domImpl = registry.getDOMImplementation("LS 3.0");
 			DOMImplementationLS implLS = (DOMImplementationLS) domImpl;
 			LSSerializer dom3Writer = implLS.createLSSerializer();
+			dom3Writer.getDomConfig().setParameter("format-pretty-print", Boolean.TRUE);
 			LSOutput output = implLS.createLSOutput();
 			output.setEncoding("UTF-8");
 			StringWriter out = new StringWriter();

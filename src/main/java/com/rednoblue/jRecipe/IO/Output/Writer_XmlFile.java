@@ -1,13 +1,23 @@
 package com.rednoblue.jRecipe.IO.Output;
 
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStream;
 // logging
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 
 // XML Imports
 import org.w3c.dom.DOMImplementation;
@@ -27,7 +37,8 @@ import com.rednoblue.jRecipe.model.XmlUtils;
  * Provides native xml output.
  */
 public class Writer_XmlFile implements O_Interface {
-	// extension info
+	private final static Logger LOGGER = Logger.getLogger(Writer_XmlFile.class.getName());
+
 	static private final String formatName = "jRecipe";
 	static private final String fileExtension = "xml";
 	static private final String fileDescription = formatName + " Files";
@@ -84,35 +95,20 @@ public class Writer_XmlFile implements O_Interface {
 			doc = XmlUtils.getBookXml(book, rec, "datamodel");
 		}
 
-		OutputStream outputStream = null;
-		try {
-			System.setProperty(DOMImplementationRegistry.PROPERTY, "org.apache.xerces.dom.DOMImplementationSourceImpl");
-			DOMImplementationRegistry registry = DOMImplementationRegistry.newInstance();
-			DOMImplementation domImpl = registry.getDOMImplementation("LS 3.0");
-			DOMImplementationLS implLS = (DOMImplementationLS) domImpl;
-			LSSerializer dom3Writer = implLS.createLSSerializer();
-			LSOutput output = implLS.createLSOutput();
-			output.setEncoding("UTF-8");
-			outputStream = new FileOutputStream(new File(fileName));
-			output.setByteStream(outputStream);
+		//LOGGER.info(XmlUtils.getXmlString(doc));
 
-			dom3Writer.write(doc, output);
+		try {
+			FileWriter writer = new FileWriter(new File(fileName));
+			BufferedWriter buffer = new BufferedWriter(writer);
+			buffer.write(XmlUtils.getXmlString(doc));
+			buffer.close();
 		} catch (FileNotFoundException ex) {
-			Logger.getLogger(Writer_XmlFile.class.getName()).log(Level.SEVERE, null, ex);
-		} catch (ClassNotFoundException ex) {
-			Logger.getLogger(BookUtils.class.getName()).log(Level.SEVERE, null, ex);
-		} catch (InstantiationException ex) {
-			Logger.getLogger(BookUtils.class.getName()).log(Level.SEVERE, null, ex);
-		} catch (IllegalAccessException ex) {
-			Logger.getLogger(BookUtils.class.getName()).log(Level.SEVERE, null, ex);
+			LOGGER.severe(ex.getMessage());
 		} catch (ClassCastException ex) {
-			Logger.getLogger(BookUtils.class.getName()).log(Level.SEVERE, null, ex);
-		} finally {
-			try {
-				outputStream.close();
-			} catch (IOException ex) {
-				Logger.getLogger(Writer_XmlFile.class.getName()).log(Level.SEVERE, null, ex);
-			}
+			LOGGER.severe(ex.getMessage());
+		} catch (IOException e) {
+			LOGGER.severe(e.getMessage());
+			e.printStackTrace();
 		}
 	}
 
