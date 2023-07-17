@@ -27,107 +27,107 @@ import com.rednoblue.jRecipe.model.XmlUtils;
  * Provides native xml output.
  */
 public class Writer_XmlFile implements O_Interface {
-  // extension info
-  static private final String formatName = "jRecipe";
-  static private final String fileExtension = "xml";
-  static private final String fileDescription = formatName + " Files";
-  static private final boolean readable = true;
-  String type;
-  Book book = null;
-  Recipe rec = null;
-  String fileName = null;
+	// extension info
+	static private final String formatName = "jRecipe";
+	static private final String fileExtension = "xml";
+	static private final String fileDescription = formatName + " Files";
+	static private final boolean readable = true;
+	String type;
+	Book book = null;
+	Recipe rec = null;
+	String fileName = null;
 
-  public Writer_XmlFile() {
-  }
+	public Writer_XmlFile() {
+	}
 
-  public Writer_XmlFile(String t) {
-    this();
-    type = t;
-  }
+	public Writer_XmlFile(String t) {
+		this();
+		type = t;
+	}
 
-  public Writer_XmlFile(Book argBook, String argFileName) {
-    book = argBook;
-    fileName = argFileName;
-    write();
-  }
+	public Writer_XmlFile(Book argBook, String argFileName) {
+		book = argBook;
+		fileName = argFileName;
+		write();
+	}
 
-  public boolean isReadable() {
-    return readable;
-  }
+	public boolean isReadable() {
+		return readable;
+	}
 
-  public String getFormatName() {
-    return formatName;
-  }
+	public String getFormatName() {
+		return formatName;
+	}
 
-  public String getFileExtension() {
-    return fileExtension;
-  }
+	public String getFileExtension() {
+		return fileExtension;
+	}
 
-  public void setBook(Book argBook) {
-    book = argBook;
-  }
+	public void setBook(Book argBook) {
+		book = argBook;
+	}
 
-  public void setRec(Recipe argRec) {
-    rec = argRec;
-  }
+	public void setRec(Recipe argRec) {
+		rec = argRec;
+	}
 
-  public void setFileName(String argFileName) {
-    fileName = argFileName;
-  }
+	public void setFileName(String argFileName) {
+		fileName = argFileName;
+	}
 
-  public void write() {
-    Document doc;
-    BookUtils bu = new BookUtils(book);
-    if (rec == null) {
-      doc = XmlUtils.getBookXml(book, "datamodel");
-    } else {
-      doc = XmlUtils.getBookXml(book, rec, "datamodel");
-    }
+	public void write() {
+		Document doc;
+		BookUtils bu = new BookUtils(book);
+		if (rec == null) {
+			doc = XmlUtils.getBookXml(book, "datamodel");
+		} else {
+			doc = XmlUtils.getBookXml(book, rec, "datamodel");
+		}
 
-    OutputStream outputStream = null;
-    try {
-      System.setProperty(DOMImplementationRegistry.PROPERTY, "org.apache.xerces.dom.DOMImplementationSourceImpl");
-      DOMImplementationRegistry registry = DOMImplementationRegistry.newInstance();
-      DOMImplementation domImpl = registry.getDOMImplementation("LS 3.0");
-      DOMImplementationLS implLS = (DOMImplementationLS) domImpl;
-      LSSerializer dom3Writer = implLS.createLSSerializer();
-      LSOutput output = implLS.createLSOutput();
-      output.setEncoding("UTF-8");
-      outputStream = new FileOutputStream(new File(fileName));
-      output.setByteStream(outputStream);
+		OutputStream outputStream = null;
+		try {
+			System.setProperty(DOMImplementationRegistry.PROPERTY, "org.apache.xerces.dom.DOMImplementationSourceImpl");
+			DOMImplementationRegistry registry = DOMImplementationRegistry.newInstance();
+			DOMImplementation domImpl = registry.getDOMImplementation("LS 3.0");
+			DOMImplementationLS implLS = (DOMImplementationLS) domImpl;
+			LSSerializer dom3Writer = implLS.createLSSerializer();
+			LSOutput output = implLS.createLSOutput();
+			output.setEncoding("UTF-8");
+			outputStream = new FileOutputStream(new File(fileName));
+			output.setByteStream(outputStream);
 
-      dom3Writer.write(doc, output);
-    } catch (FileNotFoundException ex) {
-      Logger.getLogger(Writer_XmlFile.class.getName()).log(Level.SEVERE, null, ex);
-    } catch (ClassNotFoundException ex) {
-      Logger.getLogger(BookUtils.class.getName()).log(Level.SEVERE, null, ex);
-    } catch (InstantiationException ex) {
-      Logger.getLogger(BookUtils.class.getName()).log(Level.SEVERE, null, ex);
-    } catch (IllegalAccessException ex) {
-      Logger.getLogger(BookUtils.class.getName()).log(Level.SEVERE, null, ex);
-    } catch (ClassCastException ex) {
-      Logger.getLogger(BookUtils.class.getName()).log(Level.SEVERE, null, ex);
-    } finally {
-      try {
-        outputStream.close();
-      } catch (IOException ex) {
-        Logger.getLogger(Writer_XmlFile.class.getName()).log(Level.SEVERE, null, ex);
-      }
-    }
-  }
+			dom3Writer.write(doc, output);
+		} catch (FileNotFoundException ex) {
+			Logger.getLogger(Writer_XmlFile.class.getName()).log(Level.SEVERE, null, ex);
+		} catch (ClassNotFoundException ex) {
+			Logger.getLogger(BookUtils.class.getName()).log(Level.SEVERE, null, ex);
+		} catch (InstantiationException ex) {
+			Logger.getLogger(BookUtils.class.getName()).log(Level.SEVERE, null, ex);
+		} catch (IllegalAccessException ex) {
+			Logger.getLogger(BookUtils.class.getName()).log(Level.SEVERE, null, ex);
+		} catch (ClassCastException ex) {
+			Logger.getLogger(BookUtils.class.getName()).log(Level.SEVERE, null, ex);
+		} finally {
+			try {
+				outputStream.close();
+			} catch (IOException ex) {
+				Logger.getLogger(Writer_XmlFile.class.getName()).log(Level.SEVERE, null, ex);
+			}
+		}
+	}
 
-  public MyFileFilter getChoosableFileFilter() {
-    return new MyFileFilter(fileExtension, fileDescription);
-  }
+	public MyFileFilter getChoosableFileFilter() {
+		return new MyFileFilter(fileExtension, fileDescription);
+	}
 
-  static class XmlFileWriterFactory extends O_Factory {
+	static class XmlFileWriterFactory extends O_Factory {
 
-    public O_Interface create() {
-      return (new Writer_XmlFile());
-    }
-    }
+		public O_Interface create() {
+			return (new Writer_XmlFile());
+		}
+	}
 
-  static {
-    O_FormatCreator.oFactories.put("Writer_XmlFile", new XmlFileWriterFactory());
-  }
+	static {
+		O_FormatCreator.oFactories.put("Writer_XmlFile", new XmlFileWriterFactory());
+	}
 }

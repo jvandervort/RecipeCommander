@@ -68,9 +68,9 @@ public class XmlUtils {
 			Recipe r = (Recipe) it.next();
 			bookElement.appendChild(createRecipeElement(r));
 		}
-		
-		//LOGGER.fine(getXmlString(doc));
-		
+
+		// LOGGER.fine(getXmlString(doc));
+
 		return doc;
 	}
 
@@ -84,9 +84,9 @@ public class XmlUtils {
 		XmlUtils.setDisplayType(display_type);
 		Element bookElement = XmlUtils.doc.getDocumentElement();
 		bookElement.appendChild(createRecipeElement(singleRec));
-	
-		//LOGGER.fine(getXmlString(doc));
-		
+
+		// LOGGER.fine(getXmlString(doc));
+
 		return doc;
 	}
 

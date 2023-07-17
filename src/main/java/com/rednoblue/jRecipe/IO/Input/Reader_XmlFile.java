@@ -26,7 +26,7 @@ import com.rednoblue.jRecipe.model.Recipe;
 
 class Reader_XmlFile extends DefaultHandler implements I_Interface {
 	private final static Logger LOGGER = Logger.getLogger(Reader_XmlFile.class.getName());
-	
+
 	//
 	// Constants
 	//

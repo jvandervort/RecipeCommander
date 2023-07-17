@@ -64,7 +64,7 @@ public class RecipeIndexer {
 			Analyzer analyzer = new StandardAnalyzer();
 
 			if (querystr == null || querystr.length() == 0) {
-				//searcher.close();
+				// searcher.close();
 				return null;
 			}
 			QueryParser qp = new QueryParser("recipeName", analyzer);
@@ -87,7 +87,7 @@ public class RecipeIndexer {
 			LOGGER.info(hits.totalHits + " total matching documents");
 
 			final ScoreDoc[] scoreDocs = hits.scoreDocs;
-			
+
 			for (ScoreDoc scoreDoc : scoreDocs) {
 				// get the actual document with stored fields
 				Document doc = searcher.doc(scoreDoc.doc);
@@ -98,7 +98,7 @@ public class RecipeIndexer {
 					LOGGER.info(name);
 				}
 			}
-			//searcher.close();
+			// searcher.close();
 
 		} catch (Exception e) {
 			LOGGER.severe(e.toString());
@@ -130,7 +130,7 @@ public class RecipeIndexer {
 				for (File file : files) {
 					file.delete();
 				}
-				
+
 				FSDirectory dir = FSDirectory.open(Paths.get(indexLocation));
 				IndexWriterConfig config = new IndexWriterConfig(new StandardAnalyzer());
 				IndexWriter writer = new IndexWriter(dir, config);
