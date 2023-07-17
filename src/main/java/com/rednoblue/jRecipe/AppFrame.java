@@ -132,7 +132,7 @@ public class AppFrame extends javax.swing.JFrame implements FileHistory.IFileHis
 	/** setting for the tree view */
 	private String viewBy = "recipe";
 	/** filter for the tree view */
-	private HashMap filter;
+	private HashMap<String,String> filter;
 
 	/** indexer for the filter (lucene engine) */
 	private RecipeIndexer r_indexer;
@@ -823,18 +823,18 @@ public class AppFrame extends javax.swing.JFrame implements FileHistory.IFileHis
 		ArrayList<String> fields = new ArrayList<String>();
 
 		if (recipeNameChk.isSelected()) {
-			fields.add("recipeName");
+			fields.add("Name");
 		}
 
 		if (ingredientsChk.isSelected()) {
-			fields.add("ingredient");
+			fields.add("Ingredient");
 		}
 
 		if (processChk.isSelected()) {
-			fields.add("process");
+			fields.add("Process");
 		}
 		if (commentsChk.isSelected()) {
-			fields.add("comments");
+			fields.add("Comments");
 		}
 
 		searchFind(fields, filterText.getText());
@@ -1250,7 +1250,7 @@ public class AppFrame extends javax.swing.JFrame implements FileHistory.IFileHis
 		}
 	}
 
-	private void searchFind(Collection fields, String queryString) {
+	private void searchFind(Collection<String> fields, String queryString) {
 		if (r_indexer.indexThread != null && r_indexer.indexThread.isAlive()) {
 			// indexer still running, bail
 			return;

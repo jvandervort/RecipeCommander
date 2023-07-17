@@ -17,7 +17,9 @@ import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
+import org.apache.lucene.index.StoredFields;
 import org.apache.lucene.queryparser.classic.QueryParser;
+import org.apache.lucene.queryparser.flexible.standard.StandardQueryParser;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.ScoreDoc;
@@ -55,7 +57,7 @@ public class RecipeIndexer {
 		indexThread.start();
 	}
 
-	public HashMap searchRecipes(Collection fields, String querystr) {
+	public HashMap<String,String> searchRecipes(Collection<String> fields, String querystr) {
 		HashMap<String, String> returnList = new HashMap<String, String>();
 		try {
 			FSDirectory dir = FSDirectory.open(Paths.get(indexLocation));
@@ -64,41 +66,38 @@ public class RecipeIndexer {
 			Analyzer analyzer = new StandardAnalyzer();
 
 			if (querystr == null || querystr.length() == 0) {
-				// searcher.close();
+				analyzer.close();
 				return null;
 			}
-			QueryParser qp = new QueryParser("recipeName", analyzer);
-
+			StandardQueryParser qp = new StandardQueryParser();
 			if (fields.size() > 0) {
 				StringBuffer buf = new StringBuffer();
-				Iterator it = fields.iterator();
+				Iterator<String> it = fields.iterator();
 				while (it.hasNext()) {
 					String s = (String) it.next();
 					buf.append(s + ":" + querystr + " OR ");
 				}
 				querystr = buf.toString().substring(0, buf.length() - 4);
 			}
-
 			LOGGER.info(querystr);
 
-			Query query = qp.parse(querystr);
+			Query query = qp.parse(querystr, "defaultField");
 			TopFieldDocs hits = searcher.search(query, 100000, Sort.RELEVANCE);
 
 			LOGGER.info(hits.totalHits + " total matching documents");
 
 			final ScoreDoc[] scoreDocs = hits.scoreDocs;
-
+			StoredFields storedFields = searcher.storedFields();
 			for (ScoreDoc scoreDoc : scoreDocs) {
-				// get the actual document with stored fields
-				Document doc = searcher.doc(scoreDoc.doc);
-				String name = doc.get("recipeName");
+				Document doc = storedFields.document(scoreDoc.doc);
+				String name = doc.get("Name");
 				String uuid = doc.get("UUID");
 				if (name != null) {
+					LOGGER.info("Matched " + name);
 					returnList.put(uuid, "1");
-					LOGGER.info(name);
 				}
 			}
-			// searcher.close();
+			analyzer.close();
 
 		} catch (Exception e) {
 			LOGGER.severe(e.toString());
@@ -135,22 +134,22 @@ public class RecipeIndexer {
 				IndexWriterConfig config = new IndexWriterConfig(new StandardAnalyzer());
 				IndexWriter writer = new IndexWriter(dir, config);
 
-				Iterator it = book.getRecipes().iterator();
+				Iterator<Recipe> it = book.getRecipes().iterator();
 				while (it.hasNext()) {
 					Recipe r = (Recipe) it.next();
 					// index Recipe
 					Document ldoc = new Document();
 					ldoc.add(new StoredField("UUID", r.getUUID().toString()));
-					ldoc.add(new TextField("recipeName", r.getRecipeName(), Field.Store.YES));
-					ldoc.add(new TextField("source", r.getSource(), Field.Store.YES));
-					ldoc.add(new TextField("chapter", r.getChapter(), Field.Store.YES));
-					ldoc.add(new TextField("cat", r.getCat(), Field.Store.YES));
-					ldoc.add(new TextField("subcat", r.getSubCat(), Field.Store.YES));
-					ldoc.add(new TextField("origin", r.getOrigin(), Field.Store.YES));
-					ldoc.add(new TextField("process", r.getProcess(), Field.Store.YES));
-					ldoc.add(new TextField("comments", r.getComments(), Field.Store.YES));
-					Collection ingList = r.getIngredientsList();
-					Iterator ingIt = ingList.iterator();
+					ldoc.add(new TextField("Name", r.getRecipeName(), Field.Store.YES));
+					ldoc.add(new TextField("Source", r.getSource(), Field.Store.YES));
+					ldoc.add(new TextField("Chapter", r.getChapter(), Field.Store.YES));
+					ldoc.add(new TextField("Cat", r.getCat(), Field.Store.YES));
+					ldoc.add(new TextField("SubCat", r.getSubCat(), Field.Store.YES));
+					ldoc.add(new TextField("Origin", r.getOrigin(), Field.Store.YES));
+					ldoc.add(new TextField("Process", r.getProcess(), Field.Store.YES));
+					ldoc.add(new TextField("Comments", r.getComments(), Field.Store.YES));
+					Collection<Ingredient> ingList = r.getIngredientsList();
+					Iterator<Ingredient> ingIt = ingList.iterator();
 					while (ingIt.hasNext()) {
 						Ingredient i = (Ingredient) ingIt.next();
 						ldoc.add(new TextField("ingredient", i.getName(), Field.Store.YES));

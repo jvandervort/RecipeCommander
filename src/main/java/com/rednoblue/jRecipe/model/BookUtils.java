@@ -41,7 +41,7 @@ public class BookUtils {
 	 * @param viewBy various facets of sorting/viewing
 	 * @param filter lucene filtered grouping
 	 */
-	public void loadJtree(javax.swing.JTree tree, String viewBy, HashMap filter) {
+	public void loadJtree(javax.swing.JTree tree, String viewBy, HashMap<String,String> filter) {
 		// setup variables
 		DefaultTreeModel treeModel;
 		DefaultMutableTreeNode rootNode;
