@@ -1,0 +1,20 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'application'
+mainClassName = 'com.rednoblue.jRecipe.Splasher'
+
+repositories {
+    mavenCentral()
+ }
+
+ sourceCompatibility = 18
+ targetCompatibility = 18
+
+ dependencies {
+      implementation 'org.apache.lucene:lucene-core:9.7.0'
+      implementation 'org.apache.lucene:lucene-queryparser:9.7.0'
+      implementation 'org.apache.lucene:lucene-analyzers-common:8.11.2'
+      
+      implementation 'net.sf.jasperreports:jasperreports:6.2.2'
+      implementation 'xalan:xalan:2.7.3'
+   }
