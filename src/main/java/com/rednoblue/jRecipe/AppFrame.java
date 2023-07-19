@@ -88,7 +88,6 @@ public class AppFrame extends javax.swing.JFrame implements FileHistory.IFileHis
 	private javax.swing.JMenuItem miNew;
 	private javax.swing.JMenuItem miNewRecipe;
 	private javax.swing.JMenuItem miOpen;
-	private javax.swing.JMenuItem miOpenCanned;
 	private javax.swing.JMenuItem miOpenRecipe;
 	private javax.swing.JMenuItem miOpenURL;
 	private javax.swing.JMenuItem miPaste;
@@ -146,12 +145,16 @@ public class AppFrame extends javax.swing.JFrame implements FileHistory.IFileHis
 	private JasperCompiler jasperCompiler;
 	
 	private final Logger logger;
-
+	private XmlUtils xmlUtils;
+	private MyFileWriter fileWriter;
+	
 	@Inject
-	public AppFrame(Logger logger, JasperCompiler jasperCompiler, RecipeIndexer recipeIndexer) {
+	public AppFrame(Logger logger, JasperCompiler jasperCompiler, RecipeIndexer recipeIndexer, XmlUtils xmlUtils, MyFileWriter fileWriter) {
 		this.logger = logger;
+		this.xmlUtils = xmlUtils;
 		this.jasperCompiler = jasperCompiler;
 		this.recipeIndexer = recipeIndexer;
+		this.fileWriter = fileWriter;
 
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -212,7 +215,6 @@ public class AppFrame extends javax.swing.JFrame implements FileHistory.IFileHis
 		miNew = new javax.swing.JMenuItem();
 		miOpen = new javax.swing.JMenuItem();
 		miOpenURL = new javax.swing.JMenuItem();
-		miOpenCanned = new javax.swing.JMenuItem();
 		miSave = new javax.swing.JMenuItem();
 		miSaveAs = new javax.swing.JMenuItem();
 		mnuPdf = new javax.swing.JMenu();
@@ -576,15 +578,6 @@ public class AppFrame extends javax.swing.JFrame implements FileHistory.IFileHis
 		});
 		mnuFile.add(miOpenURL);
 
-		miOpenCanned.setText("Open Canned File");
-		miOpenCanned.setToolTipText("Open xml file from jar for testing");
-		miOpenCanned.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				miOpenCannedActionPerformed(evt);
-			}
-		});
-		mnuFile.add(miOpenCanned);
-
 		miSave.setAccelerator(
 				javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
 		miSave.setText("Save");
@@ -864,28 +857,6 @@ public class AppFrame extends javax.swing.JFrame implements FileHistory.IFileHis
 		exportRecPdf(rec);
 	}// GEN-LAST:event_pmiExportRecActionPerformed
 
-	private void miOpenCannedActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_miOpenCannedActionPerformed
-		if (book != null && book.getModified() == true) {
-			// prompt for save
-			SaveDialog ds = new SaveDialog(this, true);
-			ds.setVisible(true);
-			if (ds.getReturnStatus() == SaveDialog.RET_CANCEL) {
-				// do nothing
-				return;
-			} else if (ds.getReturnStatus() == SaveDialog.RET_NOSAVE) {
-				// no save
-
-			} else if (ds.getReturnStatus() == SaveDialog.RET_SAVE) {
-				// save
-				MyFileWriter writer = new MyFileWriter(book, Global.lastFileName);
-			} else {
-				logger.info("Unknown return status from SaveOptionFrame");
-				return;
-			}
-		}
-		openBook("/test/TestXmlBook.xml");
-	}// GEN-LAST:event_miOpenCannedActionPerformed
-
 	private void miPdfViewActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_miPdfViewActionPerformed
 		pdfView(null);
 	}// GEN-LAST:event_miPdfViewActionPerformed
@@ -908,11 +879,9 @@ public class AppFrame extends javax.swing.JFrame implements FileHistory.IFileHis
 				// do nothing
 				return;
 			} else if (ds.getReturnStatus() == SaveDialog.RET_NOSAVE) {
-				// no save
-
+				// do nothing
 			} else if (ds.getReturnStatus() == SaveDialog.RET_SAVE) {
-				// save
-				MyFileWriter writer = new MyFileWriter(book, Global.lastFileName);
+				fileWriter.saveFile(book, null, Global.lastFileName, true);
 			} else {
 				logger.info("Unknown return status from SaveOptionFrame");
 				return;
@@ -1029,29 +998,27 @@ public class AppFrame extends javax.swing.JFrame implements FileHistory.IFileHis
 			return;
 		}
 		super.processMouseEvent(evt);
-	}// GEN-LAST:event_RecipeTreePopupHandler
+	}
 
-	private void saveAsActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_saveAsActionPerformed
-		MyFileWriter writer = new MyFileWriter();
-		if (writer.browseFileSystem(AppFrame.this, "jRecipe")) {
-			if (writer.saveAsFile(book, null, writer.getFileName()) == true) {
-				if (writer.getLastWriter().isReadable()) {
-					Global.lastFileName = writer.getFileName();
-					fileHistory.insertPathname(Global.lastFileName);
-					this.setTitle(Global.appName + " - [" + Global.lastFileName + "]");
-					book.setModified(false);
-					saveButtons(book.getModified());
-				}
+	private void saveAsActionPerformed(java.awt.event.ActionEvent evt) {
+		String filePath = fileWriter.browseFileSystem(AppFrame.this, "jRecipe");
+		if (filePath != null && fileWriter.saveFile(book, null, filePath, true) == true) {
+			if (fileWriter.getLastWriter().isReadable()) {
+				Global.lastFileName = filePath;
+				fileHistory.insertPathname(Global.lastFileName);
+				this.setTitle(Global.appName + " - [" + Global.lastFileName + "]");
+				book.setModified(false);
+				saveButtons(book.getModified());
 			}
 		}
-	}// GEN-LAST:event_saveAsActionPerformed
+	}
 
-	private void saveActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_saveActionPerformed
-		MyFileWriter writer = new MyFileWriter(book, Global.lastFileName);
+	private void saveActionPerformed(java.awt.event.ActionEvent evt) {
+		fileWriter.saveFile(book, null, Global.lastFileName, true);
 		this.setTitle(Global.appName + " - [" + Global.lastFileName + "]");
 		book.setModified(false);
 		saveButtons(book.getModified());
-	}// GEN-LAST:event_saveActionPerformed
+	}
 
 	private void openActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_openActionPerformed
 		if (book != null && book.getModified() == true) {
@@ -1062,11 +1029,9 @@ public class AppFrame extends javax.swing.JFrame implements FileHistory.IFileHis
 				// do nothing
 				return;
 			} else if (ds.getReturnStatus() == SaveDialog.RET_NOSAVE) {
-				// no save
-
+				// do nothing
 			} else if (ds.getReturnStatus() == SaveDialog.RET_SAVE) {
-				// save
-				MyFileWriter writer = new MyFileWriter(book, Global.lastFileName);
+				fileWriter.saveFile(book, null, Global.lastFileName, true);
 			} else {
 				logger.info("Unknown return status from SaveOptionFrame");
 				return;
@@ -1128,11 +1093,9 @@ public class AppFrame extends javax.swing.JFrame implements FileHistory.IFileHis
 				// do nothing
 				return;
 			} else if (ds.getReturnStatus() == SaveDialog.RET_NOSAVE) {
-				// no save
-
+				// do nothing
 			} else if (ds.getReturnStatus() == SaveDialog.RET_SAVE) {
-				// save
-				MyFileWriter writer = new MyFileWriter(book, Global.lastFileName);
+				fileWriter.saveFile(book, null, Global.lastFileName, true);
 			} else {
 				logger.info("Unknown return status from SaveOptionFrame");
 				return;
@@ -1268,21 +1231,13 @@ public class AppFrame extends javax.swing.JFrame implements FileHistory.IFileHis
 				// do nothing
 				return false;
 			} else if (ds.getReturnStatus() == SaveDialog.RET_NOSAVE) {
-				// exit, no save
-				// save prefs
 				saveGlobals();
-				// save file history
 				fileHistory.saveHistoryEntries(); // save entries for next session
-				// exit app
 				this.dispose();
 			} else if (ds.getReturnStatus() == SaveDialog.RET_SAVE) {
-				// save and exit
-				MyFileWriter writer = new MyFileWriter(book, Global.lastFileName);
-				// save prefs
+				fileWriter.saveFile(book, null, Global.lastFileName, true);
 				saveGlobals();
-				// save file history
 				fileHistory.saveHistoryEntries(); // save entries for next session
-				// exit app
 				this.dispose();
 			} else {
 				// do nothing
@@ -1413,11 +1368,9 @@ public class AppFrame extends javax.swing.JFrame implements FileHistory.IFileHis
 				// do nothing
 				return false;
 			} else if (ds.getReturnStatus() == SaveDialog.RET_NOSAVE) {
-				// no save
-
+				// do nothing
 			} else if (ds.getReturnStatus() == SaveDialog.RET_SAVE) {
-				// save
-				MyFileWriter writer = new MyFileWriter(book, Global.lastFileName);
+				fileWriter.saveFile(book, null, Global.lastFileName, true);
 			} else {
 				logger.info("Unknown return status from SaveOptionFrame");
 				return false;
@@ -1428,7 +1381,6 @@ public class AppFrame extends javax.swing.JFrame implements FileHistory.IFileHis
 
 	public JasperPrint get_jasper_print(Recipe r) {
 		JasperPrint jasperPrint = new JasperPrint();
-		XmlUtils xmlUtils = new XmlUtils();
 		try {
 			JRDataSource ds = null;
 			if (r == null) {
@@ -1452,16 +1404,14 @@ public class AppFrame extends javax.swing.JFrame implements FileHistory.IFileHis
 	}
 
 	public void exportRecPdf(Recipe recArg) {
-		MyFileWriter writer = new MyFileWriter();
-		if (writer.browseFileSystem(AppFrame.this, "PDF")) {
-			if (writer.saveAsFile(book, recArg, writer.getFileName()) == true) {
-				if (writer.getLastWriter().isReadable()) {
-					Global.lastFileName = writer.getFileName();
-					fileHistory.insertPathname(Global.lastFileName);
-					this.setTitle(Global.appName + " - [" + Global.lastFileName + "]");
-					book.setModified(false);
-					saveButtons(book.getModified());
-				}
+		String filePath = fileWriter.browseFileSystem(AppFrame.this, "PDF");
+		if (filePath != null && fileWriter.saveFile(book, recArg, filePath, true) == true) {
+			if (fileWriter.getLastWriter().isReadable()) {
+				Global.lastFileName = filePath;
+				fileHistory.insertPathname(Global.lastFileName);
+				this.setTitle(Global.appName + " - [" + Global.lastFileName + "]");
+				book.setModified(false);
+				saveButtons(book.getModified());
 			}
 		}
 	}
@@ -1484,7 +1434,6 @@ public class AppFrame extends javax.swing.JFrame implements FileHistory.IFileHis
 				Object nodeInfo = node.getUserObject();
 				// you have a recipe
 				rec = (Recipe) nodeInfo;
-				XmlUtils xmlUtils = new XmlUtils();
 				return new RecipeTransferable(
 						xmlUtils.transformToXmlString(book, rec, EDisplayType.NORMAL)+ "\n"
 				);

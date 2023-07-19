@@ -4,6 +4,7 @@ import java.io.File;
 
 import javax.swing.JFileChooser;
 
+import com.google.inject.Inject;
 import com.rednoblue.jrecipe.AppFrame;
 import com.rednoblue.jrecipe.io.output.IRecipeWriter;
 import com.rednoblue.jrecipe.io.output.WriterMealMaster;
@@ -17,72 +18,28 @@ import com.rednoblue.jrecipe.model.Recipe;
  * FileWriters.
  */
 public class MyFileWriter {
-	private String fileName = "";
-	private String fileEx = "";
 
 	private IRecipeWriter fileWriter;
+
 	private WriterXmlFile writerXmlFile;
 	private WriterPdf writerPdf;
 	private WriterMealMaster writerMealMaster;
 
-
-	private Book book = null;
-	private Recipe rec = null;
-
-	public MyFileWriter() {
-		this.writerXmlFile = new WriterXmlFile();
-		this.writerPdf = new WriterPdf();
-		this.writerMealMaster = new WriterMealMaster();
+	@Inject
+	public MyFileWriter(WriterXmlFile writerXmlFile, WriterPdf writerPdf, WriterMealMaster writerMealMaster) {
+		this.writerXmlFile = writerXmlFile;
+		this.writerPdf = writerPdf;
+		this.writerMealMaster = writerMealMaster;
 	}
-
-	/**
-	 *
-	 * @param argBook
-	 * @param argFileName
-	 */
-	public MyFileWriter(Book argBook, String argFileName) {
-		this();
-		book = argBook;
-		fileName = argFileName;
-		fileEx = FileUtil.getExtension(fileName);
-		saveFile(true);
-	}
-
-	public MyFileWriter(Book argBook, Recipe argRec, String argFileName) {
-		this();
-		book = argBook;
-		rec = argRec;
-		fileName = argFileName;
-		fileEx = FileUtil.getExtension(fileName);
-		saveFile(true);
-	}
-
-	/**
-	 * Saves the book to a filename.
-	 * 
-	 * @param argBook
-	 * @param argRec
-	 * @param argFileName
-	 * @return success
-	 */
-	public boolean saveAsFile(Book argBook, Recipe argRec, String argFileName) {
-		book = argBook;
-		rec = argRec;
-		fileName = argFileName;
-		fileEx = FileUtil.getExtension(fileName);
-		if (saveFile(false)) {
-			System.err.println("Book Saved!");
-			return true;
-		}
-		return false;
-	}
-
+	
 	/**
 	 * @param overwrite existing file, or error.
 	 * @return success or fail
 	 */
-	public boolean saveFile(boolean overwrite) {
-
+	public boolean saveFile(Book book, Recipe rec, String argFileName, boolean overwrite) {
+		String fileName = argFileName;
+		String fileEx = FileUtil.getExtension(fileName);
+				
 		if (fileWriter == null) {
 			if (fileEx.equalsIgnoreCase("xml")) {
 				fileWriter = writerXmlFile;
@@ -131,7 +88,7 @@ public class MyFileWriter {
 		return true;
 	}
 
-	public boolean browseFileSystem(AppFrame app, String selectedFormat) {
+	public String browseFileSystem(AppFrame app, String selectedFormat) {
 		final JFileChooser fc = new JFileChooser(app.getLastFileName());
 		
 		MyFileFilter xmlFilter = writerXmlFile.getChoosableFileFilter();
@@ -155,10 +112,9 @@ public class MyFileWriter {
 
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
 			File f = fc.getSelectedFile();
-			fileName = f.getAbsolutePath();
-			return true;
+			return f.getAbsolutePath();
 		} else {
-			return false;
+			return null;
 		}
 
 	}
@@ -170,30 +126,4 @@ public class MyFileWriter {
 	public IRecipeWriter getLastWriter() {
 		return fileWriter;
 	}
-
-	/**
-	 * Set the book property
-	 * 
-	 * @param argBook
-	 */
-	public void setBook(Book argBook) {
-		book = argBook;
-	}
-
-	/**
-	 *
-	 * @param argFileName
-	 */
-	public void setFileName(String argFileName) {
-		fileName = argFileName;
-	}
-
-	/**
-	 *
-	 * @return fileName
-	 */
-	public String getFileName() {
-		return fileName;
-	}
-
 }

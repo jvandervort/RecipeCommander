@@ -18,9 +18,16 @@ import org.w3c.dom.ls.DOMImplementationLS;
 import org.w3c.dom.ls.LSOutput;
 import org.w3c.dom.ls.LSSerializer;
 
-public class XmlUtils {
-	private final static Logger LOGGER = Logger.getLogger(XmlUtils.class.getName());
+import com.google.inject.Inject;
 
+public class XmlUtils {
+	private final Logger logger;
+
+	@Inject
+	public XmlUtils(Logger logger) {
+		this.logger = logger;
+	}
+	
 	/**
 	 * Transform entire book into an xml string
 	 * @param book
@@ -43,13 +50,13 @@ public class XmlUtils {
 			dom3Writer.write(doc, output);
 			return out.toString();
 		} catch (ClassNotFoundException ex) {
-			LOGGER.severe(ex.toString());
+			logger.severe(ex.toString());
 		} catch (InstantiationException ex) {
-			LOGGER.severe(ex.toString());
+			logger.severe(ex.toString());
 		} catch (IllegalAccessException ex) {
-			LOGGER.severe(ex.toString());
+			logger.severe(ex.toString());
 		} catch (ClassCastException ex) {
-			LOGGER.severe(ex.toString());
+			logger.severe(ex.toString());
 		}
 		return null;
 	}
@@ -77,13 +84,13 @@ public class XmlUtils {
 			dom3Writer.write(doc, output);
 			return out.toString();
 		} catch (ClassNotFoundException ex) {
-			LOGGER.severe(ex.toString());
+			logger.severe(ex.toString());
 		} catch (InstantiationException ex) {
-			LOGGER.severe(ex.toString());
+			logger.severe(ex.toString());
 		} catch (IllegalAccessException ex) {
-			LOGGER.severe(ex.toString());
+			logger.severe(ex.toString());
 		} catch (ClassCastException ex) {
-			LOGGER.severe(ex.toString());
+			logger.severe(ex.toString());
 		}
 		return null;
 	}
