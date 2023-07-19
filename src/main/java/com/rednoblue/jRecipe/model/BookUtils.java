@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.logging.Logger;
 
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
@@ -18,19 +17,10 @@ import javax.swing.tree.TreePath;
  * @version 1.0
  */
 public class BookUtils {
-	private final static Logger LOGGER = Logger.getLogger(BookUtils.class.getName());
 	private Book book;
-
-	/** make nice and pretty for printing */
-	private boolean _for_display = false;
 
 	public BookUtils(Book book) {
 		this.book = book;
-	}
-
-	public BookUtils(Book book, boolean for_display) {
-		this(book);
-		this._for_display = for_display;
 	}
 
 	/**

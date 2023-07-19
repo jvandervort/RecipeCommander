@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
 public class Ingredient {
 	private final static Logger LOGGER = Logger.getLogger(Ingredient.class.getName());
 	private String name = "";
-	private Float amount = new Float(0.0);
+	private float amount = 0f;
 	private String units = "";
 
 	/**
@@ -40,7 +40,7 @@ public class Ingredient {
 
 	public String getAmountString() {
 		Pattern p = Pattern.compile("([0-9]+).([0-9]+)");
-		Matcher m = p.matcher(amount.toString());
+		Matcher m = p.matcher(Float.toString(amount));
 
 		boolean b = m.find();
 		if (b == true) {
@@ -94,7 +94,7 @@ public class Ingredient {
 				}
 			}
 		} else {
-			return amount.toString();
+			return Float.toString(amount);
 		}
 	}
 
@@ -160,9 +160,9 @@ public class Ingredient {
 				float np = Float.parseFloat(m.group(3));
 				float dp = Float.parseFloat(m.group(4));
 				float tot = np / dp + ip;
-				retval = new Float(tot);
+				retval = tot;
 			} else {
-				retval = new Float(ip);
+				retval = ip;
 			}
 		} else {
 			// check for fraction only
@@ -174,15 +174,15 @@ public class Ingredient {
 					float np = Float.parseFloat(m.group(1));
 					float dp = Float.parseFloat(m.group(2));
 					float tot = np / dp;
-					retval = new Float(tot);
+					retval = tot;
 				}
 			} else {
 				// didn't match anything, try to set it.
 				try {
-					retval = new Float(Float.parseFloat(arg));
+					retval = Float.parseFloat(arg);
 				} catch (NumberFormatException e) {
 					LOGGER.warning("Not a valid amount(" + arg + ")");
-					retval = new Float(0.0);
+					retval = 0f;
 				}
 			}
 		}

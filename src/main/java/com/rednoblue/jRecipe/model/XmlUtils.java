@@ -18,147 +18,17 @@ import org.w3c.dom.ls.DOMImplementationLS;
 import org.w3c.dom.ls.LSOutput;
 import org.w3c.dom.ls.LSSerializer;
 
-/**
- *
- * @author John
- */
 public class XmlUtils {
-
 	private final static Logger LOGGER = Logger.getLogger(XmlUtils.class.getName());
-	private static Book book;
-	private static Document doc;
-	private static String display_type;
-
-	/*
-	 * 
-	 * 
-	 * XML SECTION
-	 * 
-	 * 
-	 */
-	private static Document getXmlDoc() throws ParserConfigurationException {
-		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-		dbf.setNamespaceAware(true);
-		dbf.setValidating(false);
-		DocumentBuilder db = dbf.newDocumentBuilder();
-		DOMImplementation dim = db.getDOMImplementation();
-		Document d = dim.createDocument("", "jRecipeBook", null);
-		Element root = d.getDocumentElement();
-		root.setAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
-		root.setAttribute("xsi:noNamespaceSchemaLocation", "recipe_book.xsd");
-		root.setAttribute("Name", book.getBookName());
-		root.setAttribute("ModDate", "");
-		return d;
-	}
-
-	private static void setDisplayType(String type) {
-		if (!(type.equals("datamodel") || type.equals("jasper"))) {
-			LOGGER.severe("Invalid Display Type: " + type);
-		}
-		XmlUtils.display_type = type;
-	}
-
-	public static Document getBookXml(Book book, String display_type) {
-		XmlUtils.book = book;
-		try {
-			XmlUtils.doc = getXmlDoc();
-		} catch (ParserConfigurationException e) {
-			e.printStackTrace();
-		}
-		XmlUtils.setDisplayType(display_type);
-		Element bookElement = XmlUtils.doc.getDocumentElement();
-		Iterator it = book.getRecipes().iterator();
-		while (it.hasNext()) {
-			Recipe r = (Recipe) it.next();
-			bookElement.appendChild(createRecipeElement(r));
-		}
-
-		//LOGGER.info(getXmlString(doc));
-
-		return doc;
-	}
-
-	public static Document getBookXml(Book book, Recipe singleRec, String display_type) {
-		XmlUtils.book = book;
-		try {
-			XmlUtils.doc = getXmlDoc();
-		} catch (ParserConfigurationException e) {
-			e.printStackTrace();
-		}
-		XmlUtils.setDisplayType(display_type);
-		Element bookElement = XmlUtils.doc.getDocumentElement();
-		bookElement.appendChild(createRecipeElement(singleRec));
-
-		//LOGGER.info(getXmlString(doc));
-
-		return doc;
-	}
-
-	private static Element createRecipeElement(Recipe r) {
-		Element e = XmlUtils.doc.createElement("Recipe");
-		e.setAttribute("Name", r.getRecipeName());
-		e.setAttribute("Source", r.getSource());
-		e.setAttribute("Chapter", r.getChapter());
-		e.setAttribute("Cat", r.getCat());
-		e.setAttribute("SubCat", r.getSubCat());
-		e.setAttribute("Origin", r.getOrigin());
-		e.setAttribute("UUID", r.getUUID().toString());
-		e.setAttribute("ModDate", r.getModDateString());
-
-		Element il = doc.createElement("IngredientList");
-		if (r.getIngredientsList().size() > 0) {
-			Iterator it = r.getIngredientsList().iterator();
-			while (it.hasNext()) {
-				Ingredient i = (Ingredient) it.next();
-				il.appendChild(createIngredientElement(i));
-			}
-		}
-		e.appendChild(il);
-
-		Element pro = doc.createElement("ProcessList");
-		if (XmlUtils.display_type.equals("jasper")) {
-			CDATASection cd = doc.createCDATASection(RecipeUtils.htmlEncode(r.getProcess()));
-			pro.appendChild(cd);
-		} else if (XmlUtils.display_type.equals("datamodel")) {
-			pro.setTextContent(r.getProcess());
-		}
-		e.appendChild(pro);
-
-		Element com = doc.createElement("Comments");
-		if (XmlUtils.display_type.equals("jasper")) {
-			CDATASection cd = doc.createCDATASection(RecipeUtils.htmlEncode(r.getComments()));
-			com.appendChild(cd);
-
-		} else if (XmlUtils.display_type.equals("datamodel")) {
-			com.setTextContent(r.getComments());
-		}
-
-		e.appendChild(com);
-
-		return (e);
-	}
-
-	private static Element createIngredientElement(Ingredient i) {
-		Element e = doc.createElement("Ingredient");
-
-		if (XmlUtils.display_type.equals("jasper")) {
-			e.setAttribute("Amount", i.getAmountString());
-		} else if (XmlUtils.display_type.equals("datamodel")) {
-			e.setAttribute("Amount", i.getAmount().toString());
-		}
-
-		e.setAttribute("Units", i.getUnits());
-		e.setAttribute("Name", i.getName());
-		return (e);
-	}
 
 	/**
-	 * Get an XML representation of the model
-	 * 
-	 * @param doc xml document
-	 * @return string representation of xml
+	 * Transform entire book into an xml string
+	 * @param book
+	 * @param type
+	 * @return
 	 */
-	public static String getXmlString(Document doc) {
+	public String transformToXmlString(Book book, EDisplayType type) {
+		Document doc = transformToXmlDocument(book, type);
 		try {
 			// try {
 			DOMImplementationRegistry registry = DOMImplementationRegistry.newInstance();
@@ -182,5 +52,155 @@ public class XmlUtils {
 			LOGGER.severe(ex.toString());
 		}
 		return null;
+	}
+	
+	/**
+	 * Transform a book with a single recipe into an xml string 
+	 * @param book
+	 * @param rec
+	 * @param type
+	 * @return
+	 */
+	public String transformToXmlString(Book book, Recipe rec, EDisplayType type) {
+		Document doc = transformToXmlDocument(book, rec, type);
+		try {
+			// try {
+			DOMImplementationRegistry registry = DOMImplementationRegistry.newInstance();
+			DOMImplementation domImpl = registry.getDOMImplementation("LS 3.0");
+			DOMImplementationLS implLS = (DOMImplementationLS) domImpl;
+			LSSerializer dom3Writer = implLS.createLSSerializer();
+			dom3Writer.getDomConfig().setParameter("format-pretty-print", Boolean.TRUE);
+			LSOutput output = implLS.createLSOutput();
+			output.setEncoding("UTF-8");
+			StringWriter out = new StringWriter();
+			output.setCharacterStream(out);
+			dom3Writer.write(doc, output);
+			return out.toString();
+		} catch (ClassNotFoundException ex) {
+			LOGGER.severe(ex.toString());
+		} catch (InstantiationException ex) {
+			LOGGER.severe(ex.toString());
+		} catch (IllegalAccessException ex) {
+			LOGGER.severe(ex.toString());
+		} catch (ClassCastException ex) {
+			LOGGER.severe(ex.toString());
+		}
+		return null;
+	}
+	
+	/**
+	 * Transform a whole book into a w3c xml Document
+	 * @param book
+	 * @param type
+	 * @return
+	 */
+	public Document transformToXmlDocument(Book book, EDisplayType type) {
+		Document doc;
+		try {
+			doc = getXmlDoc(book);
+			Element bookElement = doc.getDocumentElement();
+			Iterator<Recipe> it = book.getRecipes().iterator();
+			while (it.hasNext()) {
+				Recipe r = it.next();
+				bookElement.appendChild(createRecipeElement(doc, r, type));
+			}
+			return doc;
+		} catch (ParserConfigurationException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	/**
+	 * Transform a book with a single recipe into a w3c xml Document
+	 * @param book
+	 * @param rec
+	 * @param type
+	 * @return
+	 */
+	public Document transformToXmlDocument(Book book, Recipe rec, EDisplayType type) {
+		Document doc;
+		try {
+			doc = getXmlDoc(book);
+			Element bookElement = doc.getDocumentElement();
+			bookElement.appendChild(createRecipeElement(doc, rec, type));
+			return doc;
+		} catch (ParserConfigurationException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+		
+	private Document getXmlDoc(Book book) throws ParserConfigurationException {
+		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+		dbf.setNamespaceAware(true);
+		dbf.setValidating(false);
+		DocumentBuilder db = dbf.newDocumentBuilder();
+		DOMImplementation dim = db.getDOMImplementation();
+		Document d = dim.createDocument("", "jRecipeBook", null);
+		Element root = d.getDocumentElement();
+		root.setAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
+		root.setAttribute("xsi:noNamespaceSchemaLocation", "recipe_book.xsd");
+		root.setAttribute("Name", book.getBookName());
+		root.setAttribute("ModDate", "");
+		return d;
+	}
+
+	private Element createRecipeElement(Document doc, Recipe r, EDisplayType type ) {
+		Element e = doc.createElement("Recipe");
+		e.setAttribute("Name", r.getRecipeName());
+		e.setAttribute("Source", r.getSource());
+		e.setAttribute("Chapter", r.getChapter());
+		e.setAttribute("Cat", r.getCat());
+		e.setAttribute("SubCat", r.getSubCat());
+		e.setAttribute("Origin", r.getOrigin());
+		e.setAttribute("UUID", r.getUUID().toString());
+		e.setAttribute("ModDate", r.getModDateString());
+
+		Element il = doc.createElement("IngredientList");
+		if (r.getIngredientsList().size() > 0) {
+			Iterator<Ingredient> it = r.getIngredientsList().iterator();
+			while (it.hasNext()) {
+				Ingredient i = it.next();
+				il.appendChild(createIngredientElement(doc, i, type));
+			}
+		}
+		e.appendChild(il);
+
+		Element pro = doc.createElement("ProcessList");
+		if (type == EDisplayType.JASPER) {
+			CDATASection cd = doc.createCDATASection(RecipeUtils.htmlEncode(r.getProcess()));
+			pro.appendChild(cd);
+		} else if (type == EDisplayType.NORMAL) {
+			pro.setTextContent(r.getProcess());
+		}
+		e.appendChild(pro);
+
+		Element com = doc.createElement("Comments");
+		if (type == EDisplayType.JASPER) {
+			CDATASection cd = doc.createCDATASection(RecipeUtils.htmlEncode(r.getComments()));
+			com.appendChild(cd);
+
+		} else if (type == EDisplayType.NORMAL) {
+			com.setTextContent(r.getComments());
+		}
+
+		e.appendChild(com);
+
+		return (e);
+	}
+
+	private Element createIngredientElement(Document doc, Ingredient i, EDisplayType type) {
+		Element e = doc.createElement("Ingredient");
+
+		if (type == EDisplayType.JASPER) {
+			e.setAttribute("Amount", i.getAmountString());
+		} else if (type == EDisplayType.NORMAL) {
+			e.setAttribute("Amount", i.getAmount().toString());
+		}
+
+		e.setAttribute("Units", i.getUnits());
+		e.setAttribute("Name", i.getName());
+		return (e);
 	}
 }

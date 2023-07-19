@@ -4,6 +4,10 @@ package com.rednoblue.jrecipe.dialogs;
 import java.awt.Point;
 
 public class OpenUrl extends javax.swing.JDialog {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	public static final int RET_CANCEL = 0;
 	public static final int RET_OK = 1;
 	private String url = null;

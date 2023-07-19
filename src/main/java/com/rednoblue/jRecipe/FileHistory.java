@@ -15,7 +15,6 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
-import javax.swing.AbstractListModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -269,6 +268,11 @@ public class FileHistory {
 	 ***********************************************************/
 	private final class MenuItemWithFixedTooltip extends JMenuItem {
 
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+
 		public MenuItemWithFixedTooltip(String text) {
 			super(text);
 		}
@@ -296,7 +300,6 @@ public class FileHistory {
 		}
 
 		public void actionPerformed(ActionEvent e) {
-			JMenuItem item = (JMenuItem) e.getSource();
 			if (caller.loadFile((String) pathnameHistory.get(itemNbr)) == true) {
 				FileHistory.this.insertPathname((String) pathnameHistory.get(itemNbr));
 			} else {
@@ -304,18 +307,4 @@ public class FileHistory {
 			}
 		}
 	}
-
-	/********************************************************
-	 * The list model for our File History dialog itemList. *
-	 ********************************************************/
-	private final class ListModel extends AbstractListModel {
-
-		public Object getElementAt(int i) {
-			return itemnameHistory.get(i);
-		}
-
-		public int getSize() {
-			return itemnameHistory.size();
-		}
-	}
-} // end class FileHistory
+}

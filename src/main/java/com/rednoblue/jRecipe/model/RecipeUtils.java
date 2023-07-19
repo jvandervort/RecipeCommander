@@ -4,8 +4,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.logging.Logger;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class RecipeUtils {
 
@@ -42,11 +40,11 @@ public class RecipeUtils {
 			r = new BufferedReader(new StringReader(arg));
 			String line;
 
-			Pattern li = Pattern.compile("^\\*.*");
+			//Pattern li = Pattern.compile("^\\*.*");
 			// Pattern br = Pattern.compile("<br> *$");
 
 			while ((line = r.readLine()) != null) {
-				Matcher m = li.matcher(line);
+				//Matcher m = li.matcher(line);
 				// if ( m.matches() ) {
 				// ret.append("<li>" + line.trim() + "</li>\n");
 				// } else {

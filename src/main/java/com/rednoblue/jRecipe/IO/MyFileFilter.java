@@ -23,12 +23,9 @@ import javax.swing.filechooser.FileFilter;
  */
 public class MyFileFilter extends FileFilter {
 
-	private static String TYPE_UNKNOWN = "Type Unknown";
-	private static String HIDDEN_FILE = "Hidden File";
 	private Hashtable<String, MyFileFilter> filters = null;
 	private String description = null;
 	private String fullDescription = null;
-	private String _extension = null;
 	private boolean useExtensionsInDescription = true;
 
 	/**

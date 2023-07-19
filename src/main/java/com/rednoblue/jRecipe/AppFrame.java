@@ -27,7 +27,6 @@ import javax.swing.Action;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
-import javax.swing.JPanel;
 import javax.swing.JTree;
 import javax.swing.TransferHandler;
 import javax.swing.UIManager;
@@ -38,17 +37,18 @@ import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 
-import com.rednoblue.jrecipe.io.MyFileReader;
-import com.rednoblue.jrecipe.io.MyFileWriter;
-import com.rednoblue.jrecipe.io.input.IRecipeReader;
-import com.rednoblue.jrecipe.io.input.ReaderXmlFile;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.rednoblue.jrecipe.dialogs.OpenUrl;
 import com.rednoblue.jrecipe.dialogs.SaveDialog;
 import com.rednoblue.jrecipe.fulltext.RecipeIndexer;
+import com.rednoblue.jrecipe.io.MyFileReader;
+import com.rednoblue.jrecipe.io.MyFileWriter;
+import com.rednoblue.jrecipe.io.input.IRecipeReader;
+import com.rednoblue.jrecipe.io.input.ReaderXmlFile;
 import com.rednoblue.jrecipe.model.Book;
 import com.rednoblue.jrecipe.model.BookUtils;
+import com.rednoblue.jrecipe.model.EDisplayType;
 import com.rednoblue.jrecipe.model.Recipe;
 import com.rednoblue.jrecipe.model.XmlUtils;
 
@@ -62,6 +62,10 @@ import net.sf.jasperreports.view.JasperViewer;
 @Singleton
 public class AppFrame extends javax.swing.JFrame implements FileHistory.IFileHistory {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private javax.swing.JButton btnApplyFilter;
 	private javax.swing.JButton btnCancel;
 	private javax.swing.JButton btnNew;
@@ -1424,12 +1428,13 @@ public class AppFrame extends javax.swing.JFrame implements FileHistory.IFileHis
 
 	public JasperPrint get_jasper_print(Recipe r) {
 		JasperPrint jasperPrint = new JasperPrint();
+		XmlUtils xmlUtils = new XmlUtils();
 		try {
 			JRDataSource ds = null;
 			if (r == null) {
-				ds = new JRXmlDataSource(XmlUtils.getBookXml(book, "jasper"), "//Recipe");
+				ds = new JRXmlDataSource(xmlUtils.transformToXmlDocument(book, EDisplayType.JASPER), "//Recipe");
 			} else {
-				ds = new JRXmlDataSource(XmlUtils.getBookXml(book, r, "jasper"), "//Recipe");
+				ds = new JRXmlDataSource(xmlUtils.transformToXmlDocument(book, r, EDisplayType.JASPER), "//Recipe");
 			}
 			Map<String, Object> parameters = new HashMap<String, Object>();
 			parameters.put("IngredientSubreport", this.jasperCompiler.get_ingred_report());
@@ -1479,10 +1484,10 @@ public class AppFrame extends javax.swing.JFrame implements FileHistory.IFileHis
 				Object nodeInfo = node.getUserObject();
 				// you have a recipe
 				rec = (Recipe) nodeInfo;
-				BookUtils bu = new BookUtils(book);
-				// return new RecipeTransferable(rec.toXml() + "\n");
+				XmlUtils xmlUtils = new XmlUtils();
 				return new RecipeTransferable(
-						XmlUtils.getXmlString(XmlUtils.getBookXml(book, rec, "datamodel")) + "\n");
+						xmlUtils.transformToXmlString(book, rec, EDisplayType.NORMAL)+ "\n"
+				);
 			} else {
 				return new RecipeTransferable("");
 			}

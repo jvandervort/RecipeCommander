@@ -24,6 +24,11 @@ import com.rednoblue.jrecipe.model.Recipe;
  */
 public class RecipeFrame extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private final static Logger LOGGER = Logger.getLogger(RecipeFrame.class.getName());
 
 	// currently selected recipe object
@@ -37,9 +42,9 @@ public class RecipeFrame extends JFrame {
 		initComponents();
 
 		ArrayList<String> l = book.getChapters();
-		Iterator it = l.iterator();
+		Iterator<String> it = l.iterator();
 		while (it.hasNext()) {
-			String s = (String) it.next();
+			String s = it.next();
 			chapterComboBox.addItem(s);
 		}
 
@@ -89,9 +94,9 @@ public class RecipeFrame extends JFrame {
 		chapterLabel = new javax.swing.JLabel();
 		catLabel = new javax.swing.JLabel();
 		subcatLabel = new javax.swing.JLabel();
-		chapterComboBox = new javax.swing.JComboBox();
-		catComboBox = new javax.swing.JComboBox();
-		subCatComboBox = new javax.swing.JComboBox();
+		chapterComboBox = new javax.swing.JComboBox<String>();
+		catComboBox = new javax.swing.JComboBox<String>();
+		subCatComboBox = new javax.swing.JComboBox<String>();
 		mainPanel = new javax.swing.JPanel();
 		pnlIngredients = new javax.swing.JPanel();
 		sclIngredients = new javax.swing.JScrollPane();
@@ -536,9 +541,9 @@ public class RecipeFrame extends JFrame {
 	// Variables declaration - do not modify//GEN-BEGIN:variables
 	private javax.swing.JPanel buttonPanel;
 	private javax.swing.JButton cancelButton;
-	private javax.swing.JComboBox catComboBox;
+	private javax.swing.JComboBox<String> catComboBox;
 	private javax.swing.JLabel catLabel;
-	private javax.swing.JComboBox chapterComboBox;
+	private javax.swing.JComboBox<String> chapterComboBox;
 	private javax.swing.JLabel chapterLabel;
 	private javax.swing.JPanel mainPanel;
 	private javax.swing.JLabel modDateLabel;
@@ -557,7 +562,7 @@ public class RecipeFrame extends JFrame {
 	private javax.swing.JScrollPane sclIngredients;
 	private javax.swing.JScrollPane sclProcess;
 	private javax.swing.JTextField sourceTextField;
-	private javax.swing.JComboBox subCatComboBox;
+	private javax.swing.JComboBox<String> subCatComboBox;
 	private javax.swing.JLabel subcatLabel;
 	private javax.swing.JLabel submitterLabel;
 	private javax.swing.JTextArea txtComments;

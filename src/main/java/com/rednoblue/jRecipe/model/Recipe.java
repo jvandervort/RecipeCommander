@@ -204,7 +204,7 @@ public class Recipe {
 			}
 			while (it.hasNext()) {
 				Ingredient i = (Ingredient) it.next();
-				if (i.getAmount().equals(new Float(0.0))) {
+				if (i.getAmount().equals(0f)) {
 					ret.append(i.getName() + newline);
 				} else {
 					ret.append(i.getAmountString() + " " + i.getUnits() + " " + i.getName() + newline);
@@ -340,7 +340,7 @@ public class Recipe {
 		newrec.setComments(this.getComments());
 
 		if (this.iList.size() > 0) {
-			Iterator it = this.iList.iterator();
+			Iterator<Ingredient> it = this.iList.iterator();
 			while (it.hasNext()) {
 				Ingredient ingred = (Ingredient) it.next();
 				newrec.addIngredient(ingred.duplicate());
