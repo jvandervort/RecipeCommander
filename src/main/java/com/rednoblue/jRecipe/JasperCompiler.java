@@ -3,6 +3,8 @@ package com.rednoblue.jrecipe;
 import java.net.URL;
 import java.util.logging.Logger;
 
+import com.google.inject.Inject;
+
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperReport;
@@ -16,13 +18,14 @@ import net.sf.jasperreports.engine.xml.JRXmlLoader;
  * @version 1.0
  */
 public class JasperCompiler {
-
-	private final static Logger LOGGER = Logger.getLogger(JasperCompiler.class.getName());
 	private JasperCompilerThread compiler_thread;
 	private JasperReport main_report;
 	private JasperReport ingred_report;
-
-	public JasperCompiler() {
+	private final Logger logger;
+	
+	@Inject
+	public JasperCompiler(Logger logger) {
+		this.logger = logger;
 		compiler_thread = new JasperCompilerThread();
 		compiler_thread.start();
 	}
@@ -51,31 +54,33 @@ public class JasperCompiler {
 
 		@Override
 		public void run() {
-			LOGGER.info("jasper compiler thread running");
+			
 			try {
+				logger.info("jasper compiler starting");
+				
 				URL url = getClass().getResource("/Report1.jrxml");
 
-				LOGGER.fine("loading " + url.getPath());
+				logger.fine("loading " + url.getPath());
 				JasperDesign jasperDesign = JRXmlLoader.load(url.openStream());
 
-				LOGGER.fine("compiling " + url.getPath());
+				logger.fine("compiling " + url.getPath());
 				main_report = JasperCompileManager.compileReport(jasperDesign);
 
 				url = getClass().getResource("/Report1_ingredients.jrxml");
 
-				LOGGER.fine("loading " + url.getPath());
+				logger.fine("loading " + url.getPath());
 				JasperDesign ingredientDesign = JRXmlLoader.load(url.openStream());
 
-				LOGGER.fine("compiling " + url.getPath());
+				logger.fine("compiling " + url.getPath());
 				ingred_report = JasperCompileManager.compileReport(ingredientDesign);
 
-				LOGGER.fine("jasper compiler thread ");
+				logger.info("jasper compiler done");
 
 			} catch (JRException e) {
-				LOGGER.severe(e.toString());
+				logger.severe(e.toString());
 				e.printStackTrace();
 			} catch (java.io.IOException e) {
-				LOGGER.severe(e.toString());
+				logger.severe(e.toString());
 				e.printStackTrace();
 			}
 		}

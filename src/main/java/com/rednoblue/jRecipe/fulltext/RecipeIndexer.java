@@ -1,6 +1,7 @@
 package com.rednoblue.jrecipe.fulltext;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.Collection;
 import java.util.HashMap;
@@ -18,7 +19,6 @@ import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.index.StoredFields;
-import org.apache.lucene.queryparser.classic.QueryParser;
 import org.apache.lucene.queryparser.flexible.standard.StandardQueryParser;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
@@ -27,6 +27,7 @@ import org.apache.lucene.search.Sort;
 import org.apache.lucene.search.TopFieldDocs;
 import org.apache.lucene.store.FSDirectory;
 
+import com.google.inject.Inject;
 import com.rednoblue.jrecipe.Global;
 import com.rednoblue.jrecipe.model.Book;
 import com.rednoblue.jrecipe.model.Ingredient;
@@ -40,12 +41,14 @@ import com.rednoblue.jrecipe.model.Recipe;
  * @version 1.0
  */
 public class RecipeIndexer {
-	private final static Logger LOGGER = Logger.getLogger(RecipeIndexer.class.getName());
 	private String indexLocation = "";
 	public IndexerThread indexThread;
 
-	public RecipeIndexer() {
+	private final Logger logger;
 
+	@Inject
+	public RecipeIndexer(Logger logger) {
+		this.logger = logger;
 	}
 
 	/**
@@ -58,7 +61,7 @@ public class RecipeIndexer {
 		indexThread.start();
 	}
 
-	public HashMap<String,String> searchRecipes(Collection<String> fields, String querystr) {
+	public HashMap<String, String> searchRecipes(Collection<String> fields, String querystr) {
 		HashMap<String, String> returnList = new HashMap<String, String>();
 		try {
 			FSDirectory dir = FSDirectory.open(Paths.get(indexLocation));
@@ -80,12 +83,12 @@ public class RecipeIndexer {
 				}
 				querystr = buf.toString().substring(0, buf.length() - 4);
 			}
-			LOGGER.info(querystr);
+			logger.info(querystr);
 
 			Query query = qp.parse(querystr, "defaultField");
 			TopFieldDocs hits = searcher.search(query, 100000, Sort.RELEVANCE);
 
-			LOGGER.info(hits.totalHits + " total matching documents");
+			logger.info(hits.totalHits + " total matching documents");
 
 			final ScoreDoc[] scoreDocs = hits.scoreDocs;
 			StoredFields storedFields = searcher.storedFields();
@@ -94,14 +97,14 @@ public class RecipeIndexer {
 				String name = doc.get("Name");
 				String uuid = doc.get("UUID");
 				if (name != null) {
-					LOGGER.info("Matched " + name);
+					logger.info("Matched " + name);
 					returnList.put(uuid, "1");
 				}
 			}
 			analyzer.close();
 
 		} catch (Exception e) {
-			LOGGER.severe(e.toString());
+			logger.severe(e.toString());
 			e.printStackTrace();
 		}
 		return returnList;
@@ -118,8 +121,9 @@ public class RecipeIndexer {
 
 		@Override
 		public void run() {
-			LOGGER.info("Indexing NOW!");
 			try {
+				logger.info("indexing starting");
+
 				File f = File.createTempFile("Temp1", "out", null);
 				File tempDir = new File(f.getParent());
 				f.delete();
@@ -127,8 +131,10 @@ public class RecipeIndexer {
 				indexLocation = new String(tempDir.getAbsolutePath() + "/" + Global.appName + "_index");
 
 				File[] files = new File(indexLocation).listFiles();
-				for (File file : files) {
-					file.delete();
+				if (files != null) {
+					for (File file : files) {
+						file.delete();
+					}
 				}
 
 				FSDirectory dir = FSDirectory.open(Paths.get(indexLocation));
@@ -157,12 +163,11 @@ public class RecipeIndexer {
 					}
 					writer.addDocument(ldoc);
 				}
-				// writer.optimize();
 				writer.close();
-				LOGGER.info("Indexing complete");
+				logger.info("indexing done");
 
-			} catch (java.io.IOException ex) {
-				LOGGER.severe(ex.toString());
+			} catch (IOException ex) {
+				logger.severe(ex.toString());
 				ex.printStackTrace();
 			}
 		}

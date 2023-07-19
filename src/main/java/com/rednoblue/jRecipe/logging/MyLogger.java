@@ -15,11 +15,6 @@ import java.util.logging.Logger;
 //import java.util.logging.SimpleFormatter;
 public class MyLogger {
 
-	// static private FileHandler fileTxt;
-	// static private SimpleFormatter formatterTxt;
-	static private FileHandler fileLog;
-	static private Formatter formatter;
-
 	static public void setup() throws IOException {
 		// Create Logger
 		Logger logger = Logger.getLogger("");
@@ -34,10 +29,5 @@ public class MyLogger {
 
 		// set global logging level
 		logger.setLevel(Level.INFO);
-
-		fileLog = new FileHandler("jRecipe.log");
-		formatter = new MyFormatter();
-		fileLog.setFormatter(formatter);
-		logger.addHandler(fileLog);
 	}
 }
