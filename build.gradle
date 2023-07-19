@@ -1,7 +1,7 @@
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'application'
-mainClassName = 'com.rednoblue.jrecipe.Splasher'
+mainClassName = 'com.rednoblue.jrecipe.AppFrame'
 
 repositories {
     mavenCentral()
