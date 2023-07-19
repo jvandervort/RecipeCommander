@@ -7,7 +7,7 @@
  * and open the template in the editor.
  */
 
-package com.rednoblue.jRecipe;
+package com.rednoblue.jrecipe;
 
 import java.util.prefs.Preferences;
 

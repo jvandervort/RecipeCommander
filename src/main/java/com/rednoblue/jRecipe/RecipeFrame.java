@@ -3,7 +3,7 @@
  *
  * Created on June 5, 2002, 12:10 PM
  */
-package com.rednoblue.jRecipe;
+package com.rednoblue.jrecipe;
 
 import java.awt.Point;
 import java.awt.Toolkit;
@@ -15,8 +15,8 @@ import java.util.logging.Logger;
 
 import javax.swing.JFrame;
 
-import com.rednoblue.jRecipe.model.Book;
-import com.rednoblue.jRecipe.model.Recipe;
+import com.rednoblue.jrecipe.model.Book;
+import com.rednoblue.jrecipe.model.Recipe;
 
 /**
  *

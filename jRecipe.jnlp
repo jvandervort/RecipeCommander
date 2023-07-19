@@ -115,5 +115,5 @@
   <all-permissions/>
 </security>
   
-  <application-desc main-class="com.rednoblue.jRecipe.MainFrame"/>
+  <application-desc main-class="com.rednoblue.jrecipe.MainFrame"/>
 </jnlp>

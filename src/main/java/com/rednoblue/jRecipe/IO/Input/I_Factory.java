@@ -1,4 +1,4 @@
-package com.rednoblue.jRecipe.IO.Input;
+package com.rednoblue.jrecipe.io.input;
 
 /**
  * @author John Vandervort

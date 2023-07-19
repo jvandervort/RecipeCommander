@@ -1,4 +1,4 @@
-package com.rednoblue.jRecipe.IO;
+package com.rednoblue.jrecipe.io;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -15,12 +15,12 @@ import java.util.zip.ZipInputStream;
 
 import javax.swing.JFileChooser;
 
-import com.rednoblue.jRecipe.AppFrame;
-import com.rednoblue.jRecipe.Global;
-import com.rednoblue.jRecipe.IO.Input.I_FormatCreator;
-import com.rednoblue.jRecipe.IO.Input.I_Interface;
-import com.rednoblue.jRecipe.IO.Input.InputFormatNotCreatedException;
-import com.rednoblue.jRecipe.model.Book;
+import com.rednoblue.jrecipe.AppFrame;
+import com.rednoblue.jrecipe.Global;
+import com.rednoblue.jrecipe.io.input.I_FormatCreator;
+import com.rednoblue.jrecipe.io.input.I_Interface;
+import com.rednoblue.jrecipe.io.input.InputFormatNotCreatedException;
+import com.rednoblue.jrecipe.model.Book;
 
 /**
  * Handles the loading of a recipe book

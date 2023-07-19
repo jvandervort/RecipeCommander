@@ -1,13 +1,13 @@
-package com.rednoblue.jRecipe.IO.Input;
+package com.rednoblue.jrecipe.io.input;
 
 import java.io.BufferedReader;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 
-import com.rednoblue.jRecipe.IO.MyFileFilter;
-import com.rednoblue.jRecipe.model.Book;
-import com.rednoblue.jRecipe.model.Ingredient;
-import com.rednoblue.jRecipe.model.Recipe;
+import com.rednoblue.jrecipe.io.MyFileFilter;
+import com.rednoblue.jrecipe.model.Book;
+import com.rednoblue.jrecipe.model.Ingredient;
+import com.rednoblue.jrecipe.model.Recipe;
 
 class Reader_MasterCook implements I_Interface {
 	// extension info

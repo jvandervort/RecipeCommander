@@ -1,4 +1,4 @@
-package com.rednoblue.jRecipe;
+package com.rednoblue.jrecipe;
 
 import java.awt.Dimension;
 import java.awt.EventQueue;
@@ -32,7 +32,7 @@ public class Splasher {
 		// Call the main method of the application using Reflection
 		// --------------------------------------------------------
 		try {
-			Class.forName("com.rednoblue.jRecipe.AppFrame").getMethod("main", new Class[] { String[].class })
+			Class.forName("com.rednoblue.jrecipe.AppFrame").getMethod("main", new Class[] { String[].class })
 					.invoke(null, new Object[] { args });
 		} catch (Throwable e) {
 			LOGGER.severe(e.toString());

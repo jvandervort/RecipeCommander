@@ -1,7 +1,7 @@
-package com.rednoblue.jRecipe.IO.Input;
+package com.rednoblue.jrecipe.io.input;
 
-import com.rednoblue.jRecipe.IO.MyFileFilter;
-import com.rednoblue.jRecipe.model.Book;
+import com.rednoblue.jrecipe.io.MyFileFilter;
+import com.rednoblue.jrecipe.model.Book;
 
 public interface I_Interface {
 	abstract public boolean isFileMine(String tenlines);

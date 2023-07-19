@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.rednoblue.jRecipe.logging;
+package com.rednoblue.jrecipe.logging;
 
 import java.io.IOException;
 import java.util.logging.ConsoleHandler;

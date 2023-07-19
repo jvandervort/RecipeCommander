@@ -1,4 +1,4 @@
-package com.rednoblue.jRecipe;
+package com.rednoblue.jrecipe;
 
 import java.awt.Dimension;
 import java.awt.FontMetrics;

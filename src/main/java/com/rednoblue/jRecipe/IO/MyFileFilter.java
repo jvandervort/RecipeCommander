@@ -1,4 +1,4 @@
-package com.rednoblue.jRecipe.IO;
+package com.rednoblue.jrecipe.io;
 
 import java.io.File;
 import java.util.Enumeration;

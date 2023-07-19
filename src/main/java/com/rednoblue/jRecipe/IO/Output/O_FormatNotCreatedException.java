@@ -1,4 +1,4 @@
-package com.rednoblue.jRecipe.IO.Output;
+package com.rednoblue.jrecipe.io.output;
 
 /**
  *

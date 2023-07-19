@@ -1,4 +1,4 @@
-package com.rednoblue.jRecipe;
+package com.rednoblue.jrecipe;
 
 import java.awt.Dimension;
 import java.awt.EventQueue;
@@ -38,16 +38,16 @@ import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 
-import com.rednoblue.jRecipe.IO.MyFileReader;
-import com.rednoblue.jRecipe.IO.MyFileWriter;
-import com.rednoblue.jRecipe.IO.Input.I_Interface;
-import com.rednoblue.jRecipe.dialogs.OpenUrl;
-import com.rednoblue.jRecipe.dialogs.SaveDialog;
-import com.rednoblue.jRecipe.logging.MyLogger;
-import com.rednoblue.jRecipe.model.Book;
-import com.rednoblue.jRecipe.model.BookUtils;
-import com.rednoblue.jRecipe.model.Recipe;
-import com.rednoblue.jRecipe.model.XmlUtils;
+import com.rednoblue.jrecipe.io.MyFileReader;
+import com.rednoblue.jrecipe.io.MyFileWriter;
+import com.rednoblue.jrecipe.io.input.I_Interface;
+import com.rednoblue.jrecipe.dialogs.OpenUrl;
+import com.rednoblue.jrecipe.dialogs.SaveDialog;
+import com.rednoblue.jrecipe.logging.MyLogger;
+import com.rednoblue.jrecipe.model.Book;
+import com.rednoblue.jrecipe.model.BookUtils;
+import com.rednoblue.jrecipe.model.Recipe;
+import com.rednoblue.jrecipe.model.XmlUtils;
 
 import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JRException;

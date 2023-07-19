@@ -1,4 +1,4 @@
-package com.rednoblue.jRecipe.model;
+package com.rednoblue.jrecipe.model;
 
 import java.util.logging.Logger;
 import java.util.regex.Matcher;

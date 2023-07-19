@@ -1,4 +1,4 @@
-package com.rednoblue.jRecipe.IO.Output;
+package com.rednoblue.jrecipe.io.output;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -27,11 +27,11 @@ import org.w3c.dom.ls.DOMImplementationLS;
 import org.w3c.dom.ls.LSOutput;
 import org.w3c.dom.ls.LSSerializer;
 
-import com.rednoblue.jRecipe.IO.MyFileFilter;
-import com.rednoblue.jRecipe.model.Book;
-import com.rednoblue.jRecipe.model.BookUtils;
-import com.rednoblue.jRecipe.model.Recipe;
-import com.rednoblue.jRecipe.model.XmlUtils;
+import com.rednoblue.jrecipe.io.MyFileFilter;
+import com.rednoblue.jrecipe.model.Book;
+import com.rednoblue.jrecipe.model.BookUtils;
+import com.rednoblue.jrecipe.model.Recipe;
+import com.rednoblue.jrecipe.model.XmlUtils;
 
 /**
  * Provides native xml output.

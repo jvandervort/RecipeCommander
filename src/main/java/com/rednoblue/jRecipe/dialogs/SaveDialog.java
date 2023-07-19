@@ -1,5 +1,5 @@
 
-package com.rednoblue.jRecipe.dialogs;
+package com.rednoblue.jrecipe.dialogs;
 
 import java.awt.Point;
 

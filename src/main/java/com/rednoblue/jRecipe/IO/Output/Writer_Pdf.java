@@ -1,12 +1,12 @@
-package com.rednoblue.jRecipe.IO.Output;
+package com.rednoblue.jrecipe.io.output;
 
 import java.net.URL;
 
-import com.rednoblue.jRecipe.IO.MyFileFilter;
-import com.rednoblue.jRecipe.model.Book;
-import com.rednoblue.jRecipe.model.BookUtils;
-import com.rednoblue.jRecipe.model.Recipe;
-import com.rednoblue.jRecipe.model.XmlUtils;
+import com.rednoblue.jrecipe.io.MyFileFilter;
+import com.rednoblue.jrecipe.model.Book;
+import com.rednoblue.jrecipe.model.BookUtils;
+import com.rednoblue.jrecipe.model.Recipe;
+import com.rednoblue.jrecipe.model.XmlUtils;
 
 // jasper imports
 import net.sf.jasperreports.engine.JRDataSource;

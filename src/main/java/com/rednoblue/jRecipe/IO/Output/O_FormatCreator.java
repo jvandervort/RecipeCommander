@@ -1,4 +1,4 @@
-package com.rednoblue.jRecipe.IO.Output;
+package com.rednoblue.jrecipe.io.output;
 
 //import java.util.*;
 import java.util.Hashtable;
@@ -12,7 +12,7 @@ public abstract class O_FormatCreator {
 			// format not found, try to load it
 			try {
 				System.err.println("Loading " + name);
-				Class.forName("com.rednoblue.jRecipe.IO.Output." + name);
+				Class.forName("com.rednoblue.jrecipe.io.output." + name);
 				// By now the static block with no function would
 				// have been executed if the output format was found.
 				// the output format is expected to have put its factory

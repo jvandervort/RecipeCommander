@@ -1,4 +1,4 @@
-package com.rednoblue.jRecipe.model;
+package com.rednoblue.jrecipe.model;
 
 import java.util.ArrayList;
 import java.util.Collections;

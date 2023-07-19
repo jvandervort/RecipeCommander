@@ -1,4 +1,4 @@
-package com.rednoblue.jRecipe.IO.Input;
+package com.rednoblue.jrecipe.io.input;
 
 import java.text.SimpleDateFormat;
 import java.util.Collection;
@@ -18,11 +18,11 @@ import org.xml.sax.SAXParseException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.DefaultHandler;
 
-import com.rednoblue.jRecipe.RecipeIndexer;
-import com.rednoblue.jRecipe.IO.MyFileFilter;
-import com.rednoblue.jRecipe.model.Book;
-import com.rednoblue.jRecipe.model.Ingredient;
-import com.rednoblue.jRecipe.model.Recipe;
+import com.rednoblue.jrecipe.RecipeIndexer;
+import com.rednoblue.jrecipe.io.MyFileFilter;
+import com.rednoblue.jrecipe.model.Book;
+import com.rednoblue.jrecipe.model.Ingredient;
+import com.rednoblue.jrecipe.model.Recipe;
 
 class Reader_XmlFile extends DefaultHandler implements I_Interface {
 	private final static Logger LOGGER = Logger.getLogger(Reader_XmlFile.class.getName());

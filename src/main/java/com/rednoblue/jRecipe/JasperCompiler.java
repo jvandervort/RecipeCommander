@@ -1,4 +1,4 @@
-package com.rednoblue.jRecipe;
+package com.rednoblue.jrecipe;
 
 import java.net.URL;
 import java.util.logging.Logger;

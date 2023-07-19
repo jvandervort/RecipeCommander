@@ -1,8 +1,8 @@
-package com.rednoblue.jRecipe.IO.Output;
+package com.rednoblue.jrecipe.io.output;
 
-import com.rednoblue.jRecipe.IO.MyFileFilter;
-import com.rednoblue.jRecipe.model.Book;
-import com.rednoblue.jRecipe.model.Recipe;
+import com.rednoblue.jrecipe.io.MyFileFilter;
+import com.rednoblue.jrecipe.model.Book;
+import com.rednoblue.jrecipe.model.Recipe;
 
 public class Writer_MealMaster implements O_Interface {
 	static private final String formatName = "Meal-Master";

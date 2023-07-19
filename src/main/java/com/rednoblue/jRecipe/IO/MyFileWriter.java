@@ -1,16 +1,16 @@
-package com.rednoblue.jRecipe.IO;
+package com.rednoblue.jrecipe.io;
 
 import java.io.File;
 import java.util.Enumeration;
 
 import javax.swing.JFileChooser;
 
-import com.rednoblue.jRecipe.AppFrame;
-import com.rednoblue.jRecipe.IO.Output.O_FormatCreator;
-import com.rednoblue.jRecipe.IO.Output.O_FormatNotCreatedException;
-import com.rednoblue.jRecipe.IO.Output.O_Interface;
-import com.rednoblue.jRecipe.model.Book;
-import com.rednoblue.jRecipe.model.Recipe;
+import com.rednoblue.jrecipe.AppFrame;
+import com.rednoblue.jrecipe.io.output.O_FormatCreator;
+import com.rednoblue.jrecipe.io.output.O_FormatNotCreatedException;
+import com.rednoblue.jrecipe.io.output.O_Interface;
+import com.rednoblue.jrecipe.model.Book;
+import com.rednoblue.jrecipe.model.Recipe;
 
 /**
  * Writes the book out to a file. Handles the creation of the various

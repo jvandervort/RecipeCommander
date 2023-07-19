@@ -1,4 +1,4 @@
-package com.rednoblue.jRecipe.IO.Input;
+package com.rednoblue.jrecipe.io.input;
 
 import java.util.Hashtable;
 import java.util.logging.Level;
@@ -17,7 +17,7 @@ public abstract class I_FormatCreator {
 		if (i == null) {
 			// format not found
 			try {
-				Class.forName("com.rednoblue.jRecipe.IO.Input." + name);
+				Class.forName("com.rednoblue.jrecipe.io.input." + name);
 				// By now the static block with no function would
 				// have been executed if the shape was found.
 				// the shape is expected to have put its factory
