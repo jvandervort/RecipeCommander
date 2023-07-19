@@ -18,6 +18,7 @@ import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.index.StoredFields;
+import org.apache.lucene.queryparser.classic.QueryParser;
 import org.apache.lucene.queryparser.flexible.standard.StandardQueryParser;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
@@ -26,21 +27,25 @@ import org.apache.lucene.search.Sort;
 import org.apache.lucene.search.TopFieldDocs;
 import org.apache.lucene.store.FSDirectory;
 
-import com.google.inject.Inject;
+import com.rednoblue.jrecipe.Global;
 import com.rednoblue.jrecipe.model.Book;
-import com.rednoblue.jrecipe.prefs.Prefs;
+import com.rednoblue.jrecipe.model.Ingredient;
+import com.rednoblue.jrecipe.model.Recipe;
 
+/**
+ * Provides indexing services to the GUI. Handles indexing and searching. The
+ * indexing is done in separate thread so it shouldn't affect the GUI.
+ * 
+ * @author John Vandervort
+ * @version 1.0
+ */
 public class RecipeIndexer {
 	private final static Logger LOGGER = Logger.getLogger(RecipeIndexer.class.getName());
-	public String indexLocation = "";
+	private String indexLocation = "";
 	public IndexerThread indexThread;
-	private Book book;
-	private Prefs prefs;
-	
-	@Inject
-	public RecipeIndexer(Book book, Prefs prefs) {
-		this.book = book;
-		this.prefs = prefs;
+
+	public RecipeIndexer() {
+
 	}
 
 	/**
@@ -48,8 +53,8 @@ public class RecipeIndexer {
 	 * 
 	 * @param book of recipes
 	 */
-	public void indexRecipes() {
-		indexThread = new IndexerThread(book, this, prefs);
+	public void indexRecipes(Book book) {
+		indexThread = new IndexerThread(book);
 		indexThread.start();
 	}
 
@@ -102,11 +107,64 @@ public class RecipeIndexer {
 		return returnList;
 	}
 
-	public boolean stillIndexing() {
-		if (indexThread != null && indexThread.isAlive()) {
-			return true;
+	public class IndexerThread extends Thread {
+
+		Book book;
+
+		public IndexerThread(Book book) {
+			super(IndexerThread.class.getName());
+			this.book = book;
 		}
-		return false;
+
+		@Override
+		public void run() {
+			LOGGER.info("Indexing NOW!");
+			try {
+				File f = File.createTempFile("Temp1", "out", null);
+				File tempDir = new File(f.getParent());
+				f.delete();
+				f = null;
+				indexLocation = new String(tempDir.getAbsolutePath() + "/" + Global.appName + "_index");
+
+				File[] files = new File(indexLocation).listFiles();
+				for (File file : files) {
+					file.delete();
+				}
+
+				FSDirectory dir = FSDirectory.open(Paths.get(indexLocation));
+				IndexWriterConfig config = new IndexWriterConfig(new StandardAnalyzer());
+				IndexWriter writer = new IndexWriter(dir, config);
+
+				Iterator<Recipe> it = book.getRecipes().iterator();
+				while (it.hasNext()) {
+					Recipe r = (Recipe) it.next();
+					// index Recipe
+					Document ldoc = new Document();
+					ldoc.add(new StoredField("UUID", r.getUUID().toString()));
+					ldoc.add(new TextField("Name", r.getRecipeName(), Field.Store.YES));
+					ldoc.add(new TextField("Source", r.getSource(), Field.Store.YES));
+					ldoc.add(new TextField("Chapter", r.getChapter(), Field.Store.YES));
+					ldoc.add(new TextField("Cat", r.getCat(), Field.Store.YES));
+					ldoc.add(new TextField("SubCat", r.getSubCat(), Field.Store.YES));
+					ldoc.add(new TextField("Origin", r.getOrigin(), Field.Store.YES));
+					ldoc.add(new TextField("Process", r.getProcess(), Field.Store.YES));
+					ldoc.add(new TextField("Comments", r.getComments(), Field.Store.YES));
+					Collection<Ingredient> ingList = r.getIngredientsList();
+					Iterator<Ingredient> ingIt = ingList.iterator();
+					while (ingIt.hasNext()) {
+						Ingredient i = (Ingredient) ingIt.next();
+						ldoc.add(new TextField("Ingredient", i.getName(), Field.Store.YES));
+					}
+					writer.addDocument(ldoc);
+				}
+				// writer.optimize();
+				writer.close();
+				LOGGER.info("Indexing complete");
+
+			} catch (java.io.IOException ex) {
+				LOGGER.severe(ex.toString());
+				ex.printStackTrace();
+			}
+		}
 	}
-	
 }

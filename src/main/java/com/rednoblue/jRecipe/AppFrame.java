@@ -43,6 +43,7 @@ import com.rednoblue.jrecipe.io.MyFileWriter;
 import com.rednoblue.jrecipe.io.input.I_Interface;
 import com.rednoblue.jrecipe.dialogs.OpenUrl;
 import com.rednoblue.jrecipe.dialogs.SaveDialog;
+import com.rednoblue.jrecipe.fulltext.RecipeIndexer;
 import com.rednoblue.jrecipe.logging.MyLogger;
 import com.rednoblue.jrecipe.model.Book;
 import com.rednoblue.jrecipe.model.BookUtils;

@@ -18,7 +18,6 @@ import org.xml.sax.SAXParseException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.DefaultHandler;
 
-import com.rednoblue.jrecipe.RecipeIndexer;
 import com.rednoblue.jrecipe.io.MyFileFilter;
 import com.rednoblue.jrecipe.model.Book;
 import com.rednoblue.jrecipe.model.Ingredient;
