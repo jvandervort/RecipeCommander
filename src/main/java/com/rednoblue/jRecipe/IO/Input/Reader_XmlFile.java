@@ -1,7 +1,6 @@
 package com.rednoblue.jrecipe.io.input;
 
 import java.text.SimpleDateFormat;
-import java.util.Collection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
@@ -23,9 +22,11 @@ import com.rednoblue.jrecipe.model.Book;
 import com.rednoblue.jrecipe.model.Ingredient;
 import com.rednoblue.jrecipe.model.Recipe;
 
-class Reader_XmlFile extends DefaultHandler implements I_Interface {
-	private final static Logger LOGGER = Logger.getLogger(Reader_XmlFile.class.getName());
-
+public class Reader_XmlFile extends DefaultHandler implements I_Interface {
+	static private final String formatName = "jRecipe";
+	static private final String[] fileExtension = { "xml", "jrec" };
+	static private final String fileDescription = formatName + " Files";
+	
 	//
 	// Constants
 	//
@@ -87,21 +88,11 @@ class Reader_XmlFile extends DefaultHandler implements I_Interface {
 	protected static final boolean DEFAULT_MEMORY_USAGE = false;
 	protected static final boolean DEFAULT_TAGGINESS = false;
 	protected static final String SCHEMA_LOCATION_PROP = "http://apache.org/xml/properties/schema/external-noNamespaceSchemaLocation";
-	// Data
-	private Collection iList;
-	// Collection of ingredient objects
-	// private Collection rList;
-	// Collection of recipes in book
+
 	private Recipe rec;
-	// recipe, gets pushed onto Collection
 	private Ingredient ingred;
-	// book
 	private Book book;
 	private String chars;
-	// extension info
-	static private final String formatName = "jRecipe";
-	static private final String[] fileExtension = { "xml", "jrec" };
-	static private final String fileDescription = formatName + " Files";
 
 	public Reader_XmlFile() {
 	}
@@ -296,7 +287,7 @@ class Reader_XmlFile extends DefaultHandler implements I_Interface {
 						ingred.setName(attributes.getValue(i));
 					}
 					if (attributes.getLocalName(i).equalsIgnoreCase("Amount")) {
-						Float fltVal = new Float(attributes.getValue(i));
+						float fltVal = Float.parseFloat(attributes.getValue(i));
 						ingred.setAmount(fltVal);
 					}
 					if (attributes.getLocalName(i).equalsIgnoreCase("Units")) {
@@ -430,14 +421,4 @@ class Reader_XmlFile extends DefaultHandler implements I_Interface {
 		}
 	}
 
-	static class XmlReaderFactory extends I_Factory {
-
-		public I_Interface create() {
-			return (new Reader_XmlFile());
-		}
-	}
-
-	static {
-		I_FormatCreator.iFactories.put("Reader_XmlFile", new XmlReaderFactory());
-	}
 }

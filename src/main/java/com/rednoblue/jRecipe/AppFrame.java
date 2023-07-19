@@ -41,6 +41,7 @@ import javax.swing.tree.TreePath;
 import com.rednoblue.jrecipe.io.MyFileReader;
 import com.rednoblue.jrecipe.io.MyFileWriter;
 import com.rednoblue.jrecipe.io.input.I_Interface;
+import com.rednoblue.jrecipe.io.input.Reader_XmlFile;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.rednoblue.jrecipe.dialogs.OpenUrl;
@@ -1548,7 +1549,7 @@ public class AppFrame extends javax.swing.JFrame implements FileHistory.IFileHis
 				}
 
 				StringReader sr = new StringReader(data);
-				I_Interface reader = MyFileReader.getSpecificReader("Reader_XmlFile");
+				I_Interface reader = new Reader_XmlFile();
 
 				reader.parseSource(sr);
 				Book tbook = new Book();

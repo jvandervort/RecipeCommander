@@ -9,21 +9,12 @@ import com.rednoblue.jrecipe.model.Book;
 import com.rednoblue.jrecipe.model.Ingredient;
 import com.rednoblue.jrecipe.model.Recipe;
 
-class Reader_MasterCook implements I_Interface {
-	// extension info
+public class Reader_MasterCook implements I_Interface {
 	static private final String formatName = "MasterCook";
 	static private final String fileExtension = "txt";
 	static private final String fileDescription = formatName + " Files";
 
-	// ingredient objects
-	private ArrayList<Ingredient> iList;
-	// recipes in book
 	private ArrayList<Recipe> rList;
-	// recipe, gets pushed onto Collection
-	private Recipe rec;
-	// Ingredient, gets pushed onto Collection
-	private Ingredient ingred;
-	// book
 	private Book book;
 
 	public Reader_MasterCook() {
@@ -43,7 +34,7 @@ class Reader_MasterCook implements I_Interface {
 
 	public void parseSource(java.io.Reader reader) {
 		final int recStart = 1;
-		final int recTitle = 2;
+		//final int recTitle = 2;
 		final int recCat = 3;
 		// final int recYield=4;
 		final int recIngredients = 4;
@@ -201,10 +192,6 @@ class Reader_MasterCook implements I_Interface {
 
 	}
 
-	public String getFormatName() {
-		return formatName;
-	}
-
 	public Book getBook() {
 		return book;
 	}
@@ -221,15 +208,4 @@ class Reader_MasterCook implements I_Interface {
 			return false;
 		}
 	}
-
-	static class MasterCookReaderFactory extends I_Factory {
-		public I_Interface create() {
-			return (new Reader_MasterCook());
-		}
-	}
-
-	static {
-		I_FormatCreator.iFactories.put("Reader_MasterCook", new MasterCookReaderFactory());
-	}
-
 }

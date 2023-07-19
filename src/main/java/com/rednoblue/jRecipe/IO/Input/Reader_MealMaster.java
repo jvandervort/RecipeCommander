@@ -9,21 +9,12 @@ import com.rednoblue.jrecipe.model.Book;
 import com.rednoblue.jrecipe.model.Ingredient;
 import com.rednoblue.jrecipe.model.Recipe;
 
-class Reader_MealMaster implements I_Interface {
-	// extension info
+public class Reader_MealMaster implements I_Interface {
 	static private final String formatName = "Meal-Master";
 	static private final String fileExtension = "mmf";
 	static private final String fileDescription = formatName + " Files";
 
-	// Collection of ingredient objects
-	private ArrayList<Ingredient> iList;
-	// Collection of recipes in book
 	private ArrayList<Recipe> rList;
-	// recipe, gets pushed onto Collection
-	private Recipe rec;
-	// Ingredient, gets pushed onto Collection
-	private Ingredient ingred;
-	// book
 	private Book book;
 
 	public Reader_MealMaster() {
@@ -226,10 +217,6 @@ class Reader_MealMaster implements I_Interface {
 		}
 	}
 
-	public String getFormatName() {
-		return formatName;
-	}
-
 	public Book getBook() {
 		return book;
 	}
@@ -246,15 +233,4 @@ class Reader_MealMaster implements I_Interface {
 			return false;
 		}
 	}
-
-	static class MealMasterReaderFactory extends I_Factory {
-		public I_Interface create() {
-			return (new Reader_MealMaster());
-		}
-	}
-
-	static {
-		I_FormatCreator.iFactories.put("Reader_MealMaster", new MealMasterReaderFactory());
-	}
-
 }

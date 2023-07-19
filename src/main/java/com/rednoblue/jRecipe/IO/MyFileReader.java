@@ -7,82 +7,66 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
-import java.util.Enumeration;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
 import javax.swing.JFileChooser;
 
 import com.rednoblue.jrecipe.AppFrame;
 import com.rednoblue.jrecipe.Global;
-import com.rednoblue.jrecipe.io.input.I_FormatCreator;
 import com.rednoblue.jrecipe.io.input.I_Interface;
-import com.rednoblue.jrecipe.io.input.InputFormatNotCreatedException;
+import com.rednoblue.jrecipe.io.input.Reader_MasterCook;
+import com.rednoblue.jrecipe.io.input.Reader_MealMaster;
+import com.rednoblue.jrecipe.io.input.Reader_XmlFile;
 import com.rednoblue.jrecipe.model.Book;
 
 /**
  * Handles the loading of a recipe book
  */
-public class MyFileReader extends I_FormatCreator {
-
+public class MyFileReader {
+	private Reader_XmlFile readerXmlFile;
+	private Reader_MasterCook readerMasterCook;
+	private Reader_MealMaster readerMealMaster;
+	
 	private String fileName = "";
 	private Book book;
-	private String[] iFormats = { "Reader_MealMaster", "Reader_MasterCook", "Reader_XmlFile" };
 
 	public MyFileReader() {
-		createInputFormats();
+		readerXmlFile = new Reader_XmlFile();
+		readerMasterCook = new Reader_MasterCook();
+		readerMealMaster = new Reader_MealMaster();
 	}
 
 	public MyFileReader(String argFileName) throws FileNotFoundException, IOException {
-		createInputFormats();
+		this();
 		fileName = argFileName;
 		loadFile();
 	}
 
-	private void createInputFormats() {
-		for (int i = 0; i < iFormats.length; i++) {
-			try {
-				I_Interface reader = createFormat(iFormats[i]);
-			} catch (InputFormatNotCreatedException e) {
-				Logger.getLogger(MyFileReader.class.getName()).log(Level.SEVERE, null, iFormats[i] + " " + e);
-			} catch (ClassCastException e) {
-				Logger.getLogger(MyFileReader.class.getName()).log(Level.SEVERE, null, iFormats[i] + " " + e);
-			}
-		}
-	}
-
 	private I_Interface getCorrectReader(String tenlines) {
-		for (int i = 0; i < iFormats.length; i++) {
-			try {
-				I_Interface reader = createFormat(iFormats[i]);
-				if (reader.isFileMine(tenlines)) {
-					return reader;
-				}
-			} catch (InputFormatNotCreatedException e) {
-				Logger.getLogger(MyFileReader.class.getName()).log(Level.SEVERE, null, iFormats[i] + " " + e);
-			} catch (ClassCastException e) {
-				Logger.getLogger(MyFileReader.class.getName()).log(Level.SEVERE, null, iFormats[i] + " " + e);
-			}
+		if (readerXmlFile.isFileMine(tenlines)) {
+			return readerXmlFile;
+		}
+		if (readerMasterCook.isFileMine(tenlines)) {
+			return readerMasterCook;
+		}
+		if (readerMealMaster.isFileMine(tenlines)) {
+			return readerMealMaster;
 		}
 		return null;
 	}
 
-	public BufferedReader openBufferedReader() throws FileNotFoundException, IOException {
+	@SuppressWarnings("resource")
+	public BufferedReader getBufferedReader() throws FileNotFoundException, IOException {
 		BufferedReader br = null;
 		if (fileName.startsWith("http://") == true || fileName.startsWith("file:/") == true
 				|| fileName.equals("/test/TestXmlBook.xml")) {
 			// normal files and internal .jar file
 			java.io.Reader r = null;
 			URL u = null;
-			if (fileName.equals("/test/TestXmlBook.xml")) {
-				u = getClass().getResource("/test/TestXmlBook.xml");
-				Global.lastFileName = fileName;
-			} else {
-				u = new URL(fileName.replaceAll(" ", "%20"));
-				Global.lastFileName = new String(u.toString().replaceAll("%20", " "));
-			}
+			u = new URL(fileName.replaceAll(" ", "%20"));
+			Global.lastFileName = new String(u.toString().replaceAll("%20", " "));
 			r = new InputStreamReader(u.openStream());
 			br = new BufferedReader(r);
 
@@ -91,7 +75,7 @@ public class MyFileReader extends I_FormatCreator {
 			ZipInputStream in = null;
 			String inFilename = fileName;
 			in = new ZipInputStream(new FileInputStream(inFilename));
-			ZipEntry entry = in.getNextEntry();
+			in.getNextEntry();
 			br = new BufferedReader((java.io.Reader) new InputStreamReader(in));
 			Global.lastFileName = fileName;
 		} else {
@@ -107,7 +91,7 @@ public class MyFileReader extends I_FormatCreator {
 	public void loadFile() throws FileNotFoundException, IOException {
 		Logger.getLogger(MyFileReader.class.getName()).log(Level.INFO, fileName);
 		BufferedReader br = null;
-		br = openBufferedReader();
+		br = getBufferedReader();
 		StringBuffer b = new StringBuffer("");
 		for (int i = 0; i < 10; i++) {
 			b.append(br.readLine() + " ");
@@ -115,7 +99,7 @@ public class MyFileReader extends I_FormatCreator {
 		br.close();
 		I_Interface reader = getCorrectReader(b.toString());
 		if (reader != null) {
-			java.io.Reader r = (java.io.Reader) openBufferedReader();
+			java.io.Reader r = (java.io.Reader) getBufferedReader();
 			reader.parseSource(r);
 			book = reader.getBook();
 		}
@@ -127,29 +111,12 @@ public class MyFileReader extends I_FormatCreator {
 	}
 
 	public boolean browseFileSystem(AppFrame app) {
-		// Create a file chooser
 		final JFileChooser fc = new JFileChooser(app.getLastFileName());
-		// Set Filters
-		Enumeration<String> keys = iFactories.keys();
-		MyFileFilter jRecipeFilter = null;
-		while (keys.hasMoreElements()) {
-			String key = (String) keys.nextElement();
-			try {
-				I_Interface i = createFormat(key);
-				MyFileFilter f = i.getChoosableFileFilter();
-				fc.addChoosableFileFilter(f);
-				if (i.getFormatName().equals("jRecipe")) {
-					jRecipeFilter = f;
-				}
-
-			} catch (InputFormatNotCreatedException e) {
-				Logger.getLogger(MyFileReader.class.getName()).log(Level.SEVERE, null, e);
-
-			} catch (ClassCastException e) {
-				Logger.getLogger(MyFileReader.class.getName()).log(Level.SEVERE, null, e);
-			}
-		}
-
+		
+		MyFileFilter jRecipeFilter = readerXmlFile.getChoosableFileFilter();
+		fc.addChoosableFileFilter(jRecipeFilter);
+		fc.addChoosableFileFilter(readerMasterCook.getChoosableFileFilter());
+		fc.addChoosableFileFilter(readerMealMaster.getChoosableFileFilter());
 		fc.setFileFilter(jRecipeFilter);
 
 		// In response to a button click:
@@ -175,19 +142,5 @@ public class MyFileReader extends I_FormatCreator {
 
 	public String getFileName() {
 		return fileName;
-	}
-
-	public static I_Interface getSpecificReader(String name) {
-
-		try {
-			I_Interface reader = createFormat(name);
-			return reader;
-		} catch (InputFormatNotCreatedException e) {
-			Logger.getLogger(MyFileReader.class.getName()).log(Level.SEVERE, null, e);
-			return null;
-		} catch (ClassCastException e) {
-			Logger.getLogger(MyFileReader.class.getName()).log(Level.SEVERE, null, e);
-			return null;
-		}
 	}
 }
