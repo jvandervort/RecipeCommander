@@ -40,8 +40,8 @@ import javax.swing.tree.TreePath;
 
 import com.rednoblue.jrecipe.io.MyFileReader;
 import com.rednoblue.jrecipe.io.MyFileWriter;
-import com.rednoblue.jrecipe.io.input.I_Interface;
-import com.rednoblue.jrecipe.io.input.Reader_XmlFile;
+import com.rednoblue.jrecipe.io.input.IRecipeReader;
+import com.rednoblue.jrecipe.io.input.ReaderXmlFile;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.rednoblue.jrecipe.dialogs.OpenUrl;
@@ -1030,8 +1030,6 @@ public class AppFrame extends javax.swing.JFrame implements FileHistory.IFileHis
 	private void saveAsActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_saveAsActionPerformed
 		MyFileWriter writer = new MyFileWriter();
 		if (writer.browseFileSystem(AppFrame.this, "jRecipe")) {
-			String fileName = writer.getFileName();
-
 			if (writer.saveAsFile(book, null, writer.getFileName()) == true) {
 				if (writer.getLastWriter().isReadable()) {
 					Global.lastFileName = writer.getFileName();
@@ -1549,7 +1547,7 @@ public class AppFrame extends javax.swing.JFrame implements FileHistory.IFileHis
 				}
 
 				StringReader sr = new StringReader(data);
-				I_Interface reader = new Reader_XmlFile();
+				IRecipeReader reader = new ReaderXmlFile();
 
 				reader.parseSource(sr);
 				Book tbook = new Book();

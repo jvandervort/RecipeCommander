@@ -15,27 +15,27 @@ import javax.swing.JFileChooser;
 
 import com.rednoblue.jrecipe.AppFrame;
 import com.rednoblue.jrecipe.Global;
-import com.rednoblue.jrecipe.io.input.I_Interface;
-import com.rednoblue.jrecipe.io.input.Reader_MasterCook;
-import com.rednoblue.jrecipe.io.input.Reader_MealMaster;
-import com.rednoblue.jrecipe.io.input.Reader_XmlFile;
+import com.rednoblue.jrecipe.io.input.IRecipeReader;
+import com.rednoblue.jrecipe.io.input.ReaderMasterCook;
+import com.rednoblue.jrecipe.io.input.ReaderMealMaster;
+import com.rednoblue.jrecipe.io.input.ReaderXmlFile;
 import com.rednoblue.jrecipe.model.Book;
 
 /**
  * Handles the loading of a recipe book
  */
 public class MyFileReader {
-	private Reader_XmlFile readerXmlFile;
-	private Reader_MasterCook readerMasterCook;
-	private Reader_MealMaster readerMealMaster;
+	private ReaderXmlFile readerXmlFile;
+	private ReaderMasterCook readerMasterCook;
+	private ReaderMealMaster readerMealMaster;
 	
 	private String fileName = "";
 	private Book book;
 
 	public MyFileReader() {
-		readerXmlFile = new Reader_XmlFile();
-		readerMasterCook = new Reader_MasterCook();
-		readerMealMaster = new Reader_MealMaster();
+		readerXmlFile = new ReaderXmlFile();
+		readerMasterCook = new ReaderMasterCook();
+		readerMealMaster = new ReaderMealMaster();
 	}
 
 	public MyFileReader(String argFileName) throws FileNotFoundException, IOException {
@@ -44,7 +44,7 @@ public class MyFileReader {
 		loadFile();
 	}
 
-	private I_Interface getCorrectReader(String tenlines) {
+	private IRecipeReader getCorrectReader(String tenlines) {
 		if (readerXmlFile.isFileMine(tenlines)) {
 			return readerXmlFile;
 		}
@@ -97,7 +97,7 @@ public class MyFileReader {
 			b.append(br.readLine() + " ");
 		}
 		br.close();
-		I_Interface reader = getCorrectReader(b.toString());
+		IRecipeReader reader = getCorrectReader(b.toString());
 		if (reader != null) {
 			java.io.Reader r = (java.io.Reader) getBufferedReader();
 			reader.parseSource(r);
