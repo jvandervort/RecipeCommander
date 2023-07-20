@@ -74,18 +74,14 @@ public class MyFileWriter {
 					System.err.println("Rename Successful");
 				}
 			}
-			fileWriter.setBook(book);
-			if (rec != null) {
-				fileWriter.setRec(rec);
-			}
-			fileWriter.setFileName(fileName);
-			fileWriter.write();
+			fileWriter.write(book, rec, fileName);
+			return true;
+			
 		} catch (Exception e) {
 			System.err.println(this.getClass().getName() + ".saveFile: " + e.getMessage());
 			e.printStackTrace();
 		}
-
-		return true;
+		return false;
 	}
 
 	public String browseFileSystem(AppFrame app, String selectedFormat) {
