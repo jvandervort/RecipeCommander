@@ -13,6 +13,7 @@ import java.util.zip.ZipInputStream;
 
 import javax.swing.JFileChooser;
 
+import com.google.inject.Inject;
 import com.rednoblue.jrecipe.AppFrame;
 import com.rednoblue.jrecipe.Global;
 import com.rednoblue.jrecipe.io.input.IRecipeReader;
@@ -28,20 +29,65 @@ public class MyFileReader {
 	private ReaderXmlFile readerXmlFile;
 	private ReaderMasterCook readerMasterCook;
 	private ReaderMealMaster readerMealMaster;
-	
-	private String fileName = "";
+
 	private Book book;
 
-	public MyFileReader() {
-		readerXmlFile = new ReaderXmlFile();
-		readerMasterCook = new ReaderMasterCook();
-		readerMealMaster = new ReaderMealMaster();
+	@Inject
+	public MyFileReader(ReaderXmlFile readerXmlFile, ReaderMasterCook readerMasterCook,
+			ReaderMealMaster readerMealMaster) {
+		this.readerXmlFile = readerXmlFile;
+		this.readerMasterCook = readerMasterCook;
+		this.readerMealMaster = readerMealMaster;
 	}
 
-	public MyFileReader(String argFileName) throws FileNotFoundException, IOException {
-		this();
-		fileName = argFileName;
-		loadFile();
+	public void loadFile(String fileName) throws FileNotFoundException, IOException {
+		String tenLines = getTenLines(fileName);
+		IRecipeReader reader = getCorrectReader(tenLines);
+		if (reader == null) {
+			Logger.getLogger(MyFileReader.class.getName()).log(Level.SEVERE, null, "unsupported file format");
+			return;
+		}
+		java.io.Reader r = (java.io.Reader) getBufferedReader(fileName);
+		book = reader.parseSource(r);
+	}
+
+	public String browseFileSystem(AppFrame app) {
+		final JFileChooser fc = new JFileChooser(app.getLastFileName());
+
+		MyFileFilter jRecipeFilter = readerXmlFile.getChoosableFileFilter();
+		fc.addChoosableFileFilter(jRecipeFilter);
+		fc.addChoosableFileFilter(readerMasterCook.getChoosableFileFilter());
+		fc.addChoosableFileFilter(readerMealMaster.getChoosableFileFilter());
+		fc.setFileFilter(jRecipeFilter);
+
+		// In response to a button click:
+		int returnVal = fc.showOpenDialog(app);
+
+		if (returnVal == JFileChooser.APPROVE_OPTION) {
+			File f = fc.getSelectedFile();
+			return f.getAbsolutePath();
+		} else {
+			return null;
+		}
+	}
+
+	public Book getBook() {
+		return book;
+	}
+
+	private String getTenLines(String fileName) {
+		try (BufferedReader br = getBufferedReader(fileName)) {
+			StringBuffer b = new StringBuffer("");
+			for (int i = 0; i < 10; i++) {
+				b.append(br.readLine() + " ");
+			}
+			return b.toString();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	private IRecipeReader getCorrectReader(String tenlines) {
@@ -58,7 +104,7 @@ public class MyFileReader {
 	}
 
 	@SuppressWarnings("resource")
-	public BufferedReader getBufferedReader() throws FileNotFoundException, IOException {
+	private BufferedReader getBufferedReader(String fileName) throws FileNotFoundException, IOException {
 		BufferedReader br = null;
 		if (fileName.startsWith("http://") == true || fileName.startsWith("file:/") == true
 				|| fileName.equals("/test/TestXmlBook.xml")) {
@@ -86,61 +132,5 @@ public class MyFileReader {
 			Global.lastFileName = fileName;
 		}
 		return br;
-	}
-
-	public void loadFile() throws FileNotFoundException, IOException {
-		Logger.getLogger(MyFileReader.class.getName()).log(Level.INFO, fileName);
-		BufferedReader br = null;
-		br = getBufferedReader();
-		StringBuffer b = new StringBuffer("");
-		for (int i = 0; i < 10; i++) {
-			b.append(br.readLine() + " ");
-		}
-		br.close();
-		IRecipeReader reader = getCorrectReader(b.toString());
-		if (reader != null) {
-			java.io.Reader r = (java.io.Reader) getBufferedReader();
-			reader.parseSource(r);
-			book = reader.getBook();
-		}
-
-		if (reader == null) {
-			// unsupported file format, maybe detect later
-			Logger.getLogger(MyFileReader.class.getName()).log(Level.SEVERE, null, "unsupported file format");
-		}
-	}
-
-	public boolean browseFileSystem(AppFrame app) {
-		final JFileChooser fc = new JFileChooser(app.getLastFileName());
-		
-		MyFileFilter jRecipeFilter = readerXmlFile.getChoosableFileFilter();
-		fc.addChoosableFileFilter(jRecipeFilter);
-		fc.addChoosableFileFilter(readerMasterCook.getChoosableFileFilter());
-		fc.addChoosableFileFilter(readerMealMaster.getChoosableFileFilter());
-		fc.setFileFilter(jRecipeFilter);
-
-		// In response to a button click:
-		int returnVal = fc.showOpenDialog(app);
-
-		if (returnVal == JFileChooser.APPROVE_OPTION) {
-			File f = fc.getSelectedFile();
-			fileName = f.getAbsolutePath();
-			return true;
-		} else {
-			return false;
-		}
-
-	}
-
-	public void setFileName(String argFileName) {
-		fileName = argFileName;
-	}
-
-	public Book getBook() {
-		return book;
-	}
-
-	public String getFileName() {
-		return fileName;
 	}
 }

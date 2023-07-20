@@ -6,21 +6,6 @@ import java.util.Hashtable;
 
 import javax.swing.filechooser.FileFilter;
 
-/**
- * A convenience implementation of FileFilter that filters out all files except
- * for those type extensions that it knows about.
- *
- * Extensions are of the type ".foo", which is typically found on Windows and
- * Unix boxes, but not on Macinthosh. Case is ignored.
- *
- * Example - create a new filter that filerts out all files but gif and jpg
- * image files:
- *
- * JFileChooser chooser = new JFileChooser(); ExampleFileFilter filter = new
- * ExampleFileFilter( new String{"gif", "jpg"}, "JPEG & GIF Images")
- * chooser.addChoosableFileFilter(filter); chooser.showOpenDialog(this);
- *
- */
 public class MyFileFilter extends FileFilter {
 
 	private Hashtable<String, MyFileFilter> filters = null;

@@ -147,14 +147,16 @@ public class AppFrame extends javax.swing.JFrame implements FileHistory.IFileHis
 	private final Logger logger;
 	private XmlUtils xmlUtils;
 	private MyFileWriter fileWriter;
+	private MyFileReader fileReader;
 	
 	@Inject
-	public AppFrame(Logger logger, JasperCompiler jasperCompiler, RecipeIndexer recipeIndexer, XmlUtils xmlUtils, MyFileWriter fileWriter) {
+	public AppFrame(Logger logger, JasperCompiler jasperCompiler, RecipeIndexer recipeIndexer, XmlUtils xmlUtils, MyFileWriter fileWriter, MyFileReader fileReader) {
 		this.logger = logger;
 		this.xmlUtils = xmlUtils;
 		this.jasperCompiler = jasperCompiler;
 		this.recipeIndexer = recipeIndexer;
 		this.fileWriter = fileWriter;
+		this.fileReader = fileReader;
 
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -1038,9 +1040,9 @@ public class AppFrame extends javax.swing.JFrame implements FileHistory.IFileHis
 			}
 		}
 
-		MyFileReader reader = new MyFileReader();
-		if (reader.browseFileSystem(AppFrame.this)) {
-			if (openBook(reader.getFileName())) {
+		String fileName = fileReader.browseFileSystem(AppFrame.this);
+		if (fileName != null) {
+			if (openBook(fileName)) {
 				fileHistory.insertPathname(Global.lastFileName);
 			}
 		}
@@ -1121,8 +1123,8 @@ public class AppFrame extends javax.swing.JFrame implements FileHistory.IFileHis
 
 	public boolean openBook(String path) {
 		try {
-			MyFileReader reader = new MyFileReader(path);
-			book = reader.getBook();
+			fileReader.loadFile(path);
+			book = fileReader.getBook();
 			if (book == null) {
 				return false;
 			}
@@ -1502,10 +1504,8 @@ public class AppFrame extends javax.swing.JFrame implements FileHistory.IFileHis
 
 				StringReader sr = new StringReader(data);
 				IRecipeReader reader = new ReaderXmlFile();
-
-				reader.parseSource(sr);
-				Book tbook = new Book();
-				tbook = reader.getBook();
+				
+				Book tbook = reader.parseSource(sr);
 				if (tbook.recipeCount() > 0) {
 					ArrayList<Recipe> rList = (ArrayList<Recipe>) tbook.getRecipes();
 					Recipe rec = (Recipe) rList.get(0);
