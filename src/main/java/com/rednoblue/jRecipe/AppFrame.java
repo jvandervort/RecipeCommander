@@ -25,12 +25,30 @@ import java.util.Map;
 import java.util.logging.Logger;
 
 import javax.swing.Action;
+import javax.swing.BorderFactory;
+import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
+import javax.swing.JRadioButtonMenuItem;
+import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
+import javax.swing.JSplitPane;
+import javax.swing.JTextField;
+import javax.swing.JToolBar;
 import javax.swing.JTree;
+import javax.swing.KeyStroke;
 import javax.swing.TransferHandler;
 import javax.swing.UIManager;
+import javax.swing.WindowConstants;
+import javax.swing.border.BevelBorder;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -62,64 +80,64 @@ import net.sf.jasperreports.engine.data.JRXmlDataSource;
 import net.sf.jasperreports.view.JasperViewer;
 
 @Singleton
-public class AppFrame extends javax.swing.JFrame implements FileHistory.IFileHistory {
+public class AppFrame extends JFrame implements FileHistory.IFileHistory {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private javax.swing.JButton btnNew;
-	private javax.swing.JButton btnOpen;
-	private javax.swing.JButton btnPrint;
-	private javax.swing.JButton btnSave;
-	private javax.swing.JPanel details_panel;
-	private javax.swing.JScrollPane jScrollPane1;
-	private javax.swing.JMenuBar menuBar;
-	private javax.swing.JMenuItem miCopy;
-	private javax.swing.JMenuItem miCut;
-	private javax.swing.JMenuItem miDelRecipe;
-	private javax.swing.JMenuItem miExit;
-	private javax.swing.JCheckBoxMenuItem miFilter;
-	private javax.swing.JMenuItem miNew;
-	private javax.swing.JMenuItem miNewRecipe;
-	private javax.swing.JMenuItem miOpen;
-	private javax.swing.JMenuItem miOpenRecipe;
-	private javax.swing.JMenuItem miOpenURL;
-	private javax.swing.JMenuItem miPaste;
-	private javax.swing.JMenuItem miPdfExport;
-	private javax.swing.JMenuItem miPdfView;
-	private javax.swing.JMenuItem miPrintRecipe;
-	private javax.swing.JMenuItem miSave;
-	private javax.swing.JMenuItem miSaveAs;
-	private javax.swing.JRadioButtonMenuItem miViewByChapter;
-	private javax.swing.JRadioButtonMenuItem miViewByOrigin;
-	private javax.swing.JRadioButtonMenuItem miViewByRecipe;
-	private javax.swing.JRadioButtonMenuItem miViewBySource;
-	private javax.swing.JMenu mnuEdit;
-	private javax.swing.JMenu mnuFile;
-	private javax.swing.JMenu mnuPdf;
-	private javax.swing.JMenu mnuRecipe;
-	private javax.swing.JMenu mnuSearch;
-	private javax.swing.JMenu mnuView;
-	private javax.swing.JMenuItem pmiCopyPlaintext;
-	private javax.swing.JMenuItem pmiCopyRec;
-	private javax.swing.JMenuItem pmiCutRec;
-	private javax.swing.JMenuItem pmiExportRec;
-	private javax.swing.JMenuItem pmiNewRec;
-	private javax.swing.JMenuItem pmiOpenRec;
-	private javax.swing.JMenuItem pmiPasteRec;
-	private javax.swing.JMenuItem pmiPrintRec;
-	private javax.swing.JSeparator pmiSep1;
-	private javax.swing.JSeparator pmiSep2;
-	private javax.swing.JPopupMenu pmnuRec;
-	private javax.swing.JTree recipeTree;
-	private javax.swing.JPanel statusPanel;
-	private javax.swing.JToolBar toolBar;
-	private javax.swing.JTextField txtStatusBar;
-	private javax.swing.JSplitPane vSplitPane;
-	private javax.swing.ButtonGroup viewByButtonGroup;
-	private javax.swing.JPanel viewer_panel;
-	private javax.swing.JScrollPane viewer_scroller;
+	private JButton btnNew;
+	private JButton btnOpen;
+	private JButton btnPrint;
+	private JButton btnSave;
+	private JPanel details_panel;
+	private JScrollPane jScrollPane1;
+	private JMenuBar menuBar;
+	private JMenuItem miCopy;
+	private JMenuItem miCut;
+	private JMenuItem miDelRecipe;
+	private JMenuItem miExit;
+	private JCheckBoxMenuItem miFilter;
+	private JMenuItem miNew;
+	private JMenuItem miNewRecipe;
+	private JMenuItem miOpen;
+	private JMenuItem miOpenRecipe;
+	private JMenuItem miOpenURL;
+	private JMenuItem miPaste;
+	private JMenuItem miPdfExport;
+	private JMenuItem miPdfView;
+	private JMenuItem miPrintRecipe;
+	private JMenuItem miSave;
+	private JMenuItem miSaveAs;
+	private JRadioButtonMenuItem miViewByChapter;
+	private JRadioButtonMenuItem miViewByOrigin;
+	private JRadioButtonMenuItem miViewByRecipe;
+	private JRadioButtonMenuItem miViewBySource;
+	private JMenu mnuEdit;
+	private JMenu mnuFile;
+	private JMenu mnuPdf;
+	private JMenu mnuRecipe;
+	private JMenu mnuSearch;
+	private JMenu mnuView;
+	private JMenuItem pmiCopyPlaintext;
+	private JMenuItem pmiCopyRec;
+	private JMenuItem pmiCutRec;
+	private JMenuItem pmiExportRec;
+	private JMenuItem pmiNewRec;
+	private JMenuItem pmiOpenRec;
+	private JMenuItem pmiPasteRec;
+	private JMenuItem pmiPrintRec;
+	private JSeparator pmiSep1;
+	private JSeparator pmiSep2;
+	private JPopupMenu pmnuRec;
+	private JTree recipeTree;
+	private JPanel statusPanel;
+	private JToolBar toolBar;
+	private JTextField txtStatusBar;
+	private JSplitPane vSplitPane;
+	private ButtonGroup viewByButtonGroup;
+	private JPanel viewer_panel;
+	private JScrollPane viewer_scroller;
 	private FilterDialog filterDialog;
 
 	private FileHistory fileHistory;
@@ -155,7 +173,7 @@ public class AppFrame extends javax.swing.JFrame implements FileHistory.IFileHis
 			e.printStackTrace();
 			System.exit(1);
 		}
-		
+
 		this.xmlUtils = xmlUtils;
 		this.jasperCompiler = jasperCompiler;
 		this.recipeIndexer = recipeIndexer;
@@ -171,62 +189,62 @@ public class AppFrame extends javax.swing.JFrame implements FileHistory.IFileHis
 	}
 
 	private void initComponents() {
-		pmnuRec = new javax.swing.JPopupMenu();
-		pmiOpenRec = new javax.swing.JMenuItem();
-		pmiPrintRec = new javax.swing.JMenuItem();
-		pmiNewRec = new javax.swing.JMenuItem();
-		pmiSep1 = new javax.swing.JSeparator();
-		pmiExportRec = new javax.swing.JMenuItem();
-		pmiCopyPlaintext = new javax.swing.JMenuItem();
-		pmiSep2 = new javax.swing.JSeparator();
-		pmiCutRec = new javax.swing.JMenuItem();
-		pmiCopyRec = new javax.swing.JMenuItem();
-		pmiPasteRec = new javax.swing.JMenuItem();
-		viewByButtonGroup = new javax.swing.ButtonGroup();
-		statusPanel = new javax.swing.JPanel();
-		txtStatusBar = new javax.swing.JTextField();
-		javax.swing.JPanel mainPanel = new javax.swing.JPanel();
-		vSplitPane = new javax.swing.JSplitPane();
-		details_panel = new javax.swing.JPanel();
-		viewer_panel = new javax.swing.JPanel();
-		viewer_scroller = new javax.swing.JScrollPane();
-		jScrollPane1 = new javax.swing.JScrollPane();
-		recipeTree = new javax.swing.JTree();
+		pmnuRec = new JPopupMenu();
+		pmiOpenRec = new JMenuItem();
+		pmiPrintRec = new JMenuItem();
+		pmiNewRec = new JMenuItem();
+		pmiSep1 = new JSeparator();
+		pmiExportRec = new JMenuItem();
+		pmiCopyPlaintext = new JMenuItem();
+		pmiSep2 = new JSeparator();
+		pmiCutRec = new JMenuItem();
+		pmiCopyRec = new JMenuItem();
+		pmiPasteRec = new JMenuItem();
+		viewByButtonGroup = new ButtonGroup();
+		statusPanel = new JPanel();
+		txtStatusBar = new JTextField();
+		JPanel mainPanel = new JPanel();
+		vSplitPane = new JSplitPane();
+		details_panel = new JPanel();
+		viewer_panel = new JPanel();
+		viewer_scroller = new JScrollPane();
+		jScrollPane1 = new JScrollPane();
+		recipeTree = new JTree();
 		recipeTree.addTreeSelectionListener(new RecipeSelectionListener());
 		recipeTree.addMouseListener(new RecipeMouseAdapter());
 		recipeTree.setTransferHandler(new RecipeTransferHandler());
-		toolBar = new javax.swing.JToolBar();
-		btnNew = new javax.swing.JButton();
-		btnOpen = new javax.swing.JButton();
-		btnSave = new javax.swing.JButton();
-		btnPrint = new javax.swing.JButton();
-		menuBar = new javax.swing.JMenuBar();
-		mnuFile = new javax.swing.JMenu();
-		miNew = new javax.swing.JMenuItem();
-		miOpen = new javax.swing.JMenuItem();
-		miOpenURL = new javax.swing.JMenuItem();
-		miSave = new javax.swing.JMenuItem();
-		miSaveAs = new javax.swing.JMenuItem();
-		mnuPdf = new javax.swing.JMenu();
-		miPdfExport = new javax.swing.JMenuItem();
-		miPdfView = new javax.swing.JMenuItem();
-		miExit = new javax.swing.JMenuItem();
-		mnuSearch = new javax.swing.JMenu();
-		miFilter = new javax.swing.JCheckBoxMenuItem();
-		mnuRecipe = new javax.swing.JMenu();
-		miOpenRecipe = new javax.swing.JMenuItem();
-		miPrintRecipe = new javax.swing.JMenuItem();
-		miNewRecipe = new javax.swing.JMenuItem();
-		miDelRecipe = new javax.swing.JMenuItem();
-		mnuEdit = new javax.swing.JMenu();
-		miCut = new javax.swing.JMenuItem();
-		miCopy = new javax.swing.JMenuItem();
-		miPaste = new javax.swing.JMenuItem();
-		mnuView = new javax.swing.JMenu();
-		miViewByChapter = new javax.swing.JRadioButtonMenuItem();
-		miViewBySource = new javax.swing.JRadioButtonMenuItem();
-		miViewByOrigin = new javax.swing.JRadioButtonMenuItem();
-		miViewByRecipe = new javax.swing.JRadioButtonMenuItem();
+		toolBar = new JToolBar();
+		btnNew = new JButton();
+		btnOpen = new JButton();
+		btnSave = new JButton();
+		btnPrint = new JButton();
+		menuBar = new JMenuBar();
+		mnuFile = new JMenu();
+		miNew = new JMenuItem();
+		miOpen = new JMenuItem();
+		miOpenURL = new JMenuItem();
+		miSave = new JMenuItem();
+		miSaveAs = new JMenuItem();
+		mnuPdf = new JMenu();
+		miPdfExport = new JMenuItem();
+		miPdfView = new JMenuItem();
+		miExit = new JMenuItem();
+		mnuSearch = new JMenu();
+		miFilter = new JCheckBoxMenuItem();
+		mnuRecipe = new JMenu();
+		miOpenRecipe = new JMenuItem();
+		miPrintRecipe = new JMenuItem();
+		miNewRecipe = new JMenuItem();
+		miDelRecipe = new JMenuItem();
+		mnuEdit = new JMenu();
+		miCut = new JMenuItem();
+		miCopy = new JMenuItem();
+		miPaste = new JMenuItem();
+		mnuView = new JMenu();
+		miViewByChapter = new JRadioButtonMenuItem();
+		miViewBySource = new JRadioButtonMenuItem();
+		miViewByOrigin = new JRadioButtonMenuItem();
+		miViewByRecipe = new JRadioButtonMenuItem();
 
 		pmiOpenRec.setText("Open Recipe");
 		pmiOpenRec.setToolTipText("Open the selected recipe");
@@ -273,8 +291,8 @@ public class AppFrame extends javax.swing.JFrame implements FileHistory.IFileHis
 		pmnuRec.add(pmiCopyPlaintext);
 		pmnuRec.add(pmiSep2);
 
-		pmiCutRec.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_X,
-				java.awt.event.InputEvent.CTRL_DOWN_MASK));
+		pmiCutRec.setAccelerator(
+				KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_X, java.awt.event.InputEvent.CTRL_DOWN_MASK));
 		pmiCutRec.setText("Cut");
 		pmiCutRec.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -283,8 +301,8 @@ public class AppFrame extends javax.swing.JFrame implements FileHistory.IFileHis
 		});
 		pmnuRec.add(pmiCutRec);
 
-		pmiCopyRec.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C,
-				java.awt.event.InputEvent.CTRL_DOWN_MASK));
+		pmiCopyRec.setAccelerator(
+				KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.CTRL_DOWN_MASK));
 		pmiCopyRec.setText("Copy");
 		pmiCopyRec.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -293,8 +311,8 @@ public class AppFrame extends javax.swing.JFrame implements FileHistory.IFileHis
 		});
 		pmnuRec.add(pmiCopyRec);
 
-		pmiPasteRec.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_V,
-				java.awt.event.InputEvent.CTRL_DOWN_MASK));
+		pmiPasteRec.setAccelerator(
+				KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_V, java.awt.event.InputEvent.CTRL_DOWN_MASK));
 		pmiPasteRec.setText("Paste");
 		pmiPasteRec.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -303,7 +321,7 @@ public class AppFrame extends javax.swing.JFrame implements FileHistory.IFileHis
 		});
 		pmnuRec.add(pmiPasteRec);
 
-		setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 		setName(""); // NOI18N
 		addWindowListener(new java.awt.event.WindowAdapter() {
 			public void windowClosed(java.awt.event.WindowEvent evt) {
@@ -337,7 +355,7 @@ public class AppFrame extends javax.swing.JFrame implements FileHistory.IFileHis
 		vSplitPane.setDividerLocation(300);
 		vSplitPane.setMinimumSize(new java.awt.Dimension(100, 50));
 
-		details_panel.setBorder(javax.swing.BorderFactory.createTitledBorder("Recipe Details"));
+		details_panel.setBorder(BorderFactory.createTitledBorder("Recipe Details"));
 		details_panel.setMaximumSize(null);
 		details_panel.setLayout(new java.awt.GridLayout(1, 0));
 
@@ -353,7 +371,7 @@ public class AppFrame extends javax.swing.JFrame implements FileHistory.IFileHis
 
 		vSplitPane.setRightComponent(details_panel);
 
-		recipeTree.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+		recipeTree.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
 		recipeTree.setMaximumSize(new java.awt.Dimension(32768, 32768));
 		recipeTree.setModel(null);
 		recipeTree.setPreferredSize(null);
@@ -373,7 +391,7 @@ public class AppFrame extends javax.swing.JFrame implements FileHistory.IFileHis
 		toolBar.setMaximumSize(new java.awt.Dimension(2147483647, 20));
 		toolBar.setMinimumSize(new java.awt.Dimension(100, 20));
 
-		btnNew.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/new.gif"))); // NOI18N
+		btnNew.setIcon(new ImageIcon(getClass().getResource("/images/new.gif"))); // NOI18N
 		btnNew.setToolTipText("New");
 		btnNew.setBorder(null);
 		btnNew.addActionListener(new java.awt.event.ActionListener() {
@@ -383,7 +401,7 @@ public class AppFrame extends javax.swing.JFrame implements FileHistory.IFileHis
 		});
 		toolBar.add(btnNew);
 
-		btnOpen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/open.gif"))); // NOI18N
+		btnOpen.setIcon(new ImageIcon(getClass().getResource("/images/open.gif"))); // NOI18N
 		btnOpen.setToolTipText("Open");
 		btnOpen.setBorder(null);
 		btnOpen.addActionListener(new java.awt.event.ActionListener() {
@@ -393,7 +411,7 @@ public class AppFrame extends javax.swing.JFrame implements FileHistory.IFileHis
 		});
 		toolBar.add(btnOpen);
 
-		btnSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/save.gif"))); // NOI18N
+		btnSave.setIcon(new ImageIcon(getClass().getResource("/images/save.gif"))); // NOI18N
 		btnSave.setToolTipText("Save");
 		btnSave.setBorder(null);
 		btnSave.setEnabled(false);
@@ -404,7 +422,7 @@ public class AppFrame extends javax.swing.JFrame implements FileHistory.IFileHis
 		});
 		toolBar.add(btnSave);
 
-		btnPrint.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/print.gif"))); // NOI18N
+		btnPrint.setIcon(new ImageIcon(getClass().getResource("/images/print.gif"))); // NOI18N
 		btnPrint.setToolTipText("Print");
 		btnPrint.setBorder(null);
 		btnPrint.addActionListener(new java.awt.event.ActionListener() {
@@ -437,8 +455,8 @@ public class AppFrame extends javax.swing.JFrame implements FileHistory.IFileHis
 		});
 		mnuFile.add(miNew);
 
-		miOpen.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O,
-				java.awt.event.InputEvent.CTRL_DOWN_MASK));
+		miOpen.setAccelerator(
+				KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_DOWN_MASK));
 		miOpen.setText("Open");
 		miOpen.setToolTipText("Open a Recipe Book");
 		miOpen.addActionListener(new java.awt.event.ActionListener() {
@@ -457,8 +475,8 @@ public class AppFrame extends javax.swing.JFrame implements FileHistory.IFileHis
 		});
 		mnuFile.add(miOpenURL);
 
-		miSave.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S,
-				java.awt.event.InputEvent.CTRL_DOWN_MASK));
+		miSave.setAccelerator(
+				KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_DOWN_MASK));
 		miSave.setText("Save");
 		miSave.setToolTipText("Save a Recipe Book");
 		miSave.setEnabled(false);
@@ -542,8 +560,8 @@ public class AppFrame extends javax.swing.JFrame implements FileHistory.IFileHis
 		});
 		mnuRecipe.add(miPrintRecipe);
 
-		miNewRecipe.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N,
-				java.awt.event.InputEvent.CTRL_DOWN_MASK));
+		miNewRecipe.setAccelerator(
+				KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.CTRL_DOWN_MASK));
 		miNewRecipe.setText("New");
 		miNewRecipe.setToolTipText("Add a new recipe");
 		miNewRecipe.addActionListener(new java.awt.event.ActionListener() {
@@ -567,8 +585,8 @@ public class AppFrame extends javax.swing.JFrame implements FileHistory.IFileHis
 		mnuEdit.setMnemonic('E');
 		mnuEdit.setText("Edit");
 
-		miCut.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_X,
-				java.awt.event.InputEvent.CTRL_DOWN_MASK));
+		miCut.setAccelerator(
+				KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_X, java.awt.event.InputEvent.CTRL_DOWN_MASK));
 		miCut.setText("Cut");
 		miCut.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -577,8 +595,8 @@ public class AppFrame extends javax.swing.JFrame implements FileHistory.IFileHis
 		});
 		mnuEdit.add(miCut);
 
-		miCopy.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C,
-				java.awt.event.InputEvent.CTRL_DOWN_MASK));
+		miCopy.setAccelerator(
+				KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.CTRL_DOWN_MASK));
 		miCopy.setText("Copy");
 		miCopy.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -587,8 +605,8 @@ public class AppFrame extends javax.swing.JFrame implements FileHistory.IFileHis
 		});
 		mnuEdit.add(miCopy);
 
-		miPaste.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_V,
-				java.awt.event.InputEvent.CTRL_DOWN_MASK));
+		miPaste.setAccelerator(
+				KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_V, java.awt.event.InputEvent.CTRL_DOWN_MASK));
 		miPaste.setText("Paste");
 		miPaste.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -683,8 +701,7 @@ public class AppFrame extends javax.swing.JFrame implements FileHistory.IFileHis
 				} else {
 					txtStatusBar.setText("Filter ON");
 				}
-			}
-			else {
+			} else {
 				filter = null;
 				BookUtils bw = new BookUtils(book);
 				bw.loadJtree(this.recipeTree, this.viewBy, this.filter);
@@ -1437,7 +1454,7 @@ public class AppFrame extends javax.swing.JFrame implements FileHistory.IFileHis
 				return;
 
 			if (e.isPopupTrigger() && (node.isLeaf())) {
-				pmnuRec.show((javax.swing.JComponent) e.getSource(), e.getX(), e.getY());
+				pmnuRec.show((JComponent) e.getSource(), e.getX(), e.getY());
 			}
 		}
 
