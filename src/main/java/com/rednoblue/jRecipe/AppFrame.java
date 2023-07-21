@@ -497,7 +497,7 @@ public class AppFrame extends javax.swing.JFrame implements FileHistory.IFileHis
 		toolBar.setMaximumSize(new java.awt.Dimension(2147483647, 20));
 		toolBar.setMinimumSize(new java.awt.Dimension(100, 20));
 
-		btnNew.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/rednoblue/jRecipe/Images/new.gif"))); // NOI18N
+		btnNew.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/new.gif"))); // NOI18N
 		btnNew.setToolTipText("New");
 		btnNew.setBorder(null);
 		btnNew.addActionListener(new java.awt.event.ActionListener() {
@@ -507,7 +507,7 @@ public class AppFrame extends javax.swing.JFrame implements FileHistory.IFileHis
 		});
 		toolBar.add(btnNew);
 
-		btnOpen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/rednoblue/jRecipe/Images/open.gif"))); // NOI18N
+		btnOpen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/open.gif"))); // NOI18N
 		btnOpen.setToolTipText("Open");
 		btnOpen.setBorder(null);
 		btnOpen.addActionListener(new java.awt.event.ActionListener() {
@@ -517,7 +517,7 @@ public class AppFrame extends javax.swing.JFrame implements FileHistory.IFileHis
 		});
 		toolBar.add(btnOpen);
 
-		btnSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/rednoblue/jRecipe/Images/save.gif"))); // NOI18N
+		btnSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/save.gif"))); // NOI18N
 		btnSave.setToolTipText("Save");
 		btnSave.setBorder(null);
 		btnSave.setEnabled(false);
@@ -528,7 +528,7 @@ public class AppFrame extends javax.swing.JFrame implements FileHistory.IFileHis
 		});
 		toolBar.add(btnSave);
 
-		btnPrint.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/rednoblue/jRecipe/Images/print.gif"))); // NOI18N
+		btnPrint.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/print.gif"))); // NOI18N
 		btnPrint.setToolTipText("Print");
 		btnPrint.setBorder(null);
 		btnPrint.addActionListener(new java.awt.event.ActionListener() {
@@ -1051,7 +1051,7 @@ public class AppFrame extends javax.swing.JFrame implements FileHistory.IFileHis
 	public void setIcon() {
 
 		setIconImage(Toolkit.getDefaultToolkit()
-				.createImage(getClass().getResource("/com/rednoblue/jRecipe/Images/appIcon.gif")));
+				.createImage(getClass().getResource("/images/appIcon.gif")));
 
 	}
 

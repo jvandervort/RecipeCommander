@@ -63,7 +63,7 @@ public class RecipeFrame extends JFrame {
 		}
 
 		this.setIconImage(Toolkit.getDefaultToolkit()
-				.createImage(getClass().getResource("/com/rednoblue/jRecipe/Images/appIcon.gif")));
+				.createImage(getClass().getResource("/images/appIcon.gif")));
 		this.mainframe = mainframe;
 		this.book = book;
 		if (recArg == null) {

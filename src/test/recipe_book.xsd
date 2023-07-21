@@ -1,0 +1,56 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xsd:schema xmlns:xsd='http://www.w3.org/2001/XMLSchema'>
+	<xsd:element name = "jRecipeBook">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref = "Recipe" maxOccurs='unbounded'/>
+			</xsd:sequence>
+			<xsd:attribute name="Name" type="xsd:string"/>
+			<xsd:attribute name="ModDate" type="xsd:string"/>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name = "Recipe">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref = "IngredientList" minOccurs='0' maxOccurs='unbounded'/>
+				<xsd:element ref = "ProcessList" minOccurs='0' maxOccurs='unbounded'/>
+				<xsd:element ref = "Comments" minOccurs='0' maxOccurs='unbounded'/>
+				<xsd:element name = "Picture" type="xsd:string" minOccurs='0' maxOccurs='unbounded'/>
+			</xsd:sequence>
+			<xsd:attribute name="Name" type="xsd:string"/>
+			<xsd:attribute name="Source" type="xsd:string"/>
+			<xsd:attribute name="Chapter" type="xsd:string"/>
+			<xsd:attribute name="Submitter" type="xsd:string"/>
+			<xsd:attribute name="Cat" type="xsd:string"/>
+			<xsd:attribute name="SubCat" type="xsd:string"/>
+			<xsd:attribute name="Origin" type="xsd:string"/>
+			<xsd:attribute name="ModDate" type="xsd:string"/>
+            <xsd:attribute name="UUID" type="xsd:string"/>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name = "IngredientList">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref = "Ingredient" maxOccurs="unbounded"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name = "ProcessList">
+		<xsd:complexType>
+   		<xsd:simpleContent>
+    			<xsd:extension base="xsd:string">
+					<xsd:attribute name="PrepTime" type="xsd:string"/>
+					<xsd:attribute name="TotalTime" type="xsd:string"/>
+				</xsd:extension>
+   		</xsd:simpleContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name = "Comments" type = "xsd:string"/>
+	<xsd:element name = "Ingredient">
+		<xsd:complexType>
+			<xsd:attribute name="Name" type="xsd:string"/>
+			<xsd:attribute name="Amount" type="xsd:string"/>
+			<xsd:attribute name="Units" type="xsd:string"/>
+		</xsd:complexType>
+	</xsd:element>
+</xsd:schema>

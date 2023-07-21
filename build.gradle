@@ -1,11 +1,17 @@
-apply plugin: 'java'
-apply plugin: 'eclipse'
-apply plugin: 'application'
-mainClassName = 'com.rednoblue.jrecipe.RecipeRaptor'
+plugins {
+    id 'java'
+    id 'eclipse'
+    id 'application'
+    id "com.github.johnrengelman.shadow" version "8.1.1"
+}
+
+application {
+    mainClass = 'com.rednoblue.jrecipe.RecipeRaptor'
+}
 
 repositories {
     mavenCentral()
- }
+}
 
  sourceCompatibility = 18
  targetCompatibility = 18
@@ -16,6 +22,17 @@ repositories {
 	implementation 'org.apache.lucene:lucene-queryparser:9.7.0'
 	implementation 'org.apache.lucene:lucene-analyzers-common:8.11.2'
 
-	implementation 'net.sf.jasperreports:jasperreports:6.2.2'
-	implementation 'xalan:xalan:2.7.3'
+	implementation 'net.sf.jasperreports:jasperreports:6.20.5'
+	implementation 'jaxen:jaxen:2.0.0'
+	implementation 'com.github.librepdf:openpdf:1.3.30'
+	
+	
+}
+
+shadowJar {
+  manifest {
+    attributes(
+      'Main-Class': 'com.rednoblue.jrecipe.RecipeRaptor'
+    )
+  }
 }
