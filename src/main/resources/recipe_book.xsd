@@ -7,7 +7,6 @@
 			</xsd:sequence>
 			<xsd:attribute name="Name" type="xsd:string"/>
 			<xsd:attribute name="ModDate" type="xsd:string"/>
-			<xsd:attribute name="UUID" type="xsd:string"/>
 		</xsd:complexType>
 	</xsd:element>
 	<xsd:element name = "Recipe">
@@ -26,7 +25,7 @@
 			<xsd:attribute name="SubCat" type="xsd:string"/>
 			<xsd:attribute name="Origin" type="xsd:string"/>
 			<xsd:attribute name="ModDate" type="xsd:string"/>
-                        <xsd:attribute name="recipe_id" type="xsd:string"/>
+            <xsd:attribute name="UUID" type="xsd:string"/>
 		</xsd:complexType>
 	</xsd:element>
 	<xsd:element name = "IngredientList">
@@ -40,8 +39,8 @@
 		<xsd:complexType>
    		<xsd:simpleContent>
     			<xsd:extension base="xsd:string">
-					<xsd:attribute name="prep_time" type="xsd:string"/>
-					<xsd:attribute name="total_time" type="xsd:string"/>
+					<xsd:attribute name="PrepTime" type="xsd:string"/>
+					<xsd:attribute name="TotalTime" type="xsd:string"/>
 				</xsd:extension>
    		</xsd:simpleContent>
 		</xsd:complexType>

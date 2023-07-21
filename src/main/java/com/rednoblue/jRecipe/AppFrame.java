@@ -136,21 +136,22 @@ public class AppFrame extends javax.swing.JFrame implements FileHistory.IFileHis
 	/** setting for the tree view */
 	private String viewBy = "recipe";
 	/** filter for the tree view */
-	private HashMap<String,String> filter;
+	private HashMap<String, String> filter;
 
 	/** indexer for the filter (lucene engine) */
 	private RecipeIndexer recipeIndexer;
 
 	/** compiler for the built-in jasper reports */
 	private JasperCompiler jasperCompiler;
-	
+
 	private final Logger logger;
 	private XmlUtils xmlUtils;
 	private MyFileWriter fileWriter;
 	private MyFileReader fileReader;
-	
+
 	@Inject
-	public AppFrame(Logger logger, JasperCompiler jasperCompiler, RecipeIndexer recipeIndexer, XmlUtils xmlUtils, MyFileWriter fileWriter, MyFileReader fileReader) {
+	public AppFrame(Logger logger, JasperCompiler jasperCompiler, RecipeIndexer recipeIndexer, XmlUtils xmlUtils,
+			MyFileWriter fileWriter, MyFileReader fileReader) {
 		this.logger = logger;
 		this.xmlUtils = xmlUtils;
 		this.jasperCompiler = jasperCompiler;
@@ -285,8 +286,8 @@ public class AppFrame extends javax.swing.JFrame implements FileHistory.IFileHis
 		pmnuRec.add(pmiCopyPlaintext);
 		pmnuRec.add(pmiSep2);
 
-		pmiCutRec.setAccelerator(
-				javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_X, java.awt.event.InputEvent.CTRL_MASK));
+		pmiCutRec.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_X,
+				java.awt.event.InputEvent.CTRL_DOWN_MASK));
 		pmiCutRec.setText("Cut");
 		pmiCutRec.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -295,8 +296,8 @@ public class AppFrame extends javax.swing.JFrame implements FileHistory.IFileHis
 		});
 		pmnuRec.add(pmiCutRec);
 
-		pmiCopyRec.setAccelerator(
-				javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.CTRL_MASK));
+		pmiCopyRec.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C,
+				java.awt.event.InputEvent.CTRL_DOWN_MASK));
 		pmiCopyRec.setText("Copy");
 		pmiCopyRec.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -305,8 +306,8 @@ public class AppFrame extends javax.swing.JFrame implements FileHistory.IFileHis
 		});
 		pmnuRec.add(pmiCopyRec);
 
-		pmiPasteRec.setAccelerator(
-				javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_V, java.awt.event.InputEvent.CTRL_MASK));
+		pmiPasteRec.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_V,
+				java.awt.event.InputEvent.CTRL_DOWN_MASK));
 		pmiPasteRec.setText("Paste");
 		pmiPasteRec.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -560,8 +561,8 @@ public class AppFrame extends javax.swing.JFrame implements FileHistory.IFileHis
 		});
 		mnuFile.add(miNew);
 
-		miOpen.setAccelerator(
-				javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_MASK));
+		miOpen.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O,
+				java.awt.event.InputEvent.CTRL_DOWN_MASK));
 		miOpen.setText("Open");
 		miOpen.setToolTipText("Open a Recipe Book");
 		miOpen.addActionListener(new java.awt.event.ActionListener() {
@@ -580,8 +581,8 @@ public class AppFrame extends javax.swing.JFrame implements FileHistory.IFileHis
 		});
 		mnuFile.add(miOpenURL);
 
-		miSave.setAccelerator(
-				javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
+		miSave.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S,
+				java.awt.event.InputEvent.CTRL_DOWN_MASK));
 		miSave.setText("Save");
 		miSave.setToolTipText("Save a Recipe Book");
 		miSave.setEnabled(false);
@@ -665,8 +666,8 @@ public class AppFrame extends javax.swing.JFrame implements FileHistory.IFileHis
 		});
 		mnuRecipe.add(miPrintRecipe);
 
-		miNewRecipe.setAccelerator(
-				javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.CTRL_MASK));
+		miNewRecipe.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N,
+				java.awt.event.InputEvent.CTRL_DOWN_MASK));
 		miNewRecipe.setText("New");
 		miNewRecipe.setToolTipText("Add a new recipe");
 		miNewRecipe.addActionListener(new java.awt.event.ActionListener() {
@@ -690,8 +691,8 @@ public class AppFrame extends javax.swing.JFrame implements FileHistory.IFileHis
 		mnuEdit.setMnemonic('E');
 		mnuEdit.setText("Edit");
 
-		miCut.setAccelerator(
-				javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_X, java.awt.event.InputEvent.CTRL_MASK));
+		miCut.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_X,
+				java.awt.event.InputEvent.CTRL_DOWN_MASK));
 		miCut.setText("Cut");
 		miCut.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -700,8 +701,8 @@ public class AppFrame extends javax.swing.JFrame implements FileHistory.IFileHis
 		});
 		mnuEdit.add(miCut);
 
-		miCopy.setAccelerator(
-				javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.CTRL_MASK));
+		miCopy.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C,
+				java.awt.event.InputEvent.CTRL_DOWN_MASK));
 		miCopy.setText("Copy");
 		miCopy.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -710,8 +711,8 @@ public class AppFrame extends javax.swing.JFrame implements FileHistory.IFileHis
 		});
 		mnuEdit.add(miCopy);
 
-		miPaste.setAccelerator(
-				javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_V, java.awt.event.InputEvent.CTRL_MASK));
+		miPaste.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_V,
+				java.awt.event.InputEvent.CTRL_DOWN_MASK));
 		miPaste.setText("Paste");
 		miPaste.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -771,21 +772,21 @@ public class AppFrame extends javax.swing.JFrame implements FileHistory.IFileHis
 		setJMenuBar(menuBar);
 
 		pack();
-	}// </editor-fold>//GEN-END:initComponents
+	}
 
-	private void filterTextActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_filterTextActionPerformed
-// TODO add your handling code here:
-	}// GEN-LAST:event_filterTextActionPerformed
+	private void filterTextActionPerformed(java.awt.event.ActionEvent evt) {
+		// TODO
+	}
 
-	private void commentsChkActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_commentsChkActionPerformed
-// TODO add your handling code here:
-	}// GEN-LAST:event_commentsChkActionPerformed
+	private void commentsChkActionPerformed(java.awt.event.ActionEvent evt) {
+		// TODO
+	}
 
-	private void dlgFilterCancel(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_dlgFilterCancel
+	private void dlgFilterCancel(java.awt.event.ActionEvent evt) {
 		dlgFilter.setVisible(false);
-	}// GEN-LAST:event_dlgFilterCancel
+	}
 
-	private void dlgFilterApply(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_dlgFilterApply
+	private void dlgFilterApply(java.awt.event.ActionEvent evt) {
 		dlgFilter.setVisible(false);
 		ArrayList<String> fields = new ArrayList<String>();
 
@@ -812,7 +813,7 @@ public class AppFrame extends javax.swing.JFrame implements FileHistory.IFileHis
 			txtStatusBar.setText("Filter ON");
 		}
 
-	}// GEN-LAST:event_dlgFilterApply
+	}
 
 	/**
 	 * Copy plain text to windows buffer
@@ -871,7 +872,7 @@ public class AppFrame extends javax.swing.JFrame implements FileHistory.IFileHis
 		System.exit(0);
 	}// GEN-LAST:event_mainFrameClosed
 
-	private void miOpenURLActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_miOpenURLActionPerformed
+	private void miOpenURLActionPerformed(java.awt.event.ActionEvent evt) {
 
 		if (book != null && book.getModified() == true) {
 			// prompt for save
@@ -905,48 +906,39 @@ public class AppFrame extends javax.swing.JFrame implements FileHistory.IFileHis
 			logger.info("Unknown return status from DialogOpenURL");
 			return;
 		}
-	}// GEN-LAST:event_miOpenURLActionPerformed
+	}
 
-	private void btnPrintActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnPrintActionPerformed
+	private void btnPrintActionPerformed(java.awt.event.ActionEvent evt) {
 		// check selection in tree first
 		if (rec != null) {
 			printRecipe(rec);
 		}
+	}
 
-	}// GEN-LAST:event_btnPrintActionPerformed
-
-	private void miPasteActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_miPasteActionPerformed
-
-		TransferHandler xh = recipeTree.getTransferHandler();
-
+	private void miPasteActionPerformed(java.awt.event.ActionEvent evt) {
+		// TransferHandler xh = recipeTree.getTransferHandler();
 		Action pasteAction = TransferHandler.getPasteAction();
 		pasteAction.actionPerformed(new ActionEvent(recipeTree, ActionEvent.ACTION_PERFORMED,
 				(String) pasteAction.getValue(Action.NAME), EventQueue.getMostRecentEventTime(), 0));
+	}
 
-	}// GEN-LAST:event_miPasteActionPerformed
-
-	private void miCopyActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_miCopyActionPerformed
-
-		TransferHandler xh = recipeTree.getTransferHandler();
-
+	private void miCopyActionPerformed(java.awt.event.ActionEvent evt) {
+		// TransferHandler xh = recipeTree.getTransferHandler();
 		Action copyAction = TransferHandler.getCopyAction();
 		copyAction.actionPerformed(new ActionEvent(recipeTree, ActionEvent.ACTION_PERFORMED,
 				(String) copyAction.getValue(Action.NAME), EventQueue.getMostRecentEventTime(), 0));
+	}
 
-	}// GEN-LAST:event_miCopyActionPerformed
-
-	private void miCutActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_miCutActionPerformed
-		TransferHandler xh = recipeTree.getTransferHandler();
-
+	private void miCutActionPerformed(java.awt.event.ActionEvent evt) {
+		// TransferHandler xh = recipeTree.getTransferHandler();
 		Action cutAction = TransferHandler.getCutAction();
 		cutAction.actionPerformed(new ActionEvent(recipeTree, ActionEvent.ACTION_PERFORMED,
 				(String) cutAction.getValue(Action.NAME), EventQueue.getMostRecentEventTime(), 0));
+	}
 
-	}// GEN-LAST:event_miCutActionPerformed
-
-	private void miDelRecipeActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_miDelRecipeActionPerformed
+	private void miDelRecipeActionPerformed(java.awt.event.ActionEvent evt) {
 		deleteRecipe();
-	}// GEN-LAST:event_miDelRecipeActionPerformed
+	}
 
 	private void miViewBySourceActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_miViewBySourceActionPerformed
 		setViewBy(viewByButtonGroup.getSelection().getActionCommand());
@@ -1422,6 +1414,8 @@ public class AppFrame extends javax.swing.JFrame implements FileHistory.IFileHis
 	 * Begin Cut Copy Paste from tree stuff
 	 */
 	class RecipeTransferHandler extends TransferHandler {
+		private static final long serialVersionUID = 1L;
+
 		@Override
 		public int getSourceActions(JComponent c) {
 			return COPY;
@@ -1436,9 +1430,7 @@ public class AppFrame extends javax.swing.JFrame implements FileHistory.IFileHis
 				Object nodeInfo = node.getUserObject();
 				// you have a recipe
 				rec = (Recipe) nodeInfo;
-				return new RecipeTransferable(
-						xmlUtils.transformToXmlString(book, rec, EDisplayType.NORMAL)+ "\n"
-				);
+				return new RecipeTransferable(xmlUtils.transformToXmlString(book, rec, EDisplayType.NORMAL) + "\n");
 			} else {
 				return new RecipeTransferable("");
 			}
@@ -1504,7 +1496,7 @@ public class AppFrame extends javax.swing.JFrame implements FileHistory.IFileHis
 
 				StringReader sr = new StringReader(data);
 				IRecipeReader reader = new ReaderXmlFile();
-				
+
 				Book tbook = reader.parseSource(sr);
 				if (tbook.recipeCount() > 0) {
 					ArrayList<Recipe> rList = (ArrayList<Recipe>) tbook.getRecipes();

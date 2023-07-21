@@ -4,9 +4,8 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 xsi:noNamespaceSchemaLocation='recipe_book.xsd'
 Name="Test Xml Recipe Book from Jar"
 ModDate="2004-10-09T16:44:35"
-BookID="0"
 >
-<Recipe Name="Pumpkin Seeds" Source="Dorie" Chapter="Appetizers" Cat="" SubCat="" Origin="" UID="" ModDate="2004-03-22T09:19:20">
+<Recipe Name="Pumpkin Seeds" Source="Dorie" Chapter="Appetizers" Cat="" SubCat="" Origin="" UUID="" ModDate="2004-03-22T09:19:20">
 <IngredientList>
 <Ingredient Name="Pumpkin Seeds, unwashed" Amount="2.0" Units="c"/>
 <Ingredient Name="Worchestershire Sauce" Amount="0.5" Units="tsp"/>
@@ -22,7 +21,7 @@ BookID="0"
 <Comments>
 </Comments>
 </Recipe>
-<Recipe Name="Banana Bread" Source="Dorie" Chapter="Breads" Cat="Quick Bread" SubCat="" Origin="" UID="" ModDate="2003-12-22T14:51:19">
+<Recipe Name="Banana Bread" Source="Dorie" Chapter="Breads" Cat="Quick Bread" SubCat="" Origin="" UUID="" ModDate="2003-12-22T14:51:19">
 <IngredientList>
 <Ingredient Name="Butter" Amount="0.5" Units="c"/>
 <Ingredient Name="Sugar" Amount="1.5" Units="c"/>
@@ -44,7 +43,7 @@ BookID="0"
 <Comments>
 </Comments>
 </Recipe>
-<Recipe Name="Eggnog Pound Cake" Source="Jill Zimmerman" Chapter="Desserts" Cat="Cakes" SubCat="" Origin="" UID="" ModDate="2004-04-12T12:19:57">
+<Recipe Name="Eggnog Pound Cake" Source="Jill Zimmerman" Chapter="Desserts" Cat="Cakes" SubCat="" Origin="" UUID="" ModDate="2004-04-12T12:19:57">
 <IngredientList>
 <Ingredient Name="Butter, softened" Amount="2.0" Units="Tbsp"/>
 <Ingredient Name="Almonds, sliced" Amount="0.5" Units="c"/>
@@ -84,7 +83,7 @@ BookID="0"
         Make 10-12 servings
 </Comments>
 </Recipe>
-<Recipe Name="Carrot Cake Cookies" Source="Martha" Chapter="Desserts" Cat="Cookies" SubCat="Carrot Cake" Origin="" UID="" ModDate="2004-03-22T08:59:20">
+<Recipe Name="Carrot Cake Cookies" Source="Martha" Chapter="Desserts" Cat="Cookies" SubCat="Carrot Cake" Origin="" UUID="" ModDate="2004-03-22T08:59:20">
 <IngredientList>
 <Ingredient Name="light-brown sugar, packed" Amount="1.0" Units="c"/>
 <Ingredient Name="sugar, granulated" Amount="1.0" Units="c"/>
@@ -133,7 +132,7 @@ BookID="0"
 <Comments>
 </Comments>
 </Recipe>
-<Recipe Name="Peanut Butter Cookies" Source="Martha" Chapter="Desserts" Cat="Cookies" SubCat="Peanut Butter" Origin="" UID="" ModDate="2004-03-22T09:18:16">
+<Recipe Name="Peanut Butter Cookies" Source="Martha" Chapter="Desserts" Cat="Cookies" SubCat="Peanut Butter" Origin="" UUID="" ModDate="2004-03-22T09:18:16">
 <IngredientList>
 <Ingredient Name="Butter, unsalted" Amount="8.0" Units="Tbsp"/>
 <Ingredient Name="Peanut Butter, smooth" Amount="0.75" Units="c"/>
@@ -178,7 +177,7 @@ BookID="0"
 <Comments>
 </Comments>
 </Recipe>
-<Recipe Name="Cream Cheese Frosting" Source="Martha" Chapter="Desserts" Cat="Frosting" SubCat="" Origin="" UID="" ModDate="2004-03-22T09:00:08">
+<Recipe Name="Cream Cheese Frosting" Source="Martha" Chapter="Desserts" Cat="Frosting" SubCat="" Origin="" UUID="" ModDate="2004-03-22T09:00:08">
 <IngredientList>
 <Ingredient Name="cream cheese (room temperature)" Amount="8.0" Units="oz"/>
 <Ingredient Name="butter, unsalted (cut into pieces, room temperature)" Amount="8.0" Units="Tbsp"/>
@@ -197,7 +196,7 @@ BookID="0"
     Goes with Martha's Carrot Cake Cookie Recipe.
 </Comments>
 </Recipe>
-<Recipe Name="Beef Stroginoff" Source="Nancy Evans" Chapter="Entrees" Cat="Meat" SubCat="Beef, Traditional" Origin="Russian" UID="" ModDate="2004-09-14T09:32:28">
+<Recipe Name="Beef Stroginoff" Source="Nancy Evans" Chapter="Entrees" Cat="Meat" SubCat="Beef, Traditional" Origin="Russian" UUID="" ModDate="2004-09-14T09:32:28">
 <IngredientList>
 <Ingredient Name="Beef, round steak" Amount="2.0" Units="lb"/>
 <Ingredient Name="Onion" Amount="1.0" Units="Medium"/>
@@ -260,7 +259,7 @@ BookID="0"
         meal will come out gray.
 </Comments>
 </Recipe>
-<Recipe Name="Cajun Chicken Mustard" Source="Food Network" Chapter="Entrees" Cat="Meat" SubCat="Chicken" Origin="Cajun" UID="" ModDate="2004-04-12T12:09:33">
+<Recipe Name="Cajun Chicken Mustard" Source="Food Network" Chapter="Entrees" Cat="Meat" SubCat="Chicken" Origin="Cajun" UUID="" ModDate="2004-04-12T12:09:33">
 <IngredientList>
 <Ingredient Name="Cajun Seasoning" Amount="6.0" Units="Tbsp"/>
 <Ingredient Name="Bread Crumbs, seasoned" Amount="2.0" Units="c"/>
@@ -302,7 +301,7 @@ BookID="0"
         3 oz Dijon only.
 </Comments>
 </Recipe>
-<Recipe Name="Sour Cream Enchilada" Source="" Chapter="Entrees" Cat="Meat" SubCat="Chicken" Origin="Mexican" UID="" ModDate="2004-03-22T09:18:52">
+<Recipe Name="Sour Cream Enchilada" Source="" Chapter="Entrees" Cat="Meat" SubCat="Chicken" Origin="Mexican" UUID="" ModDate="2004-03-22T09:18:52">
 <IngredientList>
 <Ingredient Name="Cream of Chicken Soup" Amount="1.0" Units="can"/>
 <Ingredient Name="Cream of Celery Soup" Amount="1.0" Units="can"/>
@@ -351,7 +350,7 @@ BookID="0"
     
 </Comments>
 </Recipe>
-<Recipe Name="Puppy's Breath Chili" Source="Cathy Wilkey" Chapter="Entrees" Cat="Meat" SubCat="Chili" Origin="" UID="" ModDate="2004-09-14T09:31:03">
+<Recipe Name="Puppy's Breath Chili" Source="Cathy Wilkey" Chapter="Entrees" Cat="Meat" SubCat="Chili" Origin="" UUID="" ModDate="2004-09-14T09:31:03">
 <IngredientList>
 <Ingredient Name="Beef, Tri Tip or Sirloin Tip" Amount="3.0" Units="lb"/>
 <Ingredient Name="Oil, Wesson" Amount="2.0" Units="tsp"/>
@@ -421,7 +420,7 @@ BookID="0"
         Puppy's Breath Chili - World Champion 1993
 </Comments>
 </Recipe>
-<Recipe Name="Carne Asada Marinade" Source="Food 911, Tyler Florence" Chapter="Entrees" Cat="Meat" SubCat="Marinade" Origin="Mexican" UID="" ModDate="2004-04-27T08:43:25">
+<Recipe Name="Carne Asada Marinade" Source="Food 911, Tyler Florence" Chapter="Entrees" Cat="Meat" SubCat="Marinade" Origin="Mexican" UUID="" ModDate="2004-04-27T08:43:25">
 <IngredientList>
 <Ingredient Name="Garlic, minced" Amount="4.0" Units="cloves"/>
 <Ingredient Name="Jalapeno, minced" Amount="1.0" Units="whole"/>
@@ -449,7 +448,7 @@ BookID="0"
     
 </Comments>
 </Recipe>
-<Recipe Name="Hollandaise Sauce" Source="Joan Hunter" Chapter="Sauces" Cat="" SubCat="" Origin="" UID="" ModDate="2004-03-22T08:42:33">
+<Recipe Name="Hollandaise Sauce" Source="Joan Hunter" Chapter="Sauces" Cat="" SubCat="" Origin="" UUID="" ModDate="2004-03-22T08:42:33">
 <IngredientList>
 <Ingredient Name="Egg Yolks" Amount="3.0" Units="each"/>
 <Ingredient Name="Lemon Juice (more if necessary)" Amount="2.0" Units="Tbsp"/>
@@ -496,7 +495,7 @@ BookID="0"
     
 </Comments>
 </Recipe>
-<Recipe Name="Asparagus Side Dish" Source="Linda Hilbert" Chapter="Sides" Cat="Vegetables" SubCat="" Origin="" UID="" ModDate="2004-04-12T11:58:26">
+<Recipe Name="Asparagus Side Dish" Source="Linda Hilbert" Chapter="Sides" Cat="Vegetables" SubCat="" Origin="" UUID="" ModDate="2004-04-12T11:58:26">
 <IngredientList>
 <Ingredient Name="Fresh Asparagus" Amount="2.0" Units="lb"/>
 <Ingredient Name="Red Pepper, roasted, sliced" Amount="1.0" Units="c"/>
@@ -545,7 +544,7 @@ BookID="0"
     
 </Comments>
 </Recipe>
-<Recipe Name="Garlic-Lemon Green Beans with Toasted Bread Crumbs" Source="America's Test Kitchen" Chapter="Sides" Cat="Vegetables" SubCat="" Origin="" UID="" ModDate="2004-10-09T16:44:35">
+<Recipe Name="Garlic-Lemon Green Beans with Toasted Bread Crumbs" Source="America's Test Kitchen" Chapter="Sides" Cat="Vegetables" SubCat="" Origin="" UUID="" ModDate="2004-10-09T16:44:35">
 <IngredientList>
 <Ingredient Name="Butter, unsalted" Amount="3.0" Units="Tbsp"/>
 <Ingredient Name="high-quality sandwich bread, ground fine in a food processor" Amount="2.0" Units="slices"/>
@@ -581,7 +580,7 @@ BookID="0"
 <Comments>
 </Comments>
 </Recipe>
-<Recipe Name="New Year's Prosperity Soup" Source="" Chapter="Soups and Salads" Cat="" SubCat="" Origin="" UID="" ModDate="2004-03-22T09:17:04">
+<Recipe Name="New Year's Prosperity Soup" Source="" Chapter="Soups and Salads" Cat="" SubCat="" Origin="" UUID="" ModDate="2004-03-22T09:17:04">
 <IngredientList>
 <Ingredient Name="New Year's Prosperity Soup Seasoning" Amount="1.5" Units="Tbsp"/>
 <Ingredient Name="Black Eyed Peas" Amount="16.0" Units="oz"/>
@@ -615,7 +614,7 @@ BookID="0"
     
 </Comments>
 </Recipe>
-<Recipe Name="Roasted Squash Soup" Source="Martha" Chapter="Soups and Salads" Cat="" SubCat="" Origin="" UID="" ModDate="2003-12-15T09:03:40">
+<Recipe Name="Roasted Squash Soup" Source="Martha" Chapter="Soups and Salads" Cat="" SubCat="" Origin="" UUID="" ModDate="2003-12-15T09:03:40">
 <IngredientList>
 <Ingredient Name="Butternut Squash, Large" Amount="1.0" Units="whole"/>
 <Ingredient Name="Thyme" Amount="8.0" Units="sprigs"/>
@@ -675,7 +674,7 @@ BookID="0"
         1/2 head of garlic instead of 4 cloves (what the heck).
 </Comments>
 </Recipe>
-<Recipe Name="Split Pea Soup" Source="" Chapter="Soups and Salads" Cat="" SubCat="" Origin="" UID="" ModDate="2004-03-22T09:19:46">
+<Recipe Name="Split Pea Soup" Source="" Chapter="Soups and Salads" Cat="" SubCat="" Origin="" UUID="" ModDate="2004-03-22T09:19:46">
 <IngredientList>
 <Ingredient Name="Split Peas, dried" Amount="16.0" Units="oz"/>
 <Ingredient Name="Onion, chopped" Amount="1.0" Units="ea"/>
