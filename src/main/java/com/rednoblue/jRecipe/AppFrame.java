@@ -20,6 +20,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
@@ -39,6 +40,7 @@ import javax.swing.tree.TreePath;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import com.rednoblue.jrecipe.dialogs.FilterDialog;
 import com.rednoblue.jrecipe.dialogs.OpenUrl;
 import com.rednoblue.jrecipe.dialogs.SaveDialog;
 import com.rednoblue.jrecipe.fulltext.RecipeIndexer;
@@ -66,18 +68,11 @@ public class AppFrame extends javax.swing.JFrame implements FileHistory.IFileHis
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private javax.swing.JButton btnApplyFilter;
-	private javax.swing.JButton btnCancel;
 	private javax.swing.JButton btnNew;
 	private javax.swing.JButton btnOpen;
 	private javax.swing.JButton btnPrint;
 	private javax.swing.JButton btnSave;
-	private javax.swing.JCheckBox commentsChk;
 	private javax.swing.JPanel details_panel;
-	private javax.swing.JDialog dlgFilter;
-	private javax.swing.JTextField filterText;
-	private javax.swing.JCheckBox ingredientsChk;
-	private javax.swing.JLabel jLabel1;
 	private javax.swing.JScrollPane jScrollPane1;
 	private javax.swing.JMenuBar menuBar;
 	private javax.swing.JMenuItem miCopy;
@@ -117,8 +112,6 @@ public class AppFrame extends javax.swing.JFrame implements FileHistory.IFileHis
 	private javax.swing.JSeparator pmiSep1;
 	private javax.swing.JSeparator pmiSep2;
 	private javax.swing.JPopupMenu pmnuRec;
-	private javax.swing.JCheckBox processChk;
-	private javax.swing.JCheckBox recipeNameChk;
 	private javax.swing.JTree recipeTree;
 	private javax.swing.JPanel statusPanel;
 	private javax.swing.JToolBar toolBar;
@@ -127,6 +120,7 @@ public class AppFrame extends javax.swing.JFrame implements FileHistory.IFileHis
 	private javax.swing.ButtonGroup viewByButtonGroup;
 	private javax.swing.JPanel viewer_panel;
 	private javax.swing.JScrollPane viewer_scroller;
+	private FilterDialog filterDialog;
 
 	private FileHistory fileHistory;
 	/** currently selected recipe object */
@@ -158,6 +152,7 @@ public class AppFrame extends javax.swing.JFrame implements FileHistory.IFileHis
 		this.recipeIndexer = recipeIndexer;
 		this.fileWriter = fileWriter;
 		this.fileReader = fileReader;
+		this.filterDialog = new FilterDialog(this, true);
 
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -173,8 +168,6 @@ public class AppFrame extends javax.swing.JFrame implements FileHistory.IFileHis
 	}
 
 	private void initComponents() {
-		java.awt.GridBagConstraints gridBagConstraints;
-
 		pmnuRec = new javax.swing.JPopupMenu();
 		pmiOpenRec = new javax.swing.JMenuItem();
 		pmiPrintRec = new javax.swing.JMenuItem();
@@ -187,15 +180,6 @@ public class AppFrame extends javax.swing.JFrame implements FileHistory.IFileHis
 		pmiCopyRec = new javax.swing.JMenuItem();
 		pmiPasteRec = new javax.swing.JMenuItem();
 		viewByButtonGroup = new javax.swing.ButtonGroup();
-		dlgFilter = new javax.swing.JDialog();
-		btnApplyFilter = new javax.swing.JButton();
-		btnCancel = new javax.swing.JButton();
-		recipeNameChk = new javax.swing.JCheckBox();
-		ingredientsChk = new javax.swing.JCheckBox();
-		processChk = new javax.swing.JCheckBox();
-		commentsChk = new javax.swing.JCheckBox();
-		filterText = new javax.swing.JTextField();
-		jLabel1 = new javax.swing.JLabel();
 		statusPanel = new javax.swing.JPanel();
 		txtStatusBar = new javax.swing.JTextField();
 		javax.swing.JPanel mainPanel = new javax.swing.JPanel();
@@ -315,117 +299,6 @@ public class AppFrame extends javax.swing.JFrame implements FileHistory.IFileHis
 			}
 		});
 		pmnuRec.add(pmiPasteRec);
-
-		dlgFilter.setTitle("Filter");
-		dlgFilter.setAlwaysOnTop(true);
-		dlgFilter.setModal(true);
-		dlgFilter.getContentPane().setLayout(new java.awt.GridBagLayout());
-
-		btnApplyFilter.setText("Apply Filter");
-		btnApplyFilter.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				dlgFilterApply(evt);
-			}
-		});
-		gridBagConstraints = new java.awt.GridBagConstraints();
-		gridBagConstraints.gridx = 0;
-		gridBagConstraints.gridy = 6;
-		gridBagConstraints.ipadx = 5;
-		gridBagConstraints.ipady = 5;
-		gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-		gridBagConstraints.insets = new java.awt.Insets(15, 5, 5, 100);
-		dlgFilter.getContentPane().add(btnApplyFilter, gridBagConstraints);
-
-		btnCancel.setText("Cancel");
-		btnCancel.setPreferredSize(new java.awt.Dimension(87, 23));
-		btnCancel.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				dlgFilterCancel(evt);
-			}
-		});
-		gridBagConstraints = new java.awt.GridBagConstraints();
-		gridBagConstraints.gridx = 1;
-		gridBagConstraints.gridy = 6;
-		gridBagConstraints.ipadx = 5;
-		gridBagConstraints.ipady = 5;
-		gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
-		gridBagConstraints.insets = new java.awt.Insets(15, 100, 5, 5);
-		dlgFilter.getContentPane().add(btnCancel, gridBagConstraints);
-
-		recipeNameChk.setSelected(true);
-		recipeNameChk.setText("Recipe Name");
-		recipeNameChk.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
-		recipeNameChk.setMargin(new java.awt.Insets(0, 0, 0, 0));
-		gridBagConstraints = new java.awt.GridBagConstraints();
-		gridBagConstraints.gridx = 0;
-		gridBagConstraints.gridy = 0;
-		gridBagConstraints.gridwidth = 2;
-		gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-		gridBagConstraints.insets = new java.awt.Insets(20, 50, 0, 0);
-		dlgFilter.getContentPane().add(recipeNameChk, gridBagConstraints);
-
-		ingredientsChk.setText("Ingredients");
-		ingredientsChk.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
-		ingredientsChk.setMargin(new java.awt.Insets(0, 0, 0, 0));
-		gridBagConstraints = new java.awt.GridBagConstraints();
-		gridBagConstraints.gridx = 0;
-		gridBagConstraints.gridy = 1;
-		gridBagConstraints.gridwidth = 2;
-		gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-		gridBagConstraints.insets = new java.awt.Insets(15, 50, 0, 0);
-		dlgFilter.getContentPane().add(ingredientsChk, gridBagConstraints);
-
-		processChk.setText("Process");
-		processChk.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
-		processChk.setMargin(new java.awt.Insets(0, 0, 0, 0));
-		gridBagConstraints = new java.awt.GridBagConstraints();
-		gridBagConstraints.gridx = 0;
-		gridBagConstraints.gridy = 2;
-		gridBagConstraints.gridwidth = 2;
-		gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-		gridBagConstraints.insets = new java.awt.Insets(15, 50, 0, 0);
-		dlgFilter.getContentPane().add(processChk, gridBagConstraints);
-
-		commentsChk.setText("Comments");
-		commentsChk.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
-		commentsChk.setMargin(new java.awt.Insets(0, 0, 0, 0));
-		commentsChk.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				commentsChkActionPerformed(evt);
-			}
-		});
-		gridBagConstraints = new java.awt.GridBagConstraints();
-		gridBagConstraints.gridx = 0;
-		gridBagConstraints.gridy = 3;
-		gridBagConstraints.gridwidth = 2;
-		gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-		gridBagConstraints.insets = new java.awt.Insets(15, 50, 0, 0);
-		dlgFilter.getContentPane().add(commentsChk, gridBagConstraints);
-
-		filterText.setMinimumSize(new java.awt.Dimension(300, 19));
-		filterText.setPreferredSize(new java.awt.Dimension(300, 19));
-		filterText.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				filterTextActionPerformed(evt);
-			}
-		});
-		gridBagConstraints = new java.awt.GridBagConstraints();
-		gridBagConstraints.gridx = 0;
-		gridBagConstraints.gridy = 5;
-		gridBagConstraints.gridwidth = 2;
-		gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-		gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTH;
-		gridBagConstraints.insets = new java.awt.Insets(5, 50, 0, 5);
-		dlgFilter.getContentPane().add(filterText, gridBagConstraints);
-
-		jLabel1.setText("Search Text");
-		gridBagConstraints = new java.awt.GridBagConstraints();
-		gridBagConstraints.gridx = 0;
-		gridBagConstraints.gridy = 4;
-		gridBagConstraints.gridwidth = 2;
-		gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-		gridBagConstraints.insets = new java.awt.Insets(25, 50, 0, 0);
-		dlgFilter.getContentPane().add(jLabel1, gridBagConstraints);
 
 		setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
 		setName(""); // NOI18N
@@ -774,47 +647,6 @@ public class AppFrame extends javax.swing.JFrame implements FileHistory.IFileHis
 		pack();
 	}
 
-	private void filterTextActionPerformed(java.awt.event.ActionEvent evt) {
-		// TODO
-	}
-
-	private void commentsChkActionPerformed(java.awt.event.ActionEvent evt) {
-		// TODO
-	}
-
-	private void dlgFilterCancel(java.awt.event.ActionEvent evt) {
-		dlgFilter.setVisible(false);
-	}
-
-	private void dlgFilterApply(java.awt.event.ActionEvent evt) {
-		dlgFilter.setVisible(false);
-		ArrayList<String> fields = new ArrayList<String>();
-
-		if (recipeNameChk.isSelected()) {
-			fields.add("Name");
-		}
-
-		if (ingredientsChk.isSelected()) {
-			fields.add("Ingredient");
-		}
-
-		if (processChk.isSelected()) {
-			fields.add("Process");
-		}
-		if (commentsChk.isSelected()) {
-			fields.add("Comments");
-		}
-
-		searchFind(fields, filterText.getText());
-		if (filter == null) {
-			txtStatusBar.setText("Filter OFF");
-			miFilter.setSelected(false);
-		} else {
-			txtStatusBar.setText("Filter ON");
-		}
-
-	}
-
 	/**
 	 * Copy plain text to windows buffer
 	 * 
@@ -834,19 +666,28 @@ public class AppFrame extends javax.swing.JFrame implements FileHistory.IFileHis
 	private void miFilterActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_miFilterActionPerformed
 		if (miFilter.isSelected() == true) {
 
-			// Get the size of the screen
-			Point loc = this.getLocation();
-			Dimension dim = this.getSize();
+			filterDialog.setFocusOnFilterText();
+			filterDialog.setDialogLocation();
+			filterDialog.setVisible(true);
 
-			dlgFilter.pack();
-			// Determine the new location of the window
-			int w = dlgFilter.getSize().width;
-			int h = dlgFilter.getSize().height;
-			int x = loc.x + (dim.width - w) / 2;
-			int y = loc.y + (dim.height - h) / 2;
-			// Move the window
-			dlgFilter.setLocation(x, y);
-			dlgFilter.setVisible(true);
+			String filterText = filterDialog.getFilterStrgin();
+			List<String> filterFields = filterDialog.getFilterFields();
+			if (filterText.length() > 0 && filterFields.size() > 0) {
+				searchFind(filterFields, filterText);
+				if (filter == null) {
+					txtStatusBar.setText("Filter OFF");
+					miFilter.setSelected(false);
+				} else {
+					txtStatusBar.setText("Filter ON");
+				}
+			}
+			else {
+				filter = null;
+				BookUtils bw = new BookUtils(book);
+				bw.loadJtree(this.recipeTree, this.viewBy, this.filter);
+				txtStatusBar.setText("Filter Off");
+				miFilter.setSelected(false);
+			}
 
 		} else {
 			filter = null;
@@ -1050,8 +891,7 @@ public class AppFrame extends javax.swing.JFrame implements FileHistory.IFileHis
 
 	public void setIcon() {
 
-		setIconImage(Toolkit.getDefaultToolkit()
-				.createImage(getClass().getResource("/images/appIcon.gif")));
+		setIconImage(Toolkit.getDefaultToolkit().createImage(getClass().getResource("/images/appIcon.gif")));
 
 	}
 

@@ -3,7 +3,9 @@ package com.rednoblue.jrecipe.dialogs;
 
 import java.awt.Point;
 
-public class SaveDialog extends javax.swing.JDialog {
+import javax.swing.JDialog;
+
+public class SaveDialog extends JDialog {
 	/**
 	 * 
 	 */
