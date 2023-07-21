@@ -147,12 +147,6 @@ public class AppFrame extends javax.swing.JFrame implements FileHistory.IFileHis
 	public AppFrame(Logger logger, JasperCompiler jasperCompiler, RecipeIndexer recipeIndexer, XmlUtils xmlUtils,
 			MyFileWriter fileWriter, MyFileReader fileReader) {
 		this.logger = logger;
-		this.xmlUtils = xmlUtils;
-		this.jasperCompiler = jasperCompiler;
-		this.recipeIndexer = recipeIndexer;
-		this.fileWriter = fileWriter;
-		this.fileReader = fileReader;
-		this.filterDialog = new FilterDialog(this, true);
 
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -161,10 +155,19 @@ public class AppFrame extends javax.swing.JFrame implements FileHistory.IFileHis
 			e.printStackTrace();
 			System.exit(1);
 		}
+		
+		this.xmlUtils = xmlUtils;
+		this.jasperCompiler = jasperCompiler;
+		this.recipeIndexer = recipeIndexer;
+		this.fileWriter = fileWriter;
+		this.fileReader = fileReader;
+
 		initComponents();
 
-		fileHistory = new FileHistory(this);
-		fileHistory.initFileMenuHistory();
+		this.filterDialog = new FilterDialog(this, true);
+
+		this.fileHistory = new FileHistory(this);
+		this.fileHistory.initFileMenuHistory();
 	}
 
 	private void initComponents() {
