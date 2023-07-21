@@ -673,7 +673,7 @@ public class AppFrame extends javax.swing.JFrame implements FileHistory.IFileHis
 			filterDialog.setDialogLocation();
 			filterDialog.setVisible(true);
 
-			String filterText = filterDialog.getFilterStrgin();
+			String filterText = filterDialog.getFilterText();
 			List<String> filterFields = filterDialog.getFilterFields();
 			if (filterText.length() > 0 && filterFields.size() > 0) {
 				searchFind(filterFields, filterText);

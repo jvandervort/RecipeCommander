@@ -22,16 +22,16 @@ public class FilterDialog extends JDialog {
 
 	private JButton btnApplyFilter = new JButton();
 	private JButton btnCancel = new JButton();
-	private JLabel jLabel1 = new JLabel();
-	private JCheckBox commentsChk = new JCheckBox();
-	private JCheckBox ingredientsChk = new JCheckBox();
-	private JCheckBox processChk = new JCheckBox();
-	private JCheckBox recipeNameChk = new JCheckBox();
-	private JTextField filterText = new JTextField();
-	private Frame parent;
+	private JCheckBox chkComments = new JCheckBox();
+	private JCheckBox chkIngredient = new JCheckBox();
+	private JCheckBox chkProcess = new JCheckBox();
+	private JCheckBox chkRecipeName = new JCheckBox();
+	private JLabel lblSearchText = new JLabel();
+	private JTextField txtFilter = new JTextField();
+	private final Frame parent;
 
 	private ArrayList<String> filterFields = new ArrayList<String>();
-	private String filterTextString = "";
+	private String filterText = "";
 
 	public FilterDialog(Frame parent, boolean modal) {
 		super(parent, modal);
@@ -40,7 +40,7 @@ public class FilterDialog extends JDialog {
 	}
 
 	public void setFocusOnFilterText() {
-		filterText.requestFocusInWindow();
+		txtFilter.requestFocusInWindow();
 	}
 
 	public void setDialogLocation() {
@@ -61,10 +61,12 @@ public class FilterDialog extends JDialog {
 		return this.filterFields;
 	}
 
-	public String getFilterStrgin() {
-		return this.filterTextString;
+	public String getFilterText() {
+		return this.filterText;
 	}
 
+	
+	
 	private void initComponents() {
 		this.setTitle("Filter");
 		this.setAlwaysOnTop(true);
@@ -77,7 +79,6 @@ public class FilterDialog extends JDialog {
 				dlgFilterApply(evt);
 			}
 		});
-		
 		GridBagConstraints gbConstraints = new GridBagConstraints();
 		gbConstraints.gridx = 0;
 		gbConstraints.gridy = 6;
@@ -103,59 +104,54 @@ public class FilterDialog extends JDialog {
 		gbConstraints.insets = new Insets(15, 100, 5, 5);
 		this.getContentPane().add(btnCancel, gbConstraints);
 
-		recipeNameChk.setSelected(true);
-		recipeNameChk.setText("Recipe Name");
-		recipeNameChk.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
-		recipeNameChk.setMargin(new Insets(0, 0, 0, 0));
+		chkRecipeName.setSelected(true);
+		chkRecipeName.setText("Recipe Name");
+		chkRecipeName.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
+		chkRecipeName.setMargin(new Insets(0, 0, 0, 0));
 		gbConstraints = new GridBagConstraints();
 		gbConstraints.gridx = 0;
 		gbConstraints.gridy = 0;
 		gbConstraints.gridwidth = 2;
 		gbConstraints.anchor = GridBagConstraints.NORTHWEST;
 		gbConstraints.insets = new Insets(20, 50, 0, 0);
-		this.getContentPane().add(recipeNameChk, gbConstraints);
+		this.getContentPane().add(chkRecipeName, gbConstraints);
 
-		ingredientsChk.setText("Ingredients");
-		ingredientsChk.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
-		ingredientsChk.setMargin(new Insets(0, 0, 0, 0));
+		chkIngredient.setText("Ingredients");
+		chkIngredient.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
+		chkIngredient.setMargin(new Insets(0, 0, 0, 0));
 		gbConstraints = new GridBagConstraints();
 		gbConstraints.gridx = 0;
 		gbConstraints.gridy = 1;
 		gbConstraints.gridwidth = 2;
 		gbConstraints.anchor = GridBagConstraints.NORTHWEST;
 		gbConstraints.insets = new Insets(15, 50, 0, 0);
-		this.getContentPane().add(ingredientsChk, gbConstraints);
+		this.getContentPane().add(chkIngredient, gbConstraints);
 
-		processChk.setText("Process");
-		processChk.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
-		processChk.setMargin(new Insets(0, 0, 0, 0));
+		chkProcess.setText("Process");
+		chkProcess.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
+		chkProcess.setMargin(new Insets(0, 0, 0, 0));
 		gbConstraints = new GridBagConstraints();
 		gbConstraints.gridx = 0;
 		gbConstraints.gridy = 2;
 		gbConstraints.gridwidth = 2;
 		gbConstraints.anchor = GridBagConstraints.NORTHWEST;
 		gbConstraints.insets = new Insets(15, 50, 0, 0);
-		this.getContentPane().add(processChk, gbConstraints);
+		this.getContentPane().add(chkProcess, gbConstraints);
 
-		commentsChk.setText("Comments");
-		commentsChk.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
-		commentsChk.setMargin(new Insets(0, 0, 0, 0));
-		commentsChk.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
-				// TODO
-			}
-		});
+		chkComments.setText("Comments");
+		chkComments.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
+		chkComments.setMargin(new Insets(0, 0, 0, 0));
 		gbConstraints = new GridBagConstraints();
 		gbConstraints.gridx = 0;
 		gbConstraints.gridy = 3;
 		gbConstraints.gridwidth = 2;
 		gbConstraints.anchor = GridBagConstraints.NORTHWEST;
 		gbConstraints.insets = new Insets(15, 50, 0, 0);
-		this.getContentPane().add(commentsChk, gbConstraints);
+		this.getContentPane().add(chkComments, gbConstraints);
 
-		filterText.setMinimumSize(new Dimension(300, 19));
-		filterText.setPreferredSize(new Dimension(300, 19));
-		filterText.addActionListener(new ActionListener() {
+		txtFilter.setMinimumSize(new Dimension(300, 19));
+		txtFilter.setPreferredSize(new Dimension(300, 19));
+		txtFilter.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dlgFilterApply(e);
 			}
@@ -167,16 +163,16 @@ public class FilterDialog extends JDialog {
 		gbConstraints.fill = GridBagConstraints.HORIZONTAL;
 		gbConstraints.anchor = GridBagConstraints.NORTH;
 		gbConstraints.insets = new Insets(5, 50, 0, 5);
-		this.getContentPane().add(filterText, gbConstraints);
+		this.getContentPane().add(txtFilter, gbConstraints);
 
-		jLabel1.setText("Search Text");
+		lblSearchText.setText("Search Text");
 		gbConstraints = new GridBagConstraints();
 		gbConstraints.gridx = 0;
 		gbConstraints.gridy = 4;
 		gbConstraints.gridwidth = 2;
 		gbConstraints.anchor = GridBagConstraints.NORTHWEST;
 		gbConstraints.insets = new Insets(25, 50, 0, 0);
-		this.getContentPane().add(jLabel1, gbConstraints);
+		this.getContentPane().add(lblSearchText, gbConstraints);
 
 		pack();
 	}
@@ -189,23 +185,23 @@ public class FilterDialog extends JDialog {
 	private void dlgFilterApply(ActionEvent evt) {
 		this.setVisible(false);
 		this.filterFields.clear();
-		this.filterTextString = "";
+		this.filterText = "";
 
-		if (recipeNameChk.isSelected()) {
+		if (chkRecipeName.isSelected()) {
 			filterFields.add("Name");
 		}
 
-		if (ingredientsChk.isSelected()) {
+		if (chkIngredient.isSelected()) {
 			filterFields.add("Ingredient");
 		}
 
-		if (processChk.isSelected()) {
+		if (chkProcess.isSelected()) {
 			filterFields.add("Process");
 		}
-		if (commentsChk.isSelected()) {
+		if (chkComments.isSelected()) {
 			filterFields.add("Comments");
 		}
 
-		this.filterTextString = filterText.getText().trim();
+		this.filterText = txtFilter.getText().trim();
 	}
 }
