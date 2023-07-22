@@ -17,7 +17,7 @@ import java.util.prefs.Preferences;
  */
 public class Global {
 	// properties for prefs
-	public static final String appName = "RecipeRaptor";
+	public static final String appName = "RecipeCommander";
 	private static final String prefString = "/com/rednoblue/" + appName;
 	private static final String prefLocX = "loc_x";
 	private static final String prefLocY = "loc_y";

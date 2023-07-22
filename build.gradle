@@ -6,7 +6,7 @@ plugins {
 }
 
 application {
-    mainClass = 'com.rednoblue.jrecipe.RecipeRaptor'
+    mainClass = 'com.rednoblue.jrecipe.RecipeCommander'
 }
 
 repositories {
@@ -32,7 +32,7 @@ repositories {
 shadowJar {
   manifest {
     attributes(
-      'Main-Class': 'com.rednoblue.jrecipe.RecipeRaptor'
+      'Main-Class': 'com.rednoblue.jrecipe.RecipeCommander'
     )
   }
 }
