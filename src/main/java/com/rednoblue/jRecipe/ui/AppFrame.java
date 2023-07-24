@@ -69,10 +69,10 @@ import com.rednoblue.jrecipe.io.input.ReaderXmlFile;
 import com.rednoblue.jrecipe.model.Book;
 import com.rednoblue.jrecipe.model.EDisplayType;
 import com.rednoblue.jrecipe.model.Recipe;
-import com.rednoblue.jrecipe.model.XmlUtils;
 import com.rednoblue.jrecipe.ui.dialog.FilterDialog;
 import com.rednoblue.jrecipe.ui.dialog.OpenUrl;
 import com.rednoblue.jrecipe.ui.dialog.SaveDialog;
+import com.rednoblue.jrecipe.xml.XmlTransformer;
 
 import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JRException;
@@ -174,13 +174,13 @@ public class AppFrame extends JFrame implements FileHistory.IFileHistory {
 	 */
 	private JasperCompiler jasperCompiler;
 
-	private XmlUtils xmlUtils;
+	private XmlTransformer xmlUtils;
 	private MyFileWriter fileWriter;
 	private MyFileReader fileReader;
 	private UserPrefs userPrefs;
 
 	@Inject
-	public AppFrame(Logger logger, JasperCompiler jasperCompiler, RecipeIndexer recipeIndexer, XmlUtils xmlUtils,
+	public AppFrame(Logger logger, JasperCompiler jasperCompiler, RecipeIndexer recipeIndexer, XmlTransformer xmlUtils,
 			MyFileWriter fileWriter, MyFileReader fileReader, UserPrefs userPrefs) {
 		this.logger = logger;
 		this.userPrefs = userPrefs;

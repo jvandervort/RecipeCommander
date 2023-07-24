@@ -7,7 +7,7 @@ import com.rednoblue.jrecipe.io.MyFileFilter;
 import com.rednoblue.jrecipe.model.Book;
 import com.rednoblue.jrecipe.model.EDisplayType;
 import com.rednoblue.jrecipe.model.Recipe;
-import com.rednoblue.jrecipe.model.XmlUtils;
+import com.rednoblue.jrecipe.xml.XmlTransformer;
 
 // jasper imports
 import net.sf.jasperreports.engine.JRDataSource;
@@ -31,10 +31,10 @@ public class WriterPdf implements IRecipeWriter {
 	static private final String fileDescription = formatName + " Files";
 	static private final boolean readable = false;
 
-	private XmlUtils xmlUtils;
+	private XmlTransformer xmlUtils;
 
 	@Inject
-	public WriterPdf(XmlUtils xmlUtils) {
+	public WriterPdf(XmlTransformer xmlUtils) {
 		this.xmlUtils = xmlUtils;
 	}
 

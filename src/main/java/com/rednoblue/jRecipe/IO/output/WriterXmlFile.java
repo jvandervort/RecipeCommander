@@ -12,7 +12,7 @@ import com.rednoblue.jrecipe.io.MyFileFilter;
 import com.rednoblue.jrecipe.model.Book;
 import com.rednoblue.jrecipe.model.EDisplayType;
 import com.rednoblue.jrecipe.model.Recipe;
-import com.rednoblue.jrecipe.model.XmlUtils;
+import com.rednoblue.jrecipe.xml.XmlTransformer;
 
 /**
  * Provides native xml output.
@@ -25,10 +25,10 @@ public class WriterXmlFile implements IRecipeWriter {
 	static private final String fileDescription = formatName + " Files";
 	static private final boolean readable = true;
 
-	private XmlUtils xmlUtils;
+	private XmlTransformer xmlUtils;
 
 	@Inject
-	public WriterXmlFile(XmlUtils xmlUtils) {
+	public WriterXmlFile(XmlTransformer xmlUtils) {
 		this.xmlUtils = xmlUtils;
 	}
 
