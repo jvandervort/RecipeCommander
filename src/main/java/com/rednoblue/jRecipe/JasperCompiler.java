@@ -13,9 +13,6 @@ import net.sf.jasperreports.engine.xml.JRXmlLoader;
 
 /**
  * Compiles built-in jasper reports in a separate thread.
- * 
- * @author John Vandervort
- * @version 1.0
  */
 public class JasperCompiler {
 	private JasperCompilerThread compiler_thread;

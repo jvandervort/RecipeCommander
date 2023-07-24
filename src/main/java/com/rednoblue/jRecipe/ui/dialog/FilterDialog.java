@@ -1,4 +1,4 @@
-package com.rednoblue.jrecipe.dialogs;
+package com.rednoblue.jrecipe.ui.dialog;
 
 import java.awt.Dimension;
 import java.awt.Frame;

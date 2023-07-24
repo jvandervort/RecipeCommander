@@ -1,13 +1,5 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.rednoblue.jrecipe.logging;
 
-/**
- *
- * @author John
- */
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Formatter;

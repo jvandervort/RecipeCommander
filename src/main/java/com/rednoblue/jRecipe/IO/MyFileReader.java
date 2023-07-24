@@ -14,13 +14,13 @@ import java.util.zip.ZipInputStream;
 import javax.swing.JFileChooser;
 
 import com.google.inject.Inject;
-import com.rednoblue.jrecipe.AppFrame;
-import com.rednoblue.jrecipe.Global;
+import com.rednoblue.jrecipe.UserPrefs;
 import com.rednoblue.jrecipe.io.input.IRecipeReader;
 import com.rednoblue.jrecipe.io.input.ReaderMasterCook;
 import com.rednoblue.jrecipe.io.input.ReaderMealMaster;
 import com.rednoblue.jrecipe.io.input.ReaderXmlFile;
 import com.rednoblue.jrecipe.model.Book;
+import com.rednoblue.jrecipe.ui.AppFrame;
 
 /**
  * Handles the loading of a recipe book
@@ -29,12 +29,14 @@ public class MyFileReader {
 	private ReaderXmlFile readerXmlFile;
 	private ReaderMasterCook readerMasterCook;
 	private ReaderMealMaster readerMealMaster;
+	private final UserPrefs userPrefs;
 
 	private Book book;
 
 	@Inject
 	public MyFileReader(ReaderXmlFile readerXmlFile, ReaderMasterCook readerMasterCook,
-			ReaderMealMaster readerMealMaster) {
+			ReaderMealMaster readerMealMaster, UserPrefs userPrefs) {
+		this.userPrefs = userPrefs;
 		this.readerXmlFile = readerXmlFile;
 		this.readerMasterCook = readerMasterCook;
 		this.readerMealMaster = readerMealMaster;
@@ -112,7 +114,7 @@ public class MyFileReader {
 			java.io.Reader r = null;
 			URL u = null;
 			u = new URL(fileName.replaceAll(" ", "%20"));
-			Global.lastFileName = new String(u.toString().replaceAll("%20", " "));
+			userPrefs.lastFileName = new String(u.toString().replaceAll("%20", " "));
 			r = new InputStreamReader(u.openStream());
 			br = new BufferedReader(r);
 
@@ -123,13 +125,13 @@ public class MyFileReader {
 			in = new ZipInputStream(new FileInputStream(inFilename));
 			in.getNextEntry();
 			br = new BufferedReader((java.io.Reader) new InputStreamReader(in));
-			Global.lastFileName = fileName;
+			userPrefs.lastFileName = fileName;
 		} else {
 			// local file
 			FileInputStream fis = new FileInputStream(fileName);
 			InputStreamReader isr = new InputStreamReader(fis, "UTF8");
 			br = new BufferedReader(isr);
-			Global.lastFileName = fileName;
+			userPrefs.lastFileName = fileName;
 		}
 		return br;
 	}

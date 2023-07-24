@@ -1,5 +1,5 @@
 
-package com.rednoblue.jrecipe;
+package com.rednoblue.jrecipe.ui;
 
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.swing.JRViewer;

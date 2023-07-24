@@ -15,29 +15,28 @@ import java.util.logging.Logger;
  * Data model: contained by book, contains ingredients
  */
 public class Recipe {
-
 	private final static Logger LOGGER = Logger.getLogger(Recipe.class.getName());
-	// private Book book = null;
-	public String recipe_name;
+
+	public String recipeName;
 	public String source;
 	public String chapter;
 	public String cat;
 	public String subcat;
 	public String origin;
-	public Date mod_date;
+	public Date modDate;
 	public String process;
 	public String comments;
 	public UUID uuid = null;
 	public ArrayList<Ingredient> iList;
 
 	public Recipe() {
-		recipe_name = new String("New Recipe");
+		recipeName = new String("New Recipe");
 		source = new String("");
 		chapter = new String("");
 		cat = new String("");
 		subcat = new String("");
 		origin = new String("");
-		mod_date = new Date();
+		modDate = new Date();
 		iList = new ArrayList<Ingredient>();
 		process = new String("");
 		comments = new String("");
@@ -48,11 +47,11 @@ public class Recipe {
 	 * return book; }
 	 */
 	public String getRecipeName() {
-		return recipe_name;
+		return recipeName;
 	}
 
 	public boolean setRecipeName(String arg) {
-		recipe_name = arg;
+		recipeName = arg;
 		return true;
 	}
 
@@ -91,17 +90,17 @@ public class Recipe {
 	}
 
 	public Date getModDate() {
-		return mod_date;
+		return modDate;
 	}
 
 	public String getModDateString() {
 		SimpleDateFormat sdf;
 		sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-		return sdf.format(mod_date);
+		return sdf.format(modDate);
 	}
 
 	public boolean setModDate(Date modDate) {
-		this.mod_date = modDate;
+		this.modDate = modDate;
 		return true;
 	}
 
@@ -360,6 +359,7 @@ public class Recipe {
 				ret.append(val + ":");
 			} catch (Throwable e) {
 				LOGGER.warning(e.toString());
+				e.printStackTrace();
 			}
 
 		}
@@ -368,7 +368,7 @@ public class Recipe {
 
 	/** used by jtree node names in AppFrame */
 	public String toString() {
-		String ret = recipe_name;
+		String ret = recipeName;
 		if (source.length() > 0) {
 			ret = ret + " (" + source + ")";
 		}
@@ -378,7 +378,7 @@ public class Recipe {
 	/** used by copytoplaintext in AppFrame */
 	public String toStringComplete() {
 		StringBuffer s = new StringBuffer("");
-		s.append(recipe_name + " ");
+		s.append(recipeName + " ");
 		if (source.length() > 0) {
 			s.append("(" + source + ")\n");
 		}

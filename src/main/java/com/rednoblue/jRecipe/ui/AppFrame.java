@@ -1,4 +1,4 @@
-package com.rednoblue.jrecipe;
+package com.rednoblue.jrecipe.ui;
 
 import java.awt.Dimension;
 import java.awt.EventQueue;
@@ -58,19 +58,21 @@ import javax.swing.tree.TreePath;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import com.rednoblue.jrecipe.dialogs.FilterDialog;
-import com.rednoblue.jrecipe.dialogs.OpenUrl;
-import com.rednoblue.jrecipe.dialogs.SaveDialog;
+import com.rednoblue.jrecipe.FileHistory;
+import com.rednoblue.jrecipe.JasperCompiler;
+import com.rednoblue.jrecipe.UserPrefs;
 import com.rednoblue.jrecipe.fulltext.RecipeIndexer;
 import com.rednoblue.jrecipe.io.MyFileReader;
 import com.rednoblue.jrecipe.io.MyFileWriter;
 import com.rednoblue.jrecipe.io.input.IRecipeReader;
 import com.rednoblue.jrecipe.io.input.ReaderXmlFile;
 import com.rednoblue.jrecipe.model.Book;
-import com.rednoblue.jrecipe.model.BookUtils;
 import com.rednoblue.jrecipe.model.EDisplayType;
 import com.rednoblue.jrecipe.model.Recipe;
 import com.rednoblue.jrecipe.model.XmlUtils;
+import com.rednoblue.jrecipe.ui.dialog.FilterDialog;
+import com.rednoblue.jrecipe.ui.dialog.OpenUrl;
+import com.rednoblue.jrecipe.ui.dialog.SaveDialog;
 
 import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JRException;
@@ -81,11 +83,10 @@ import net.sf.jasperreports.view.JasperViewer;
 
 @Singleton
 public class AppFrame extends JFrame implements FileHistory.IFileHistory {
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
+	private final Logger logger;
+
+	private JPanel mainPanel;
 	private JButton btnNew;
 	private JButton btnOpen;
 	private JButton btnPrint;
@@ -141,30 +142,48 @@ public class AppFrame extends JFrame implements FileHistory.IFileHistory {
 	private FilterDialog filterDialog;
 
 	private FileHistory fileHistory;
-	/** currently selected recipe object */
+
+	/** 
+	 * currently selected recipe object 
+	 */
+
 	private Recipe rec;
-	/** currently open book object */
+	/** 
+	 * currently open book object 
+	 */
+
 	private Book book;
-	/** setting for the tree view */
+
+	/** 
+	 * setting for the tree view 
+	 */
 	private String viewBy = "recipe";
-	/** filter for the tree view */
+
+	/** 
+	 * filter for the tree view 
+	 */
 	private HashMap<String, String> filter;
 
-	/** indexer for the filter (lucene engine) */
+	/**
+	 * Indexer for the filter (Lucene engine)
+	 */
 	private RecipeIndexer recipeIndexer;
 
-	/** compiler for the built-in jasper reports */
+	/**
+	 * compiler for the built-in Jasper Reports
+	 */
 	private JasperCompiler jasperCompiler;
 
-	private final Logger logger;
 	private XmlUtils xmlUtils;
 	private MyFileWriter fileWriter;
 	private MyFileReader fileReader;
+	private UserPrefs userPrefs;
 
 	@Inject
 	public AppFrame(Logger logger, JasperCompiler jasperCompiler, RecipeIndexer recipeIndexer, XmlUtils xmlUtils,
-			MyFileWriter fileWriter, MyFileReader fileReader) {
+			MyFileWriter fileWriter, MyFileReader fileReader, UserPrefs userPrefs) {
 		this.logger = logger;
+		this.userPrefs = userPrefs;
 
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -203,7 +222,7 @@ public class AppFrame extends JFrame implements FileHistory.IFileHistory {
 		viewByButtonGroup = new ButtonGroup();
 		statusPanel = new JPanel();
 		txtStatusBar = new JTextField();
-		JPanel mainPanel = new JPanel();
+		mainPanel = new JPanel();
 		vSplitPane = new JSplitPane();
 		details_panel = new JPanel();
 		viewer_panel = new JPanel();
@@ -250,7 +269,7 @@ public class AppFrame extends JFrame implements FileHistory.IFileHistory {
 		pmiOpenRec.setToolTipText("Open the selected recipe");
 		pmiOpenRec.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				pmiOpenRecActionPerformed(evt);
+				openRecipe();
 			}
 		});
 		pmnuRec.add(pmiOpenRec);
@@ -259,7 +278,10 @@ public class AppFrame extends JFrame implements FileHistory.IFileHistory {
 		pmiPrintRec.setToolTipText("Print the selected recipe");
 		pmiPrintRec.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				btnPrintActionPerformed(evt);
+				// check selection in tree first
+				if (rec != null) {
+					printRecipe(rec);
+				}
 			}
 		});
 		pmnuRec.add(pmiPrintRec);
@@ -268,7 +290,7 @@ public class AppFrame extends JFrame implements FileHistory.IFileHistory {
 		pmiNewRec.setToolTipText("Add a new recipe");
 		pmiNewRec.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				pmiNewRecActionPerformed(evt);
+				newRecipe();
 			}
 		});
 		pmnuRec.add(pmiNewRec);
@@ -277,7 +299,7 @@ public class AppFrame extends JFrame implements FileHistory.IFileHistory {
 		pmiExportRec.setText("Export Recipe");
 		pmiExportRec.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				pmiExportRecActionPerformed(evt);
+				exportRecPdf(rec);
 			}
 		});
 		pmnuRec.add(pmiExportRec);
@@ -285,7 +307,9 @@ public class AppFrame extends JFrame implements FileHistory.IFileHistory {
 		pmiCopyPlaintext.setText("Copy Plaintext for Email");
 		pmiCopyPlaintext.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				pmiCopyPlaintextActionPerformed(evt);
+				StringSelection stringSelection = new StringSelection(rec.toStringComplete());
+				Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+				clipboard.setContents(stringSelection, null);
 			}
 		});
 		pmnuRec.add(pmiCopyPlaintext);
@@ -427,7 +451,10 @@ public class AppFrame extends JFrame implements FileHistory.IFileHistory {
 		btnPrint.setBorder(null);
 		btnPrint.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				btnPrintActionPerformed(evt);
+				// check selection in tree first
+				if (rec != null) {
+					printRecipe(rec);
+				}
 			}
 		});
 		toolBar.add(btnPrint);
@@ -555,7 +582,10 @@ public class AppFrame extends JFrame implements FileHistory.IFileHistory {
 		miPrintRecipe.setToolTipText("Print selected recipe");
 		miPrintRecipe.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				btnPrintActionPerformed(evt);
+				// check selection in tree first
+				if (rec != null) {
+					printRecipe(rec);
+				}
 			}
 		});
 		mnuRecipe.add(miPrintRecipe);
@@ -668,18 +698,10 @@ public class AppFrame extends JFrame implements FileHistory.IFileHistory {
 		pack();
 	}
 
-	/**
-	 * Copy plain text to windows buffer
-	 * 
-	 * @param evt
-	 */
-	private void pmiCopyPlaintextActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_pmiCopyPlaintextActionPerformed
-		//
-		StringSelection stringSelection = new StringSelection(rec.toStringComplete());
-		Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-		clipboard.setContents(stringSelection, null);
-	}// GEN-LAST:event_pmiCopyPlaintextActionPerformed
-
+	public void setAppFrameTitle() {
+		setTitle(userPrefs.appName);
+	}
+	
 	private void miPdfExportActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_miPdfExportActionPerformed
 		exportRecPdf(null);
 	}// GEN-LAST:event_miPdfExportActionPerformed
@@ -703,23 +725,19 @@ public class AppFrame extends JFrame implements FileHistory.IFileHistory {
 				}
 			} else {
 				filter = null;
-				BookUtils bw = new BookUtils(book);
-				bw.loadJtree(this.recipeTree, this.viewBy, this.filter);
+				RecipeTreeLoader bw = new RecipeTreeLoader();
+				bw.loadTree(this.recipeTree, this.viewBy, this.filter, book);
 				txtStatusBar.setText("Filter Off");
 				miFilter.setSelected(false);
 			}
 
 		} else {
 			filter = null;
-			BookUtils bw = new BookUtils(book);
-			bw.loadJtree(this.recipeTree, this.viewBy, this.filter);
+			RecipeTreeLoader bw = new RecipeTreeLoader();
+			bw.loadTree(this.recipeTree, this.viewBy, this.filter, book);
 			txtStatusBar.setText("Filter Off");
 		}
 	}// GEN-LAST:event_miFilterActionPerformed
-
-	private void pmiExportRecActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_pmiExportRecActionPerformed
-		exportRecPdf(rec);
-	}// GEN-LAST:event_pmiExportRecActionPerformed
 
 	private void miPdfViewActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_miPdfViewActionPerformed
 		pdfView(null);
@@ -745,7 +763,7 @@ public class AppFrame extends JFrame implements FileHistory.IFileHistory {
 			} else if (ds.getReturnStatus() == SaveDialog.RET_NOSAVE) {
 				// do nothing
 			} else if (ds.getReturnStatus() == SaveDialog.RET_SAVE) {
-				fileWriter.saveFile(book, null, Global.lastFileName, true);
+				fileWriter.saveFile(book, null, userPrefs.lastFileName, true);
 			} else {
 				logger.info("Unknown return status from SaveOptionFrame");
 				return;
@@ -769,13 +787,6 @@ public class AppFrame extends JFrame implements FileHistory.IFileHistory {
 		}
 	}
 
-	private void btnPrintActionPerformed(java.awt.event.ActionEvent evt) {
-		// check selection in tree first
-		if (rec != null) {
-			printRecipe(rec);
-		}
-	}
-
 	private void miPasteActionPerformed(java.awt.event.ActionEvent evt) {
 		// TransferHandler xh = recipeTree.getTransferHandler();
 		Action pasteAction = TransferHandler.getPasteAction();
@@ -791,7 +802,6 @@ public class AppFrame extends JFrame implements FileHistory.IFileHistory {
 	}
 
 	private void miCutActionPerformed(java.awt.event.ActionEvent evt) {
-		// TransferHandler xh = recipeTree.getTransferHandler();
 		Action cutAction = TransferHandler.getCutAction();
 		cutAction.actionPerformed(new ActionEvent(recipeTree, ActionEvent.ACTION_PERFORMED,
 				(String) cutAction.getValue(Action.NAME), EventQueue.getMostRecentEventTime(), 0));
@@ -801,52 +811,43 @@ public class AppFrame extends JFrame implements FileHistory.IFileHistory {
 		deleteRecipe();
 	}
 
-	private void miViewBySourceActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_miViewBySourceActionPerformed
+	private void miViewBySourceActionPerformed(java.awt.event.ActionEvent evt) {
 		setViewBy(viewByButtonGroup.getSelection().getActionCommand());
-		BookUtils bw = new BookUtils(book);
-		bw.loadJtree(this.recipeTree, this.viewBy, this.filter);
-	}// GEN-LAST:event_miViewBySourceActionPerformed
+		RecipeTreeLoader bw = new RecipeTreeLoader();
+		bw.loadTree(this.recipeTree, this.viewBy, this.filter, book);
+	}
 
-	private void pmiNewRecActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_pmiNewRecActionPerformed
+	private void miNewRecipeActionPerformed(java.awt.event.ActionEvent evt) {
 		newRecipe();
-	}// GEN-LAST:event_pmiNewRecActionPerformed
+	}
 
-	private void miNewRecipeActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_miNewRecipeActionPerformed
-		newRecipe();
-	}// GEN-LAST:event_miNewRecipeActionPerformed
-
-	private void miViewByRecipeActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_miViewByRecipeActionPerformed
+	private void miViewByRecipeActionPerformed(java.awt.event.ActionEvent evt) {
 		setViewBy(viewByButtonGroup.getSelection().getActionCommand());
-		BookUtils bw = new BookUtils(book);
-		bw.loadJtree(this.recipeTree, this.viewBy, this.filter);
-	}// GEN-LAST:event_miViewByRecipeActionPerformed
+		RecipeTreeLoader bw = new RecipeTreeLoader();
+		bw.loadTree(this.recipeTree, this.viewBy, this.filter, book);
+	}
 
-	private void miViewByOriginActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_miViewByOriginActionPerformed
+	private void miViewByOriginActionPerformed(java.awt.event.ActionEvent evt) {
 		setViewBy(viewByButtonGroup.getSelection().getActionCommand());
-		BookUtils bw = new BookUtils(book);
-		bw.loadJtree(this.recipeTree, this.viewBy, this.filter);
-	}// GEN-LAST:event_miViewByOriginActionPerformed
+		RecipeTreeLoader bw = new RecipeTreeLoader();
+		bw.loadTree(this.recipeTree, this.viewBy, this.filter, book);
+	}
 
-	private void miViewByChapterActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_miViewByChapterActionPerformed
+	private void miViewByChapterActionPerformed(java.awt.event.ActionEvent evt) {
 		setViewBy(viewByButtonGroup.getSelection().getActionCommand());
-		BookUtils bw = new BookUtils(book);
-		bw.loadJtree(this.recipeTree, this.viewBy, this.filter);
-	}// GEN-LAST:event_miViewByChapterActionPerformed
+		RecipeTreeLoader bw = new RecipeTreeLoader();
+		bw.loadTree(this.recipeTree, this.viewBy, this.filter, book);
+	}
 
-	private void miOpenRecipeActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_miOpenRecipeActionPerformed
+	private void miOpenRecipeActionPerformed(java.awt.event.ActionEvent evt) {
 		openRecipe();
-	}// GEN-LAST:event_miOpenRecipeActionPerformed
+	}
 
-	private void mainFrameClosing(java.awt.event.WindowEvent evt) {// GEN-FIRST:event_mainFrameClosing
+	private void mainFrameClosing(java.awt.event.WindowEvent evt) {
 		exitApp();
-	}// GEN-LAST:event_mainFrameClosing
+	}
 
-	private void pmiOpenRecActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_pmiOpenRecActionPerformed
-		openRecipe();
-	}// GEN-LAST:event_pmiOpenRecActionPerformed
-
-	private void RecipeTreePopupHandler(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_RecipeTreePopupHandler
-		// popup menu?
+	private void RecipeTreePopupHandler(java.awt.event.MouseEvent evt) {
 		if (evt.isPopupTrigger()) {
 			pmnuRec.show(evt.getComponent(), evt.getX(), evt.getY());
 			evt.consume();
@@ -859,9 +860,9 @@ public class AppFrame extends JFrame implements FileHistory.IFileHistory {
 		String filePath = fileWriter.browseFileSystem(AppFrame.this, "jRecipe");
 		if (filePath != null && fileWriter.saveFile(book, null, filePath, true) == true) {
 			if (fileWriter.getLastWriter().isReadable()) {
-				Global.lastFileName = filePath;
-				fileHistory.insertPathname(Global.lastFileName);
-				this.setTitle(Global.appName + " - [" + Global.lastFileName + "]");
+				userPrefs.lastFileName = filePath;
+				fileHistory.insertPathname(userPrefs.lastFileName);
+				this.setTitle(userPrefs.appName + " - [" + userPrefs.lastFileName + "]");
 				book.setModified(false);
 				saveButtons(book.getModified());
 			}
@@ -869,8 +870,8 @@ public class AppFrame extends JFrame implements FileHistory.IFileHistory {
 	}
 
 	private void saveActionPerformed(java.awt.event.ActionEvent evt) {
-		fileWriter.saveFile(book, null, Global.lastFileName, true);
-		this.setTitle(Global.appName + " - [" + Global.lastFileName + "]");
+		fileWriter.saveFile(book, null, userPrefs.lastFileName, true);
+		this.setTitle(userPrefs.appName + " - [" + userPrefs.lastFileName + "]");
 		book.setModified(false);
 		saveButtons(book.getModified());
 	}
@@ -886,7 +887,7 @@ public class AppFrame extends JFrame implements FileHistory.IFileHistory {
 			} else if (ds.getReturnStatus() == SaveDialog.RET_NOSAVE) {
 				// do nothing
 			} else if (ds.getReturnStatus() == SaveDialog.RET_SAVE) {
-				fileWriter.saveFile(book, null, Global.lastFileName, true);
+				fileWriter.saveFile(book, null, userPrefs.lastFileName, true);
 			} else {
 				logger.info("Unknown return status from SaveOptionFrame");
 				return;
@@ -896,7 +897,7 @@ public class AppFrame extends JFrame implements FileHistory.IFileHistory {
 		String fileName = fileReader.browseFileSystem(AppFrame.this);
 		if (fileName != null) {
 			if (openBook(fileName)) {
-				fileHistory.insertPathname(Global.lastFileName);
+				fileHistory.insertPathname(userPrefs.lastFileName);
 			}
 		}
 	}// GEN-LAST:event_openActionPerformed
@@ -916,26 +917,26 @@ public class AppFrame extends JFrame implements FileHistory.IFileHistory {
 	}
 
 	public void loadGlobals() {
-		Global.loadAll();
-		if (Global.lastFileName.length() > 0) {
-			if (openBook(Global.lastFileName)) {
-				this.setTitle(Global.appName + " - [" + Global.lastFileName + "]");
+		userPrefs.loadAll();
+		if (userPrefs.lastFileName.length() > 0) {
+			if (openBook(userPrefs.lastFileName)) {
+				this.setTitle(userPrefs.appName + " - [" + userPrefs.lastFileName + "]");
 			}
 		}
-		setLocation(Global.LocX, Global.LocY);
-		setSize(Global.SizeW, Global.SizeH);
+		setLocation(userPrefs.LocX, userPrefs.LocY);
+		setSize(userPrefs.SizeW, userPrefs.SizeH);
 	}
 
 	public void saveGlobals() {
 		Point coordPt = this.getLocation();
-		Global.LocX = (int) coordPt.getX();
-		Global.LocY = (int) coordPt.getY();
+		userPrefs.LocX = (int) coordPt.getX();
+		userPrefs.LocY = (int) coordPt.getY();
 
 		Dimension appDim = getSize();
-		Global.SizeH = appDim.height;
-		Global.SizeW = appDim.width;
+		userPrefs.SizeH = appDim.height;
+		userPrefs.SizeW = appDim.width;
 
-		Global.saveAll();
+		userPrefs.saveAll();
 	}
 
 	public void openNewBook() {
@@ -949,7 +950,7 @@ public class AppFrame extends JFrame implements FileHistory.IFileHistory {
 			} else if (ds.getReturnStatus() == SaveDialog.RET_NOSAVE) {
 				// do nothing
 			} else if (ds.getReturnStatus() == SaveDialog.RET_SAVE) {
-				fileWriter.saveFile(book, null, Global.lastFileName, true);
+				fileWriter.saveFile(book, null, userPrefs.lastFileName, true);
 			} else {
 				logger.info("Unknown return status from SaveOptionFrame");
 				return;
@@ -960,16 +961,16 @@ public class AppFrame extends JFrame implements FileHistory.IFileHistory {
 		miFilter.setSelected(false);
 		filter = null;
 		book.setBookName("New Recipe Book");
-		Global.lastFileName = "";
-		this.setTitle(Global.appName + " - [New Book]");
+		userPrefs.lastFileName = "";
+		this.setTitle(userPrefs.appName + " - [New Book]");
 		book.setModified(true);
 		saveButtons(book.getModified());
 		Recipe r = new Recipe();
 		r.setRecipeName("Blank Recipe");
 		book.addRecipe(r);
 
-		BookUtils bw = new BookUtils(book);
-		bw.loadJtree(this.recipeTree, this.viewBy, this.filter);
+		RecipeTreeLoader bw = new RecipeTreeLoader();
+		bw.loadTree(this.recipeTree, this.viewBy, this.filter, book);
 		this.recipeTree.revalidate();
 	}
 
@@ -982,13 +983,13 @@ public class AppFrame extends JFrame implements FileHistory.IFileHistory {
 			}
 			miFilter.setSelected(false);
 			filter = null;
-			BookUtils bw = new BookUtils(book);
-			bw.loadJtree(this.recipeTree, this.viewBy, this.filter);
+			RecipeTreeLoader bw = new RecipeTreeLoader();
+			bw.loadTree(this.recipeTree, this.viewBy, this.filter, book);
 			this.recipeTree.revalidate();
 
 			// Save recently opened files
-			Global.lastFileName = path;
-			setTitle(Global.appName + " - [" + Global.lastFileName + "]");
+			userPrefs.lastFileName = path;
+			setTitle(userPrefs.appName + " - [" + userPrefs.lastFileName + "]");
 			recipeIndexer.indexRecipes(book);
 			return true;
 		} catch (FileNotFoundException e) {
@@ -1003,11 +1004,11 @@ public class AppFrame extends JFrame implements FileHistory.IFileHistory {
 	}
 
 	public void setLastFileName(String argFileName) {
-		Global.lastFileName = argFileName;
+		userPrefs.lastFileName = argFileName;
 	}
 
 	public String getLastFileName() {
-		return Global.lastFileName;
+		return userPrefs.lastFileName;
 	}
 
 	public Book getBook() {
@@ -1048,8 +1049,8 @@ public class AppFrame extends JFrame implements FileHistory.IFileHistory {
 
 		filter = recipeIndexer.searchRecipes(fields, queryString);
 		if (filter != null) {
-			BookUtils bw = new BookUtils(book);
-			bw.loadJtree(this.recipeTree, this.viewBy, this.filter);
+			RecipeTreeLoader bw = new RecipeTreeLoader();
+			bw.loadTree(this.recipeTree, this.viewBy, this.filter, book);
 		}
 	}
 
@@ -1089,7 +1090,7 @@ public class AppFrame extends JFrame implements FileHistory.IFileHistory {
 				fileHistory.saveHistoryEntries(); // save entries for next session
 				this.dispose();
 			} else if (ds.getReturnStatus() == SaveDialog.RET_SAVE) {
-				fileWriter.saveFile(book, null, Global.lastFileName, true);
+				fileWriter.saveFile(book, null, userPrefs.lastFileName, true);
 				saveGlobals();
 				fileHistory.saveHistoryEntries(); // save entries for next session
 				this.dispose();
@@ -1108,7 +1109,7 @@ public class AppFrame extends JFrame implements FileHistory.IFileHistory {
 	}
 
 	public void reload(Recipe recArg) {
-		// reindex for filter
+		// re-index for filter
 		recipeIndexer.indexRecipes(book);
 
 		// called after new recipe, or edits save to existing recipe
@@ -1123,8 +1124,8 @@ public class AppFrame extends JFrame implements FileHistory.IFileHistory {
 		}
 
 		// fill the tree
-		BookUtils bw = new BookUtils(book);
-		bw.loadJtree(this.recipeTree, this.viewBy, this.filter);
+		RecipeTreeLoader bw = new RecipeTreeLoader();
+		bw.loadTree(this.recipeTree, this.viewBy, this.filter, book);
 
 		// find rec in new tree model
 		if (recArg != null) {
@@ -1150,19 +1151,19 @@ public class AppFrame extends JFrame implements FileHistory.IFileHistory {
 	public void saveButtons(boolean value) {
 		// called changes are made to enable save buttons
 
-		if (Global.lastFileName.startsWith("http://")) {
+		if (userPrefs.lastFileName.startsWith("http://")) {
 			btnSave.setEnabled(false);
 			miSave.setEnabled(false);
-		} else if (Global.lastFileName.equals("")) {
+		} else if (userPrefs.lastFileName.equals("")) {
 			btnSave.setEnabled(false);
 			miSave.setEnabled(false);
 		} else {
 			btnSave.setEnabled(value);
 			miSave.setEnabled(value);
 			if (value == true) {
-				this.setTitle(Global.appName + " - [" + Global.lastFileName + "*]");
+				this.setTitle(userPrefs.appName + " - [" + userPrefs.lastFileName + "*]");
 			} else {
-				this.setTitle(Global.appName + " - [" + Global.lastFileName + "]");
+				this.setTitle(userPrefs.appName + " - [" + userPrefs.lastFileName + "]");
 			}
 		}
 	}
@@ -1175,7 +1176,7 @@ public class AppFrame extends JFrame implements FileHistory.IFileHistory {
 	 * @return the application name
 	 */
 	public String getApplicationName() {
-		return Global.appName;
+		return userPrefs.appName;
 	}
 
 	/**
@@ -1224,7 +1225,7 @@ public class AppFrame extends JFrame implements FileHistory.IFileHistory {
 			} else if (ds.getReturnStatus() == SaveDialog.RET_NOSAVE) {
 				// do nothing
 			} else if (ds.getReturnStatus() == SaveDialog.RET_SAVE) {
-				fileWriter.saveFile(book, null, Global.lastFileName, true);
+				fileWriter.saveFile(book, null, userPrefs.lastFileName, true);
 			} else {
 				logger.info("Unknown return status from SaveOptionFrame");
 				return false;
@@ -1261,9 +1262,9 @@ public class AppFrame extends JFrame implements FileHistory.IFileHistory {
 		String filePath = fileWriter.browseFileSystem(AppFrame.this, "PDF");
 		if (filePath != null && fileWriter.saveFile(book, recArg, filePath, true) == true) {
 			if (fileWriter.getLastWriter().isReadable()) {
-				Global.lastFileName = filePath;
-				fileHistory.insertPathname(Global.lastFileName);
-				this.setTitle(Global.appName + " - [" + Global.lastFileName + "]");
+				userPrefs.lastFileName = filePath;
+				fileHistory.insertPathname(userPrefs.lastFileName);
+				this.setTitle(userPrefs.appName + " - [" + userPrefs.lastFileName + "]");
 				book.setModified(false);
 				saveButtons(book.getModified());
 			}

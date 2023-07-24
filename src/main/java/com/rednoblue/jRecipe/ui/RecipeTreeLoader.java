@@ -1,26 +1,21 @@
-package com.rednoblue.jrecipe.model;
+package com.rednoblue.jrecipe.ui;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 
+import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
 
-/**
- * Helper class for the Book, Recipe, and Ingredient classes
- * 
- * @author John Vandervort
- * @version 1.0
- */
-public class BookUtils {
-	private Book book;
+import com.rednoblue.jrecipe.model.Book;
+import com.rednoblue.jrecipe.model.Recipe;
 
-	public BookUtils(Book book) {
-		this.book = book;
+public class RecipeTreeLoader {
+
+	public RecipeTreeLoader() {
 	}
 
 	/**
@@ -30,8 +25,9 @@ public class BookUtils {
 	 * @param tree   from the mainframe
 	 * @param viewBy various facets of sorting/viewing
 	 * @param filter lucene filtered grouping
+	 * @param book   recipe book
 	 */
-	public void loadJtree(javax.swing.JTree tree, String viewBy, HashMap<String,String> filter) {
+	public void loadTree(JTree tree, String viewBy, HashMap<String, String> filter, Book book) {
 		// setup variables
 		DefaultTreeModel treeModel;
 		DefaultMutableTreeNode rootNode;
@@ -46,7 +42,7 @@ public class BookUtils {
 		DefaultMutableTreeNode sourceNode = null;
 
 		ArrayList<Recipe> rList = book.getRecipes();
-		Collections.sort(rList, new TreeComparator(viewBy));
+		Collections.sort(rList, new RecipeTreeComparator(viewBy));
 
 		if (filter != null) {
 			// sort should be based on group by
@@ -457,84 +453,4 @@ public class BookUtils {
 
 	}
 
-	/*
-	 * 
-	 * 
-	 * HELPER CLASSES
-	 * 
-	 * 
-	 */
-	/**
-	 * Used for sorting the jtree in various ways
-	 */
-	class TreeComparator implements Comparator<Recipe> {
-
-		private String by;
-
-		public TreeComparator(String by) {
-			this.by = by;
-		}
-
-		public int compare(Recipe o1, Recipe o2) {
-
-			Recipe r1 = (Recipe) o1;
-			Recipe r2 = (Recipe) o2;
-
-			int compareVal = 0;
-			if (by.equals("chapter")) {
-				compareVal = r1.getTreeAncestors(TreeViewBy.chapter).compareTo(r2.getTreeAncestors(TreeViewBy.chapter));
-			} else if (by.equals("origin")) {
-				compareVal = r1.getTreeAncestors(TreeViewBy.origin).compareTo(r2.getTreeAncestors(TreeViewBy.origin));
-			} else if (by.equals("source")) {
-				compareVal = r1.getTreeAncestors(TreeViewBy.source).compareTo(r2.getTreeAncestors(TreeViewBy.source));
-			} else if (by.equals("recipeName")) {
-				compareVal = r1.getTreeAncestors(TreeViewBy.recipeName)
-						.compareTo(r2.getTreeAncestors(TreeViewBy.recipeName));
-			}
-
-			if (compareVal != 0) {
-				return compareVal;
-			}
-			return 0; // they are the same
-		}
-
-		@Override
-		public boolean equals(Object o) {
-			if (!(o instanceof TreeComparator)) {
-				return false;
-			} else {
-				return true;
-			}
-		}
-	}
-}
-
-class TreeViewBy {
-
-	static ArrayList<String> chapter = new ArrayList<String>();
-	static ArrayList<String> origin = new ArrayList<String>();
-	static ArrayList<String> source = new ArrayList<String>();
-	static ArrayList<String> recipeName = new ArrayList<String>();
-
-	static {
-		chapter.add(new String("chapter"));
-		chapter.add(new String("cat"));
-		chapter.add(new String("subcat"));
-		chapter.add(new String("recipeName"));
-
-		origin.add(new String("origin"));
-		origin.add(new String("chapter"));
-		origin.add(new String("cat"));
-		origin.add(new String("subcat"));
-		origin.add(new String("recipeName"));
-
-		source.add(new String("source"));
-		source.add(new String("chapter"));
-		source.add(new String("cat"));
-		source.add(new String("subcat"));
-		source.add(new String("recipeName"));
-
-		recipeName.add(new String("recipeName"));
-
-	}
 }

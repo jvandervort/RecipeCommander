@@ -3,7 +3,7 @@
  *
  * Created on June 5, 2002, 12:10 PM
  */
-package com.rednoblue.jrecipe;
+package com.rednoblue.jrecipe.ui;
 
 import java.awt.Point;
 import java.awt.Toolkit;

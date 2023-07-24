@@ -21,18 +21,10 @@ public class Book {
 	/** has the book been changed? */
 	private boolean is_modified = false;
 
-	// CONSTRUCTOR: caller is the parent frame that hosts the file menu
 	public Book() {
 		recipe_list = new ArrayList<Recipe>();
 	}
 
-	/*
-	 * 
-	 * 
-	 * Accessors
-	 * 
-	 * 
-	 */
 	public Date getModDate() {
 		return mod_date;
 	}
@@ -121,13 +113,12 @@ public class Book {
 	 * @return success
 	 */
 	public boolean addRecipe(Recipe rec) {
-		// rec.setBook(this);
 		recipe_list.add(rec);
 		return true;
 	}
 
 	/**
-	 * Delete a sinlge recipe from the book
+	 * Delete a single recipe from the book
 	 * 
 	 * @param rec recipe
 	 * @return success
@@ -146,7 +137,7 @@ public class Book {
 		return recipe_list.size();
 	}
 
-	/** Find a recipe by name (first occurance) */
+	/** Find a recipe by name (first occurrence) */
 	public Recipe findRecipeByName(String recipeName) {
 		Iterator<Recipe> it = recipe_list.iterator();
 		while (it.hasNext()) {

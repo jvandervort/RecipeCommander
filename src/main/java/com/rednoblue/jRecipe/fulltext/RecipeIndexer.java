@@ -28,7 +28,7 @@ import org.apache.lucene.search.TopFieldDocs;
 import org.apache.lucene.store.FSDirectory;
 
 import com.google.inject.Inject;
-import com.rednoblue.jrecipe.Global;
+import com.rednoblue.jrecipe.UserPrefs;
 import com.rednoblue.jrecipe.model.Book;
 import com.rednoblue.jrecipe.model.Ingredient;
 import com.rednoblue.jrecipe.model.Recipe;
@@ -36,19 +36,18 @@ import com.rednoblue.jrecipe.model.Recipe;
 /**
  * Provides indexing services to the GUI. Handles indexing and searching. The
  * indexing is done in separate thread so it shouldn't affect the GUI.
- * 
- * @author John Vandervort
- * @version 1.0
  */
 public class RecipeIndexer {
 	private String indexLocation = "";
 	public IndexerThread indexThread;
 
 	private final Logger logger;
+	private final UserPrefs userPrefs;
 
 	@Inject
-	public RecipeIndexer(Logger logger) {
+	public RecipeIndexer(Logger logger, UserPrefs userPrefs) {
 		this.logger = logger;
+		this.userPrefs = userPrefs;
 	}
 
 	/**
@@ -128,7 +127,7 @@ public class RecipeIndexer {
 				File tempDir = new File(f.getParent());
 				f.delete();
 				f = null;
-				indexLocation = new String(tempDir.getAbsolutePath() + "/" + Global.appName + "_index");
+				indexLocation = new String(tempDir.getAbsolutePath() + "/" + userPrefs.appName + "_index");
 
 				File[] files = new File(indexLocation).listFiles();
 				if (files != null) {
