@@ -21,7 +21,6 @@ import java.util.Date;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.logging.Logger;
 
 import javax.swing.Action;
@@ -59,7 +58,6 @@ import javax.swing.tree.TreePath;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.rednoblue.jrecipe.FileHistory;
-import com.rednoblue.jrecipe.JasperCompiler;
 import com.rednoblue.jrecipe.UserPrefs;
 import com.rednoblue.jrecipe.fulltext.RecipeIndexer;
 import com.rednoblue.jrecipe.io.MyFileReader;
@@ -69,16 +67,13 @@ import com.rednoblue.jrecipe.io.input.ReaderXmlFile;
 import com.rednoblue.jrecipe.model.Book;
 import com.rednoblue.jrecipe.model.EDisplayType;
 import com.rednoblue.jrecipe.model.Recipe;
+import com.rednoblue.jrecipe.report.JasperCompiler;
+import com.rednoblue.jrecipe.report.MyJRViewer;
 import com.rednoblue.jrecipe.ui.dialog.FilterDialog;
 import com.rednoblue.jrecipe.ui.dialog.OpenUrl;
 import com.rednoblue.jrecipe.ui.dialog.SaveDialog;
 import com.rednoblue.jrecipe.xml.XmlTransformer;
 
-import net.sf.jasperreports.engine.JRDataSource;
-import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.data.JRXmlDataSource;
 import net.sf.jasperreports.view.JasperViewer;
 
 @Singleton
@@ -143,24 +138,24 @@ public class AppFrame extends JFrame implements FileHistory.IFileHistory {
 
 	private FileHistory fileHistory;
 
-	/** 
-	 * currently selected recipe object 
+	/**
+	 * currently selected recipe object
 	 */
 
 	private Recipe rec;
-	/** 
-	 * currently open book object 
+	/**
+	 * currently open book object
 	 */
 
 	private Book book;
 
-	/** 
-	 * setting for the tree view 
+	/**
+	 * setting for the tree view
 	 */
 	private String viewBy = "recipe";
 
-	/** 
-	 * filter for the tree view 
+	/**
+	 * filter for the tree view
 	 */
 	private HashMap<String, String> filter;
 
@@ -701,7 +696,7 @@ public class AppFrame extends JFrame implements FileHistory.IFileHistory {
 	public void setAppFrameTitle() {
 		setTitle(userPrefs.appName);
 	}
-	
+
 	private void miPdfExportActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_miPdfExportActionPerformed
 		exportRecPdf(null);
 	}// GEN-LAST:event_miPdfExportActionPerformed
@@ -1234,28 +1229,8 @@ public class AppFrame extends JFrame implements FileHistory.IFileHistory {
 		return openBook(path);
 	}
 
-	public JasperPrint get_jasper_print(Recipe r) {
-		JasperPrint jasperPrint = new JasperPrint();
-		try {
-			JRDataSource ds = null;
-			if (r == null) {
-				ds = new JRXmlDataSource(xmlUtils.transformToXmlDocument(book, EDisplayType.JASPER), "//Recipe");
-			} else {
-				ds = new JRXmlDataSource(xmlUtils.transformToXmlDocument(book, r, EDisplayType.JASPER), "//Recipe");
-			}
-			Map<String, Object> parameters = new HashMap<String, Object>();
-			parameters.put("IngredientSubreport", this.jasperCompiler.get_ingred_report());
-			jasperPrint = JasperFillManager.fillReport(this.jasperCompiler.get_main_report(), parameters, ds);
-		} catch (JRException e) {
-			logger.severe(e.toString());
-			e.printStackTrace();
-		}
-		return jasperPrint;
-	}
-
 	public void pdfView(Recipe r) {
-		JasperPrint jasperPrint = get_jasper_print(r);
-		JasperViewer.viewReport(jasperPrint, false);
+		JasperViewer.viewReport(this.jasperCompiler.getJasperPrint(book, r), false);
 	}
 
 	public void exportRecPdf(Recipe recArg) {
@@ -1392,31 +1367,6 @@ public class AppFrame extends JFrame implements FileHistory.IFileHistory {
 		}
 	}
 
-	class RecipeTransferable implements Transferable {
-
-		private String data;
-
-		public RecipeTransferable(String data) {
-			this.data = data;
-		}
-
-		public DataFlavor[] getTransferDataFlavors() {
-			return new DataFlavor[] { DataFlavor.stringFlavor };
-		}
-
-		public boolean isDataFlavorSupported(DataFlavor flavor) {
-			return flavor.equals(DataFlavor.stringFlavor);
-		}
-
-		public Object getTransferData(DataFlavor flavor) throws UnsupportedFlavorException {
-			if (isDataFlavorSupported(flavor)) {
-				return data;
-			}
-
-			throw new UnsupportedFlavorException(flavor);
-		}
-	}
-
 	class RecipeSelectionListener implements TreeSelectionListener {
 		public void valueChanged(TreeSelectionEvent e) {
 
@@ -1428,7 +1378,7 @@ public class AppFrame extends JFrame implements FileHistory.IFileHistory {
 				if (jasperCompiler.is_running()) {
 					logger.info("JasperComplier is still running");
 				} else {
-					viewer_scroller.setViewportView(new MyJRViewer(get_jasper_print(rec)));
+					viewer_scroller.setViewportView(new MyJRViewer(jasperCompiler.getJasperPrint(book, rec)));
 				}
 			} else {
 				// no children, ie book, chapter, etc... or no selection

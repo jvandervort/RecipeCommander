@@ -62,8 +62,7 @@ public class RecipeFrame extends JFrame {
 			subCatComboBox.addItem(s);
 		}
 
-		this.setIconImage(Toolkit.getDefaultToolkit()
-				.createImage(getClass().getResource("/images/appIcon.gif")));
+		this.setIconImage(Toolkit.getDefaultToolkit().createImage(getClass().getResource("/images/appIcon.gif")));
 		this.mainframe = mainframe;
 		this.book = book;
 		if (recArg == null) {

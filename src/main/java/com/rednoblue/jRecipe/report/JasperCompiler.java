@@ -1,13 +1,23 @@
-package com.rednoblue.jrecipe;
+package com.rednoblue.jrecipe.report;
 
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Logger;
 
 import com.google.inject.Inject;
+import com.rednoblue.jrecipe.model.Book;
+import com.rednoblue.jrecipe.model.EDisplayType;
+import com.rednoblue.jrecipe.model.Recipe;
+import com.rednoblue.jrecipe.xml.XmlTransformer;
 
+import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.data.JRXmlDataSource;
 import net.sf.jasperreports.engine.design.JasperDesign;
 import net.sf.jasperreports.engine.xml.JRXmlLoader;
 
@@ -19,22 +29,43 @@ public class JasperCompiler {
 	private JasperReport main_report;
 	private JasperReport ingred_report;
 	private final Logger logger;
+	private final XmlTransformer xmlTransformer;
 	
 	@Inject
-	public JasperCompiler(Logger logger) {
+	public JasperCompiler(Logger logger, XmlTransformer xmlTransformer) {
 		this.logger = logger;
+		this.xmlTransformer = xmlTransformer;
 		compiler_thread = new JasperCompilerThread();
 		compiler_thread.start();
 	}
 
-	public JasperReport get_main_report() {
+	public JasperReport getMainReport() {
 		return main_report;
 	}
 
-	public JasperReport get_ingred_report() {
+	public JasperReport getIngredientReport() {
 		return ingred_report;
 	}
 
+	public JasperPrint getJasperPrint(Book book, Recipe r) {
+		JasperPrint jasperPrint = new JasperPrint();
+		try {
+			JRDataSource ds = null;
+			if (r == null) {
+				ds = new JRXmlDataSource(xmlTransformer.transformToXmlDocument(book, EDisplayType.JASPER), "//Recipe");
+			} else {
+				ds = new JRXmlDataSource(xmlTransformer.transformToXmlDocument(book, r, EDisplayType.JASPER), "//Recipe");
+			}
+			Map<String, Object> parameters = new HashMap<String, Object>();
+			parameters.put("IngredientSubreport", getIngredientReport());
+			jasperPrint = JasperFillManager.fillReport(getMainReport(), parameters, ds);
+		} catch (JRException e) {
+			logger.severe(e.toString());
+			e.printStackTrace();
+		}
+		return jasperPrint;
+	}
+	
 	public boolean is_running() {
 		if (compiler_thread != null && compiler_thread.isAlive()) {
 			return true;
