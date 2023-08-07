@@ -30,23 +30,25 @@ public class MyFileReader {
 	private ReaderMasterCook readerMasterCook;
 	private ReaderMealMaster readerMealMaster;
 	private final UserPrefs userPrefs;
-
+	private final Logger logger;
+	
 	private Book book;
 
 	@Inject
-	public MyFileReader(ReaderXmlFile readerXmlFile, ReaderMasterCook readerMasterCook,
+	public MyFileReader(Logger logger, ReaderXmlFile readerXmlFile, ReaderMasterCook readerMasterCook,
 			ReaderMealMaster readerMealMaster, UserPrefs userPrefs) {
 		this.userPrefs = userPrefs;
 		this.readerXmlFile = readerXmlFile;
 		this.readerMasterCook = readerMasterCook;
 		this.readerMealMaster = readerMealMaster;
+		this.logger = logger;
 	}
 
 	public void loadFile(String fileName) throws FileNotFoundException, IOException {
 		String tenLines = getTenLines(fileName);
 		IRecipeReader reader = getCorrectReader(tenLines);
 		if (reader == null) {
-			Logger.getLogger(MyFileReader.class.getName()).log(Level.SEVERE, null, "unsupported file format");
+			logger.severe("unsupported file format");
 			return;
 		}
 		java.io.Reader r = (java.io.Reader) getBufferedReader(fileName);
@@ -94,7 +96,7 @@ public class MyFileReader {
 			}
 			return b.toString();
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+			// do nothing.
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -102,6 +104,9 @@ public class MyFileReader {
 	}
 
 	private IRecipeReader getCorrectReader(String tenlines) {
+		if (tenlines == null) {
+			return null;
+		}
 		if (readerXmlFile.isFileMine(tenlines)) {
 			return readerXmlFile;
 		}
