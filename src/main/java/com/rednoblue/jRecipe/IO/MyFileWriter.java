@@ -87,6 +87,9 @@ public class MyFileWriter {
 	public String browseFileSystem(AppFrame app, String selectedFormat) {
 		final JFileChooser fc = new JFileChooser(app.getLastFileName());
 		
+		fc.setDialogTitle("Save As");
+		fc.setApproveButtonText("Save As");
+		
 		MyFileFilter xmlFilter = writerXmlFile.getChoosableFileFilter();
 		MyFileFilter pdfFilter = writerPdf.getChoosableFileFilter();
 		MyFileFilter mealMasterFilter = writerMealMaster.getChoosableFileFilter();

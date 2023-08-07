@@ -54,7 +54,16 @@ public class MyFileReader {
 	}
 
 	public String browseFileSystem(AppFrame app) {
-		final JFileChooser fc = new JFileChooser(app.getLastFileName());
+		
+		String openPath;
+		if (app.getLastFileName() != null) {
+			openPath = app.getLastFileName();
+		}
+		else {
+			openPath = System.getProperty("user.home");
+		}
+		
+		final JFileChooser fc = new JFileChooser(openPath);
 
 		MyFileFilter jRecipeFilter = readerXmlFile.getChoosableFileFilter();
 		fc.addChoosableFileFilter(jRecipeFilter);
