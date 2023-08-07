@@ -121,7 +121,7 @@ public class RecipeIndexer {
 		@Override
 		public void run() {
 			try {
-				logger.info("indexing starting");
+				logger.fine("indexing starting");
 
 				File f = File.createTempFile("Temp1", "out", null);
 				File tempDir = new File(f.getParent());
@@ -163,7 +163,8 @@ public class RecipeIndexer {
 					writer.addDocument(ldoc);
 				}
 				writer.close();
-				logger.info("indexing done");
+				
+				logger.fine("indexing done");
 
 			} catch (IOException ex) {
 				logger.severe(ex.toString());

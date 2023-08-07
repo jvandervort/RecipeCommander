@@ -969,6 +969,8 @@ public class AppFrame extends JFrame implements FileHistory.IFileHistory {
 
 	public boolean openBook(String path) {
 		try {
+			logger.info(String.format("opening book %s", path));
+			
 			fileReader.loadFile(path);
 			book = fileReader.getBook();
 			if (book == null) {

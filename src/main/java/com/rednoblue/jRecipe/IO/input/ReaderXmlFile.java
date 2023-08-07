@@ -220,7 +220,7 @@ public class ReaderXmlFile extends DefaultHandler implements IRecipeReader {
 			ioe.printStackTrace();
 		}
 
-		Logger.getLogger(ReaderXmlFile.class.getName()).log(Level.INFO, "File Parsed!");
+		Logger.getLogger(ReaderXmlFile.class.getName()).log(Level.FINE, "File Parsed!");
 	}
 
 	@Override

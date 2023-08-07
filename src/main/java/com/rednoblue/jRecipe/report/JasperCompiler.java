@@ -84,7 +84,7 @@ public class JasperCompiler {
 		public void run() {
 			
 			try {
-				logger.info("jasper compiler starting");
+				logger.fine("jasper compiler starting");
 				
 				URL url = getClass().getResource("/Report1.jrxml");
 
@@ -102,7 +102,7 @@ public class JasperCompiler {
 				logger.fine("compiling " + url.getPath());
 				ingred_report = JasperCompileManager.compileReport(ingredientDesign);
 
-				logger.info("jasper compiler done");
+				logger.fine("jasper compiler done");
 
 			} catch (JRException e) {
 				logger.severe(e.toString());
