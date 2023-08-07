@@ -54,11 +54,8 @@ class RecipeTreeComparator implements Comparator<Recipe> {
 			compareVal = r1.getTreeAncestors(recipeNameTree)
 					.compareTo(r2.getTreeAncestors(recipeNameTree));
 		}
-
-		if (compareVal != 0) {
-			return compareVal;
-		}
-		return 0; // they are the same
+		
+		return compareVal;
 	}
 
 	@Override

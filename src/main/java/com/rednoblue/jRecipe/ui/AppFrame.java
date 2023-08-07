@@ -152,7 +152,7 @@ public class AppFrame extends JFrame implements FileHistory.IFileHistory {
 	/**
 	 * setting for the tree view
 	 */
-	private String viewBy = "recipe";
+	private String viewBy = "recipeName";
 
 	/**
 	 * filter for the tree view
@@ -173,12 +173,14 @@ public class AppFrame extends JFrame implements FileHistory.IFileHistory {
 	private MyFileWriter fileWriter;
 	private MyFileReader fileReader;
 	private UserPrefs userPrefs;
+	private RecipeTreeLoader loader;
 
 	@Inject
 	public AppFrame(Logger logger, JasperCompiler jasperCompiler, RecipeIndexer recipeIndexer, XmlTransformer xmlUtils,
-			MyFileWriter fileWriter, MyFileReader fileReader, UserPrefs userPrefs) {
+			MyFileWriter fileWriter, MyFileReader fileReader, UserPrefs userPrefs, RecipeTreeLoader loader) {
 		this.logger = logger;
 		this.userPrefs = userPrefs;
+		this.loader = loader;
 
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -410,7 +412,7 @@ public class AppFrame extends JFrame implements FileHistory.IFileHistory {
 		toolBar.setMaximumSize(new java.awt.Dimension(2147483647, 20));
 		toolBar.setMinimumSize(new java.awt.Dimension(100, 20));
 
-		btnNew.setIcon(new ImageIcon(getClass().getResource("/images/new.gif"))); // NOI18N
+		btnNew.setIcon(new ImageIcon(getClass().getResource("/images/new.gif")));
 		btnNew.setToolTipText("New");
 		btnNew.setBorder(null);
 		btnNew.addActionListener(new java.awt.event.ActionListener() {
@@ -420,7 +422,7 @@ public class AppFrame extends JFrame implements FileHistory.IFileHistory {
 		});
 		toolBar.add(btnNew);
 
-		btnOpen.setIcon(new ImageIcon(getClass().getResource("/images/open.gif"))); // NOI18N
+		btnOpen.setIcon(new ImageIcon(getClass().getResource("/images/open.gif")));
 		btnOpen.setToolTipText("Open");
 		btnOpen.setBorder(null);
 		btnOpen.addActionListener(new java.awt.event.ActionListener() {
@@ -430,7 +432,7 @@ public class AppFrame extends JFrame implements FileHistory.IFileHistory {
 		});
 		toolBar.add(btnOpen);
 
-		btnSave.setIcon(new ImageIcon(getClass().getResource("/images/save.gif"))); // NOI18N
+		btnSave.setIcon(new ImageIcon(getClass().getResource("/images/save.gif")));
 		btnSave.setToolTipText("Save");
 		btnSave.setBorder(null);
 		btnSave.setEnabled(false);
@@ -441,7 +443,7 @@ public class AppFrame extends JFrame implements FileHistory.IFileHistory {
 		});
 		toolBar.add(btnSave);
 
-		btnPrint.setIcon(new ImageIcon(getClass().getResource("/images/print.gif"))); // NOI18N
+		btnPrint.setIcon(new ImageIcon(getClass().getResource("/images/print.gif")));
 		btnPrint.setToolTipText("Print");
 		btnPrint.setBorder(null);
 		btnPrint.addActionListener(new java.awt.event.ActionListener() {
@@ -678,7 +680,7 @@ public class AppFrame extends JFrame implements FileHistory.IFileHistory {
 		viewByButtonGroup.add(miViewByRecipe);
 		miViewByRecipe.setSelected(true);
 		miViewByRecipe.setText("By Recipe");
-		miViewByRecipe.setActionCommand("recipe");
+		miViewByRecipe.setActionCommand("recipeName");
 		miViewByRecipe.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				miViewByRecipeActionPerformed(evt);
@@ -697,11 +699,11 @@ public class AppFrame extends JFrame implements FileHistory.IFileHistory {
 		setTitle(userPrefs.appName);
 	}
 
-	private void miPdfExportActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_miPdfExportActionPerformed
+	private void miPdfExportActionPerformed(java.awt.event.ActionEvent evt) {
 		exportRecPdf(null);
-	}// GEN-LAST:event_miPdfExportActionPerformed
+	}
 
-	private void miFilterActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_miFilterActionPerformed
+	private void miFilterActionPerformed(java.awt.event.ActionEvent evt) {
 		if (miFilter.isSelected() == true) {
 
 			filterDialog.setFocusOnFilterText();
@@ -720,31 +722,29 @@ public class AppFrame extends JFrame implements FileHistory.IFileHistory {
 				}
 			} else {
 				filter = null;
-				RecipeTreeLoader bw = new RecipeTreeLoader();
-				bw.loadTree(this.recipeTree, this.viewBy, this.filter, book);
+				loader.loadTree(this.recipeTree, this.viewBy, this.filter, book);
 				txtStatusBar.setText("Filter Off");
 				miFilter.setSelected(false);
 			}
 
 		} else {
 			filter = null;
-			RecipeTreeLoader bw = new RecipeTreeLoader();
-			bw.loadTree(this.recipeTree, this.viewBy, this.filter, book);
+			loader.loadTree(this.recipeTree, this.viewBy, this.filter, book);
 			txtStatusBar.setText("Filter Off");
 		}
-	}// GEN-LAST:event_miFilterActionPerformed
+	}
 
-	private void miPdfViewActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_miPdfViewActionPerformed
+	private void miPdfViewActionPerformed(java.awt.event.ActionEvent evt) {
 		pdfView(null);
-	}// GEN-LAST:event_miPdfViewActionPerformed
+	}
 
-	private void newRecipeBookActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_newRecipeBookActionPerformed
+	private void newRecipeBookActionPerformed(java.awt.event.ActionEvent evt) {
 		openNewBook();
-	}// GEN-LAST:event_newRecipeBookActionPerformed
+	}
 
-	private void mainFrameClosed(java.awt.event.WindowEvent evt) {// GEN-FIRST:event_mainFrameClosed
+	private void mainFrameClosed(java.awt.event.WindowEvent evt) {
 		System.exit(0);
-	}// GEN-LAST:event_mainFrameClosed
+	}
 
 	private void miOpenURLActionPerformed(java.awt.event.ActionEvent evt) {
 
@@ -808,8 +808,7 @@ public class AppFrame extends JFrame implements FileHistory.IFileHistory {
 
 	private void miViewBySourceActionPerformed(java.awt.event.ActionEvent evt) {
 		setViewBy(viewByButtonGroup.getSelection().getActionCommand());
-		RecipeTreeLoader bw = new RecipeTreeLoader();
-		bw.loadTree(this.recipeTree, this.viewBy, this.filter, book);
+		loader.loadTree(this.recipeTree, this.viewBy, this.filter, book);
 	}
 
 	private void miNewRecipeActionPerformed(java.awt.event.ActionEvent evt) {
@@ -818,20 +817,17 @@ public class AppFrame extends JFrame implements FileHistory.IFileHistory {
 
 	private void miViewByRecipeActionPerformed(java.awt.event.ActionEvent evt) {
 		setViewBy(viewByButtonGroup.getSelection().getActionCommand());
-		RecipeTreeLoader bw = new RecipeTreeLoader();
-		bw.loadTree(this.recipeTree, this.viewBy, this.filter, book);
+		loader.loadTree(this.recipeTree, this.viewBy, this.filter, book);
 	}
 
 	private void miViewByOriginActionPerformed(java.awt.event.ActionEvent evt) {
 		setViewBy(viewByButtonGroup.getSelection().getActionCommand());
-		RecipeTreeLoader bw = new RecipeTreeLoader();
-		bw.loadTree(this.recipeTree, this.viewBy, this.filter, book);
+		loader.loadTree(this.recipeTree, this.viewBy, this.filter, book);
 	}
 
 	private void miViewByChapterActionPerformed(java.awt.event.ActionEvent evt) {
 		setViewBy(viewByButtonGroup.getSelection().getActionCommand());
-		RecipeTreeLoader bw = new RecipeTreeLoader();
-		bw.loadTree(this.recipeTree, this.viewBy, this.filter, book);
+		loader.loadTree(this.recipeTree, this.viewBy, this.filter, book);
 	}
 
 	private void miOpenRecipeActionPerformed(java.awt.event.ActionEvent evt) {
@@ -871,7 +867,7 @@ public class AppFrame extends JFrame implements FileHistory.IFileHistory {
 		saveButtons(book.getModified());
 	}
 
-	private void openActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_openActionPerformed
+	private void openActionPerformed(java.awt.event.ActionEvent evt) {
 		if (book != null && book.getModified() == true) {
 			// prompt for save
 			SaveDialog ds = new SaveDialog(this, true);
@@ -895,15 +891,15 @@ public class AppFrame extends JFrame implements FileHistory.IFileHistory {
 				fileHistory.insertPathname(userPrefs.lastFileName);
 			}
 		}
-	}// GEN-LAST:event_openActionPerformed
+	}
 
-	private void mnuFileActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_mnuFileActionPerformed
+	private void mnuFileActionPerformed(java.awt.event.ActionEvent evt) {
 		// Add your handling code here:
-	}// GEN-LAST:event_mnuFileActionPerformed
+	}
 
-	private void miExitActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_miExitActionPerformed
+	private void miExitActionPerformed(java.awt.event.ActionEvent evt) {
 		exitApp();
-	}// GEN-LAST:event_miExitActionPerformed
+	}
 
 	public void setIcon() {
 
@@ -913,11 +909,6 @@ public class AppFrame extends JFrame implements FileHistory.IFileHistory {
 
 	public void loadGlobals() {
 		userPrefs.loadAll();
-		if (userPrefs.lastFileName.length() > 0) {
-			if (openBook(userPrefs.lastFileName)) {
-				this.setTitle(userPrefs.appName + " - [" + userPrefs.lastFileName + "]");
-			}
-		}
 		setLocation(userPrefs.LocX, userPrefs.LocY);
 		setSize(userPrefs.SizeW, userPrefs.SizeH);
 	}
@@ -934,6 +925,14 @@ public class AppFrame extends JFrame implements FileHistory.IFileHistory {
 		userPrefs.saveAll();
 	}
 
+	public void openLastOpenBook() {
+		if (userPrefs.lastFileName.length() > 0) {
+			if (openBook(userPrefs.lastFileName)) {
+				this.setTitle(userPrefs.appName + " - [" + userPrefs.lastFileName + "]");
+			}
+		}
+	}
+	
 	public void openNewBook() {
 		if (book != null && book.getModified() == true) {
 			// prompt for save
@@ -964,8 +963,7 @@ public class AppFrame extends JFrame implements FileHistory.IFileHistory {
 		r.setRecipeName("Blank Recipe");
 		book.addRecipe(r);
 
-		RecipeTreeLoader bw = new RecipeTreeLoader();
-		bw.loadTree(this.recipeTree, this.viewBy, this.filter, book);
+		loader.loadTree(this.recipeTree, this.viewBy, this.filter, book);
 		this.recipeTree.revalidate();
 	}
 
@@ -978,8 +976,8 @@ public class AppFrame extends JFrame implements FileHistory.IFileHistory {
 			}
 			miFilter.setSelected(false);
 			filter = null;
-			RecipeTreeLoader bw = new RecipeTreeLoader();
-			bw.loadTree(this.recipeTree, this.viewBy, this.filter, book);
+			
+			loader.loadTree(this.recipeTree, this.viewBy, this.filter, book);
 			this.recipeTree.revalidate();
 
 			// Save recently opened files
@@ -1044,8 +1042,7 @@ public class AppFrame extends JFrame implements FileHistory.IFileHistory {
 
 		filter = recipeIndexer.searchRecipes(fields, queryString);
 		if (filter != null) {
-			RecipeTreeLoader bw = new RecipeTreeLoader();
-			bw.loadTree(this.recipeTree, this.viewBy, this.filter, book);
+			loader.loadTree(this.recipeTree, this.viewBy, this.filter, book);
 		}
 	}
 
@@ -1119,8 +1116,7 @@ public class AppFrame extends JFrame implements FileHistory.IFileHistory {
 		}
 
 		// fill the tree
-		RecipeTreeLoader bw = new RecipeTreeLoader();
-		bw.loadTree(this.recipeTree, this.viewBy, this.filter, book);
+		loader.loadTree(this.recipeTree, this.viewBy, this.filter, book);
 
 		// find rec in new tree model
 		if (recArg != null) {

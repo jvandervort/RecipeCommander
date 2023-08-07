@@ -4,18 +4,23 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.logging.Logger;
 
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
 
+import com.google.inject.Inject;
 import com.rednoblue.jrecipe.model.Book;
 import com.rednoblue.jrecipe.model.Recipe;
 
 public class RecipeTreeLoader {
-
-	public RecipeTreeLoader() {
+	private final Logger logger;
+	
+	@Inject
+	public RecipeTreeLoader(Logger logger) {
+		this.logger = logger;
 	}
 
 	/**
@@ -42,9 +47,13 @@ public class RecipeTreeLoader {
 		DefaultMutableTreeNode sourceNode = null;
 
 		ArrayList<Recipe> rList = book.getRecipes();
+		
+		logger.fine("sorting by " + viewBy + " " + rList.size());
 		Collections.sort(rList, new RecipeTreeComparator(viewBy));
 
 		if (filter != null) {
+			logger.fine("filtering");
+			
 			// sort should be based on group by
 			if (viewBy.equals("chapter")) {
 				rootNode = new DefaultMutableTreeNode(book);
@@ -222,7 +231,7 @@ public class RecipeTreeLoader {
 				treeModel = new DefaultTreeModel(rootNode);
 				tree.setModel(treeModel);
 
-			} else if (viewBy.equals("recipe")) {
+			} else if (viewBy.equals("recipeName")) {
 				rootNode = new DefaultMutableTreeNode(book);
 				nMatch = new DefaultMutableTreeNode("Matching");
 				nNoMatch = new DefaultMutableTreeNode("Non-Matching");
@@ -254,9 +263,11 @@ public class RecipeTreeLoader {
 				}
 
 			} else {
-				System.err.println("ViewBy=" + viewBy + " Not Handled.");
+				throw new IllegalArgumentException(String.format("Unhandled viewBy %s", viewBy));
 			}
 		} else {
+			logger.fine("NOT filtering");
+			
 			// sort should be based on group by
 			if (viewBy.equals("chapter")) {
 				rootNode = new DefaultMutableTreeNode(book);
@@ -435,7 +446,7 @@ public class RecipeTreeLoader {
 				treeModel = new DefaultTreeModel(rootNode);
 				tree.setModel(treeModel);
 
-			} else if (viewBy.equals("recipe")) {
+			} else if (viewBy.equals("recipeName")) {
 				rootNode = new DefaultMutableTreeNode(book);
 				Iterator<Recipe> it = rList.iterator();
 				while (it.hasNext()) {
@@ -447,7 +458,7 @@ public class RecipeTreeLoader {
 				tree.setModel(treeModel);
 
 			} else {
-				System.err.println("ViewBy=" + viewBy + " Not Handled.");
+				throw new IllegalArgumentException(String.format("Unhandled viewBy %s", viewBy));
 			}
 		}
 

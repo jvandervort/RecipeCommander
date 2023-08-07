@@ -22,6 +22,7 @@ public class RecipeCommander {
 		app.setAppFrameTitle();
 		app.loadGlobals();
 		app.setIcon();
+		app.openLastOpenBook();
 		app.repaint();
 		app.setVisible(true);
 	}
